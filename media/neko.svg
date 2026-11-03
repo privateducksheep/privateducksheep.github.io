@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Default Neko, face on, in the 3D pet's colours: orange body and ears,
+       cream muzzle, pink nose, blue harness. Eyes a little bigger than the
+       model's so they still read at tab size. -->
+  <g stroke="#d9772a" stroke-width="2" stroke-linejoin="round">
+    <path d="M12 26 L14 3 L28 17 Z" fill="#ff9f43"/>
+    <path d="M52 26 L50 3 L36 17 Z" fill="#ff9f43"/>
+    <circle cx="32" cy="37" r="25" fill="#ff9f43"/>
+  </g>
+  <path d="M8 38 Q32 50 56 38" fill="none" stroke="#2f6bff" stroke-width="6" stroke-linecap="round"/>
+  <ellipse cx="32" cy="45" rx="15" ry="12" fill="#ffe2b8"/>
+  <circle cx="23" cy="30" r="4.6" fill="#1d1d1d"/>
+  <circle cx="41" cy="30" r="4.6" fill="#1d1d1d"/>
+  <circle cx="24.6" cy="28.4" r="1.5" fill="#ffffff"/>
+  <circle cx="42.6" cy="28.4" r="1.5" fill="#ffffff"/>
+  <ellipse cx="32" cy="37.5" rx="3" ry="2.3" fill="#ff6b8b"/>
+</svg>

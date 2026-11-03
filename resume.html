@@ -1,0 +1,1021 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Shaun Lim Résumé</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky top bar over matte black; the résumé is a white Letter-sized sheet laid
+   out like the original PDF; an editing toolbar sits above it; AI help and history share
+   one panel on the right. */
+:root {
+  --bg: #0c0c0d;
+  --surface: #151517;
+  --surface-2: #1c1c1f;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --fg: #f5f5f7;
+  --muted: #8e8e96;
+  --accent: #ff9a8a;
+  --ok: #7ee0b5;
+  --paper: #ffffff;
+  --ink: #111111;
+  --edit: #2f6bff;
+  --font: "Geist", -apple-system, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  --cv: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+button { font: inherit; color: inherit; cursor: pointer; }
+button[disabled] { cursor: default; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+/* ---------- top bar ---------- */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(12, 12, 13, 0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.bar-in { max-width: 1240px; margin-inline: auto; padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.back { color: var(--muted); text-decoration: none; font-weight: 500; padding: 8px 4px; }
+.back:hover { color: var(--fg); }
+.title { font-weight: 700; letter-spacing: -0.02em; margin-right: auto; display: flex; align-items: center; gap: 10px; }
+.badge { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--muted); font-weight: 500; }
+.badge.dirty { color: var(--accent); border-color: rgba(255, 154, 138, 0.4); }
+.badge.saved { color: var(--ok); border-color: rgba(126, 224, 181, 0.4); }
+.btn { border: 1px solid var(--line-strong); background: transparent; padding: 9px 15px; border-radius: 999px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 7px; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+.btn:hover { border-color: var(--fg); }
+.btn.on { background: var(--surface-2); border-color: var(--fg); }
+.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn.primary:hover { background: #fff; }
+.btn.danger:hover { border-color: #ff6b6b; color: #ff8a8a; }
+.btn[disabled] { opacity: 0.45; }
+.btn svg { width: 16px; height: 16px; }
+
+/* ---------- page ---------- */
+.wrap { max-width: 1240px; margin-inline: auto; padding-block: 22px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; justify-items: center; }
+.wrap.with-panel { grid-template-columns: minmax(0, 1fr) 360px; justify-items: stretch; }
+.stage { display: flex; flex-direction: column; gap: 12px; align-items: center; min-width: 0; }
+.notice { width: min(816px, 100%); padding: 12px 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); color: #c9c9cf; font-size: 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.notice b { color: var(--fg); }
+.notice .spacer { margin-left: auto; display: flex; gap: 8px; }
+
+/* ---------- toolbar ---------- */
+.tb { position: sticky; top: calc(66px + env(safe-area-inset-top, 0px)); z-index: 15; width: min(816px, 100%); display: flex; flex-direction: column; gap: 6px; padding: 8px; border-radius: 14px; background: rgba(21, 21, 23, 0.96); border: 1px solid var(--line-strong); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.tb-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.grp { display: flex; align-items: center; gap: 1px; padding: 2px; border-radius: 10px; background: var(--surface-2); min-width: 0; }
+.grp[aria-disabled="true"] { opacity: 0.42; pointer-events: none; }
+.grp .lbl { font-size: 12px; color: var(--muted); padding: 0 6px 0 8px; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+.grp .lbl b { color: var(--fg); font-weight: 600; }
+.tb button.ic { border: 0; background: transparent; padding: 7px 9px; border-radius: 8px; font-size: 13px; font-weight: 600; white-space: nowrap; min-width: 32px; }
+.tb button.ic:hover { background: rgba(255, 255, 255, 0.1); }
+.tb button.ic.del:hover { background: rgba(255, 90, 90, 0.22); }
+.tb button.ic[disabled] { opacity: 0.35; background: transparent; }
+.tb .meter { margin-left: auto; font-size: 12.5px; color: var(--muted); display: flex; gap: 10px; align-items: center; padding-right: 4px; font-variant-numeric: tabular-nums; }
+.meter .pg { padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line-strong); }
+.meter .pg.ok { color: var(--ok); border-color: rgba(126, 224, 181, 0.4); }
+.meter .pg.over { color: var(--accent); border-color: rgba(255, 154, 138, 0.45); }
+.tb input { background: var(--bg); border: 1px solid var(--line-strong); border-radius: 8px; color: var(--fg); padding: 7px 9px; font: inherit; font-size: 13px; min-width: 0; flex: 1; }
+.tb .sub-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; padding: 2px; }
+.tb .sub-row .hint { font-size: 12.5px; color: var(--muted); }
+
+/* ---------- the sheet ---------- */
+.paper { position: relative; width: min(816px, 100%); min-height: 1056px; background: var(--paper); color: var(--ink); font-family: var(--cv); font-size: 13.3px; line-height: 1.28; padding: 44px 52px 56px; border-radius: 4px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); }
+.page-line { position: absolute; left: 0; right: 0; border-top: 1.5px dashed #ff8a7a; pointer-events: none; }
+.page-line span { position: absolute; right: 8px; top: -18px; font-family: var(--font); font-size: 11px; color: #d0503e; background: #fff; padding: 0 4px; }
+.cv-name { text-align: center; font-weight: 700; font-size: 29px; letter-spacing: 0.01em; text-transform: uppercase; margin: 0; }
+.cv-contact { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-top: 2px; }
+.cv-sec { margin-top: 16px; }
+.cv-sec-h { font-weight: 700; font-size: 15px; text-transform: uppercase; margin: 0; padding-bottom: 3px; border-bottom: 3px double var(--ink); }
+.cv-item { margin-top: 5px; }
+.cv-item + .cv-item { margin-top: 9px; }
+.cv-row { display: flex; gap: 16px; align-items: baseline; font-weight: 700; }
+.cv-row .t { flex: 1; min-width: 0; }
+.cv-row .r { white-space: nowrap; text-align: right; }
+.cv-sub { font-weight: 700; }
+.cv-bullets { margin: 1px 0 0; padding-left: 26px; }
+.cv-bullets li { margin: 0; padding-left: 2px; }
+.cv-bullets a { color: #1a4fd6; }
+.cv-empty { color: #8a8a8a; font-style: italic; }
+.editing [contenteditable] { outline: none; border-radius: 2px; transition: background 0.15s, box-shadow 0.15s; }
+.editing [contenteditable]:hover { background: rgba(47, 107, 255, 0.06); }
+.editing [contenteditable]:focus { background: rgba(47, 107, 255, 0.09); box-shadow: 0 0 0 1px rgba(47, 107, 255, 0.5); }
+.editing [contenteditable]:empty::before { content: attr(data-ph); color: #9a9a9a; font-weight: 400; }
+.editing .cv-sec, .editing .cv-item { cursor: text; }
+.editing .cv-sec.sel { outline: 1.5px dashed rgba(47, 107, 255, 0.45); outline-offset: 6px; border-radius: 4px; }
+.editing .cv-item.sel { outline: 2px solid rgba(47, 107, 255, 0.8); outline-offset: 4px; border-radius: 3px; background: rgba(47, 107, 255, 0.035); }
+.editing li.selb { background: rgba(255, 196, 60, 0.18); }
+mark.hit { background: #ffe27a; color: inherit; border-radius: 2px; }
+
+/* ---------- side panel ---------- */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; align-self: start; position: sticky; top: calc(84px + env(safe-area-inset-top, 0px)); max-height: calc(100vh - 110px); display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.tabs { display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: var(--surface-2); }
+.tabs button { flex: 1; border: 0; background: transparent; padding: 8px; border-radius: 9px; font-weight: 600; font-size: 14px; color: var(--muted); }
+.tabs button.on { background: var(--bg); color: var(--fg); }
+.pane { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; min-height: 0; }
+.pane p.hint { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.ver { border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; display: flex; flex-direction: column; gap: 8px; background: var(--surface-2); }
+.ver.on { border-color: rgba(255, 154, 138, 0.55); }
+.ver .when { font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+.ver .note { color: var(--muted); font-size: 13px; }
+.ver .acts { display: flex; gap: 6px; flex-wrap: wrap; }
+.ver .acts .btn { padding: 6px 11px; font-size: 13px; }
+.ver input, .field { width: 100%; background: var(--bg); border: 1px solid var(--line-strong); border-radius: 10px; color: var(--fg); padding: 9px 11px; font: inherit; font-size: 14px; }
+.ver .confirm { font-size: 13px; color: #ffb4b4; }
+.small-link { align-self: flex-start; background: none; border: 0; color: var(--muted); font-size: 13px; text-decoration: underline; padding: 2px 0; }
+.small-link:hover { color: var(--fg); }
+
+/* AI */
+.ai-target { font-size: 13px; color: var(--muted); padding: 10px 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); line-height: 1.45; }
+.ai-target b { color: var(--fg); font-weight: 600; }
+.ai-target q { color: #d9d9de; }
+.quick { display: flex; flex-wrap: wrap; gap: 6px; }
+.quick button { border: 1px solid var(--line-strong); background: transparent; border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 600; }
+.quick button:hover { border-color: var(--fg); }
+.quick button[disabled] { opacity: 0.4; }
+.chat { display: flex; flex-direction: column; gap: 10px; }
+.msg { padding: 10px 12px; border-radius: 12px; font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg.me { align-self: flex-end; background: var(--fg); color: var(--bg); max-width: 88%; }
+.msg.ai { background: var(--surface-2); border: 1px solid var(--line); }
+.msg.err { color: #ffb4b4; }
+.opt { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line-strong); font-size: 14px; line-height: 1.45; }
+.opt .row { display: flex; gap: 6px; }
+.opt .btn { padding: 6px 12px; font-size: 13px; }
+.ai-form { display: flex; gap: 6px; align-items: flex-end; }
+.ai-form textarea { flex: 1; resize: vertical; min-height: 42px; max-height: 160px; background: var(--bg); border: 1px solid var(--line-strong); border-radius: 12px; color: var(--fg); padding: 10px 12px; font: inherit; font-size: 14px; }
+
+/* lock dialog + toast */
+.lock { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); background: rgba(6, 6, 7, 0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.lock-card { width: min(380px, 100%); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.lock-card h2 { margin: 0; font-size: 19px; letter-spacing: -0.02em; }
+.lock-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.lock-card .err { color: #ff8a8a; font-size: 13px; min-height: 1em; }
+.lock-card .row { display: flex; gap: 8px; justify-content: flex-end; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 600; transition: opacity 0.3s, transform 0.3s; z-index: 40; pointer-events: none; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 1020px) {
+  .wrap.with-panel { grid-template-columns: minmax(0, 1fr); }
+  .panel { position: static; max-height: none; }
+}
+@media (max-width: 640px) {
+  .paper { padding: 24px 18px 32px; font-size: 12px; min-height: 0; }
+  .cv-name { font-size: 22px; }
+  .cv-row { flex-direction: column; gap: 0; }
+  .cv-row .r { text-align: left; font-weight: 400; color: #444; }
+  .page-line { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <a class="back" href="index.html" target="_top">← Portfolio</a>
+    <div class="title">Résumé <span class="badge" id="state-badge" hidden></span></div>
+    <button class="btn" id="b-ai" type="button" hidden>AI help</button>
+    <button class="btn" id="b-history" type="button" hidden>History</button>
+    <button class="btn" id="b-pdf" type="button" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>Download PDF
+    </button>
+    <button class="btn" id="b-edit" type="button" hidden>Edit</button>
+    <button class="btn" id="b-discard" type="button" hidden>Discard</button>
+    <button class="btn primary" id="b-save" type="button" hidden>Save</button>
+  </div>
+</div>
+
+<main class="wrap" id="wrap">
+  <div class="stage">
+    <div class="notice" id="notice" hidden></div>
+    <div class="tb" id="tb" hidden>
+      <div class="tb-row">
+        <div class="grp">
+          <button class="ic" type="button" data-act="undo" id="t-undo" title="Undo (⌘Z)">↶</button>
+          <button class="ic" type="button" data-act="redo" id="t-redo" title="Redo (⇧⌘Z)">↷</button>
+        </div>
+        <div class="grp" id="g-fmt" aria-disabled="true">
+          <button class="ic" type="button" data-fmt="bold" title="Bold (⌘B)"><b>B</b></button>
+          <button class="ic" type="button" data-fmt="italic" title="Italic (⌘I)"><i>I</i></button>
+          <button class="ic" type="button" data-fmt="underline" title="Underline (⌘U)"><u>U</u></button>
+          <button class="ic" type="button" data-act="link-open" title="Link (⌘K)">Link</button>
+          <button class="ic" type="button" data-fmt="clear" title="Clear formatting">Clear</button>
+        </div>
+        <div class="grp"><button class="ic" type="button" data-act="find-open" title="Find and replace (⌘F)">Find</button><button class="ic" type="button" data-act="sec-add">+ Section</button></div>
+        <div class="meter" id="meter"></div>
+      </div>
+      <div class="tb-row">
+        <div class="grp" id="g-sec" aria-disabled="true"><span class="lbl" id="l-sec">Click a section</span>
+          <button class="ic" type="button" data-act="sec-up" title="Move section up">↑</button><button class="ic" type="button" data-act="sec-down" title="Move section down">↓</button>
+          <button class="ic" type="button" data-act="item-add">+ Entry</button><button class="ic del" type="button" data-act="sec-del">Delete</button></div>
+        <div class="grp" id="g-item" aria-disabled="true"><span class="lbl" id="l-item">Click an entry</span>
+          <button class="ic" type="button" data-act="item-up" title="Move entry up">↑</button><button class="ic" type="button" data-act="item-down" title="Move entry down">↓</button>
+          <button class="ic" type="button" data-act="item-dup">Duplicate</button><button class="ic" type="button" data-act="bullet-add">+ Bullet</button>
+          <button class="ic" type="button" data-act="sub-toggle" id="t-sub">+ Subtitle</button><button class="ic del" type="button" data-act="item-del">Delete</button></div>
+      </div>
+      <div class="sub-row" id="link-row" hidden>
+        <input id="link-url" type="url" placeholder="https://…" aria-label="Link address">
+        <button class="btn" type="button" data-act="link-apply">Apply</button><button class="btn" type="button" data-act="link-remove">Remove link</button><button class="btn" type="button" data-act="link-close">Close</button>
+      </div>
+      <div class="sub-row" id="find-row" hidden>
+        <input id="find-q" placeholder="Find" aria-label="Find"><input id="find-r" placeholder="Replace with" aria-label="Replace with">
+        <span class="hint" id="find-n"></span>
+        <button class="btn" type="button" data-act="find-all">Replace all</button><button class="btn" type="button" data-act="find-close">Close</button>
+      </div>
+    </div>
+    <article class="paper" id="paper" aria-live="polite"><p class="cv-empty">Loading the résumé…</p></article>
+  </div>
+
+  <aside class="panel" id="panel" hidden>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="ai" id="tab-ai">AI assistant</button>
+      <button type="button" role="tab" data-tab="history" id="tab-history">History</button>
+    </div>
+    <div class="pane" id="pane-ai">
+      <div class="ai-target" id="ai-target">Click a bullet on the sheet, then pick an action. Or ask anything below.</div>
+      <div class="quick" id="ai-quick">
+        <button type="button" data-ai="improve">Improve</button>
+        <button type="button" data-ai="shorter">Make it shorter</button>
+        <button type="button" data-ai="verbs">Stronger verbs</button>
+        <button type="button" data-ai="impact">Show impact</button>
+        <button type="button" data-ai="grammar">Fix grammar</button>
+      </div>
+      <div class="chat" id="chat"></div>
+      <form class="ai-form" id="ai-form">
+        <textarea id="ai-in" rows="2" placeholder="Ask for help, or paste a job description to tailor your résumé"></textarea>
+        <button class="btn primary" type="submit" id="ai-send">Send</button>
+      </form>
+      <p class="hint" id="ai-foot">Claude Haiku 5.5 · never invents results: it leaves placeholders like [X%] for you to fill in.</p>
+    </div>
+    <div class="pane" id="pane-history" hidden>
+      <p class="hint">Every save is kept. Preview one, rename it, restore it into the editor, or delete it.</p>
+      <input class="field" id="save-note" maxlength="80" placeholder="Note for the next save (optional)">
+      <div id="ver-list"></div>
+      <button class="small-link" type="button" id="b-change-pw">Change editing password</button>
+    </div>
+  </aside>
+</main>
+
+<div class="lock" id="lock" hidden>
+  <form class="lock-card" id="lock-form">
+    <h2 id="lock-title">Unlock editing</h2>
+    <p id="lock-hint">Enter your editing password.</p>
+    <input class="field" type="password" id="pw0" autocomplete="current-password" placeholder="Current password" hidden>
+    <input class="field" type="password" id="pw1" autocomplete="current-password" placeholder="Password">
+    <input class="field" type="password" id="pw2" autocomplete="new-password" placeholder="Repeat password" hidden>
+    <span class="err" id="lock-err"></span>
+    <div class="row"><button class="btn" type="button" id="lock-cancel">Cancel</button><button class="btn primary" type="submit" id="lock-ok">Unlock</button></div>
+  </form>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(() => {
+  // The public résumé page is this file built with VIEW_ONLY = true: it reads
+  // resume.json and has no editing at all. The editor app keeps it false.
+  const VIEW_ONLY = true;
+  const $ = (id) => document.getElementById(id);
+  const paper = $("paper");
+  let db = null, user = null, downloads = null, sample = null;
+  let isOwner = false;
+  let saved = null;      // last saved résumé
+  let state = null;      // what is on the sheet
+  let editing = false, dirty = false, previewing = null;
+  let versions = [];
+  let panel = null;      // null | "ai" | "history"
+  let sel = { si: -1, ii: -1, bi: -1 };
+  const uid = () => Math.random().toString(36).slice(2, 9);
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const fmt = (t) => new Date(t).toLocaleString(undefined, { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), 2400); }
+
+  // ---------- rich text: bullets keep b / i / u / links, nothing else ----------
+  const isHTML = (s) => /<\/?(b|i|u|a)\b/i.test(s || "");
+  const legacy = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");     // older saves used **bold**
+  function clean(html) {
+    const t = document.createElement("template");
+    t.innerHTML = isHTML(html) ? html : legacy(html);
+    const out = document.createElement("div");
+    const walk = (src, dst) => {
+      for (const n of src.childNodes) {
+        if (n.nodeType === 3) { dst.append(n.textContent.replace(/ /g, " ")); continue; }
+        if (n.nodeType !== 1) continue;
+        if (n.tagName === "BR") { dst.append(" "); continue; }
+        let tag = { B: "b", STRONG: "b", I: "i", EM: "i", U: "u", A: "a" }[n.tagName];
+        if (!tag && n.style) {
+          const st = n.style;
+          if (st.fontWeight === "bold" || +st.fontWeight >= 600) tag = "b";
+          else if (st.fontStyle === "italic") tag = "i";
+          else if ((st.textDecorationLine || st.textDecoration || "").includes("underline")) tag = "u";
+        }
+        if (!tag) { walk(n, dst); continue; }
+        const e = document.createElement(tag);
+        if (tag === "a") {
+          const h = n.getAttribute("href") || "";
+          if (!/^(https?:|mailto:)/i.test(h)) { walk(n, dst); continue; }
+          e.setAttribute("href", h);
+        }
+        walk(n, e);
+        if (e.textContent.trim()) dst.append(e);
+      }
+    };
+    walk(t.content, out);
+    return out.innerHTML.replace(/\s+/g, " ").trim();
+  }
+  const plain = (s) => { const d = document.createElement("div"); d.innerHTML = clean(s); return d.textContent; };
+  // **x** from the AI becomes bold on the sheet
+  const fromAI = (s) => clean(esc(String(s || "")).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"));
+
+  // ---------- render ----------
+  function field(tag, cls, value, key, ph, rich = false, ed = false) {
+    const el = document.createElement(tag);
+    if (cls) el.className = cls;
+    el.dataset.k = key;
+    el.dataset.ph = ph;
+    if (rich) {
+      el.innerHTML = clean(value);
+      el.querySelectorAll("a").forEach((a) => { a.target = "_blank"; a.rel = "noopener"; });
+    } else el.textContent = value || "";
+    if (ed) { el.contentEditable = "true"; el.spellcheck = true; }
+    return el;
+  }
+  function render() {
+    const doc = previewing ? previewing.doc : state;
+    const ed = editing && !previewing;
+    paper.classList.toggle("editing", ed);
+    paper.innerHTML = "";
+    if (!doc) { paper.innerHTML = `<p class="cv-empty">${isOwner ? "No résumé saved yet. Press Edit to start one." : "The résumé hasn't been published yet."}</p>`; return; }
+    paper.append(field("h1", "cv-name", doc.name, "name", "Your name", false, ed));
+    const contact = document.createElement("div");
+    contact.className = "cv-contact";
+    (doc.contact || []).forEach((c, i) => contact.append(field("span", "", c, `contact.${i}`, "Contact line", false, ed)));
+    paper.append(contact);
+    doc.sections.forEach((sec, si) => {
+      const s = document.createElement("section");
+      s.className = "cv-sec"; s.dataset.si = si;
+      s.append(field("h2", "cv-sec-h", sec.title, `s.${si}.title`, "Section title", false, ed));
+      sec.items.forEach((it, ii) => {
+        const d = document.createElement("div");
+        d.className = "cv-item"; d.dataset.ii = ii;
+        if (ed || it.title || it.right) {
+          const row = document.createElement("div");
+          row.className = "cv-row";
+          row.append(field("span", "t", it.title, `s.${si}.i.${ii}.title`, "Role, organisation", false, ed));
+          row.append(field("span", "r", it.right, `s.${si}.i.${ii}.right`, "Dates", false, ed));
+          d.append(row);
+        }
+        if (it.subtitle != null && (ed || it.subtitle)) d.append(field("div", "cv-sub", it.subtitle, `s.${si}.i.${ii}.subtitle`, "Subtitle", false, ed));
+        if (it.bullets.length) {
+          const ul = document.createElement("ul");
+          ul.className = "cv-bullets";
+          it.bullets.forEach((b, bi) => {
+            const li = field("li", "", b, `s.${si}.i.${ii}.b.${bi}`, "Bullet point", true, ed);
+            li.dataset.bi = bi;
+            ul.append(li);
+          });
+          d.append(ul);
+        }
+        s.append(d);
+      });
+      paper.append(s);
+    });
+    if (ed) markSel();
+    requestAnimationFrame(updateMeter);
+  }
+
+  // read the sheet back into state
+  function harvest() {
+    if (!editing || previewing || !state) return;
+    paper.querySelectorAll("[data-k]").forEach((el) => {
+      const k = el.dataset.k.split(".");
+      const v = el.tagName === "LI" ? clean(el.innerHTML) : el.textContent.replace(/ /g, " ").replace(/\s+/g, " ").trim();
+      if (k[0] === "name") state.name = v;
+      else if (k[0] === "contact") state.contact[+k[1]] = v;
+      else if (k[0] === "s") {
+        const sec = state.sections[+k[1]];
+        if (k[2] === "title") sec.title = v;
+        else { const it = sec.items[+k[3]]; if (k[4] === "b") it.bullets[+k[5]] = v; else it[k[4]] = v; }
+      }
+    });
+  }
+
+  // ---------- undo / redo ----------
+  let past = [], future = [], committed = null;
+  function commit() {
+    harvest();
+    const now = JSON.stringify(state);
+    if (committed !== null && now !== committed) { past.push(committed); if (past.length > 120) past.shift(); future = []; }
+    committed = now;
+    syncUndo();
+  }
+  function undo() { commit(); if (!past.length) return; future.push(committed); committed = past.pop(); state = JSON.parse(committed); render(); setDirty(true); syncUndo(); }
+  function redo() { commit(); if (!future.length) return; past.push(committed); committed = future.pop(); state = JSON.parse(committed); render(); setDirty(true); syncUndo(); }
+  function syncUndo() { $("t-undo").disabled = !past.length; $("t-redo").disabled = !future.length; }
+  let typing;
+  paper.addEventListener("input", () => { if (!dirty) setDirty(true); clearTimeout(typing); typing = setTimeout(() => { commit(); updateMeter(); }, 600); });
+
+  // ---------- selection ----------
+  function markSel() {
+    paper.querySelectorAll(".sel, .selb").forEach((e) => e.classList.remove("sel", "selb"));
+    const s = state?.sections[sel.si], it = s?.items[sel.ii];
+    if (!s) sel = { si: -1, ii: -1, bi: -1 };
+    else {
+      const secEl = paper.querySelector(`.cv-sec[data-si="${sel.si}"]`);
+      secEl?.classList.add("sel");
+      const itEl = secEl?.querySelector(`.cv-item[data-ii="${sel.ii}"]`);
+      if (itEl) { itEl.classList.add("sel"); itEl.querySelector(`li[data-bi="${sel.bi}"]`)?.classList.add("selb"); }
+      else sel.ii = sel.bi = -1;
+    }
+    $("g-sec").setAttribute("aria-disabled", String(!s));
+    $("g-item").setAttribute("aria-disabled", String(!it));
+    $("l-sec").innerHTML = s ? `Section · <b>${esc(s.title || "Untitled")}</b>` : "Click a section";
+    $("l-item").innerHTML = it ? `Entry · <b>${esc(it.title || plain(it.bullets[0] || "") || "Untitled")}</b>` : "Click an entry";
+    $("t-sub").textContent = it && it.subtitle != null ? "− Subtitle" : "+ Subtitle";
+    syncAiTarget();
+  }
+  function pick(t) {
+    if (!editing || previewing) return;
+    const s = t.closest?.(".cv-sec"), it = t.closest?.(".cv-item"), li = t.closest?.("li[data-bi]");
+    $("g-fmt").setAttribute("aria-disabled", String(!li));
+    if (!s) return;
+    const n = { si: +s.dataset.si, ii: it ? +it.dataset.ii : -1, bi: li ? +li.dataset.bi : -1 };
+    if (n.si !== sel.si || n.ii !== sel.ii || n.bi !== sel.bi) { harvest(); sel = n; markSel(); }
+  }
+  paper.addEventListener("focusin", (e) => pick(e.target));
+  paper.addEventListener("mousedown", (e) => pick(e.target));
+
+  // ---------- structural actions ----------
+  const move = (arr, i, d) => { const j = i + d; if (j < 0 || j >= arr.length) return false; [arr[i], arr[j]] = [arr[j], arr[i]]; return true; };
+  const blankItem = () => ({ id: uid(), title: "", right: "", bullets: [""] });
+  function act(name) {
+    if (name === "preview-exit") { previewing = null; render(); syncBar(); renderVersions(); return; }
+    if (name === "restore") { state = clone(previewing.doc); previewing = null; editing = true; commit(); render(); setDirty(true); syncBar(); renderVersions(); toast("Restored into the editor. Save to keep it."); return; }
+    if (name === "undo") return undo();
+    if (name === "redo") return redo();
+    if (name === "link-open") return openLink();
+    if (name === "link-close") { $("link-row").hidden = true; return; }
+    if (name === "link-apply") return applyLink();
+    if (name === "link-remove") { restoreRange(); document.execCommand("unlink"); $("link-row").hidden = true; return; }
+    if (name === "find-open") { $("find-row").hidden = false; $("find-q").focus(); highlight(); return; }
+    if (name === "find-close") { $("find-row").hidden = true; render(); return; }
+    if (name === "find-all") return replaceAll();
+    commit();
+    const secs = state.sections, { si, ii } = sel;
+    switch (name) {
+      case "sec-up": if (move(secs, si, -1)) sel.si--; break;
+      case "sec-down": if (move(secs, si, 1)) sel.si++; break;
+      case "sec-del": secs.splice(si, 1); sel = { si: -1, ii: -1, bi: -1 }; break;
+      case "sec-add": secs.push({ id: uid(), title: "New section", items: [blankItem()] }); sel = { si: secs.length - 1, ii: 0, bi: -1 }; break;
+      case "item-add": secs[si].items.push(blankItem()); sel.ii = secs[si].items.length - 1; break;
+      case "item-up": if (move(secs[si].items, ii, -1)) sel.ii--; break;
+      case "item-down": if (move(secs[si].items, ii, 1)) sel.ii++; break;
+      case "item-dup": secs[si].items.splice(ii + 1, 0, { ...clone(secs[si].items[ii]), id: uid() }); sel.ii++; break;
+      case "item-del": secs[si].items.splice(ii, 1); sel.ii = sel.bi = -1; break;
+      case "bullet-add": secs[si].items[ii].bullets.push(""); sel.bi = secs[si].items[ii].bullets.length - 1; break;
+      case "sub-toggle": { const x = secs[si].items[ii]; if (x.subtitle != null) delete x.subtitle; else x.subtitle = ""; break; }
+      default: return;
+    }
+    commit(); render(); setDirty(true); syncBar();
+    if (name === "bullet-add") paper.querySelector(`[data-k="s.${si}.i.${ii}.b.${sel.bi}"]`)?.focus();
+  }
+  document.addEventListener("click", (e) => { const b = e.target.closest("[data-act]"); if (b) { e.preventDefault(); act(b.dataset.act); } });
+
+  // formatting keeps the caret where it was
+  document.querySelectorAll("[data-fmt]").forEach((b) => b.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    const f = b.dataset.fmt;
+    if (f === "clear") { document.execCommand("removeFormat"); document.execCommand("unlink"); }
+    else document.execCommand(f);
+    setDirty(true); clearTimeout(typing); typing = setTimeout(commit, 300);
+  }));
+
+  // links
+  let savedRange = null;
+  function saveRange() { const s = getSelection(); if (s.rangeCount && paper.contains(s.anchorNode)) savedRange = s.getRangeAt(0).cloneRange(); }
+  function restoreRange() { if (!savedRange) return; const s = getSelection(); s.removeAllRanges(); s.addRange(savedRange); }
+  function openLink() {
+    saveRange();
+    const a = savedRange && (savedRange.startContainer.parentElement?.closest("a"));
+    $("link-url").value = a?.getAttribute("href") || "";
+    $("link-row").hidden = false; $("link-url").focus();
+  }
+  function applyLink() {
+    let url = $("link-url").value.trim();
+    if (!url) return;
+    if (!/^(https?:|mailto:)/i.test(url)) url = (url.includes("@") && !url.includes("/") ? "mailto:" : "https://") + url;
+    restoreRange();
+    if (getSelection().isCollapsed) { toast("Select the words to link first."); return; }
+    document.execCommand("createLink", false, url);
+    $("link-row").hidden = true; setDirty(true); commit();
+  }
+  $("link-url").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } });
+
+  // find & replace
+  const rx = (q) => new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+  function eachText(fn) { // fn(get, set) over every editable string
+    state.name = fn(state.name, false);
+    state.contact = state.contact.map((c) => fn(c, false));
+    state.sections.forEach((s) => { s.title = fn(s.title, false); s.items.forEach((it) => {
+      it.title = fn(it.title, false); it.right = fn(it.right, false); if (it.subtitle != null) it.subtitle = fn(it.subtitle, false);
+      it.bullets = it.bullets.map((b) => fn(clean(b), true));
+    }); });
+  }
+  function count(q) { let n = 0; if (!q) return 0; const r = rx(q); const chk = (s, html) => { n += ((html ? plain(s) : s || "").match(r) || []).length; return s; }; eachText(chk); return n; }
+  function highlight() {
+    if (!state) return;
+    commit(); render();
+    const q = $("find-q").value;
+    $("find-n").textContent = q ? `${count(q)} found` : "";
+    if (!q) return;
+    const r = rx(q);
+    const walker = document.createTreeWalker(paper, NodeFilter.SHOW_TEXT);
+    const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((t) => {
+      if (!r.test(t.textContent)) return; r.lastIndex = 0;
+      const span = document.createElement("span");
+      span.innerHTML = esc(t.textContent).replace(rx(esc(q)), (m) => `<mark class="hit">${m}</mark>`);
+      t.replaceWith(...span.childNodes);
+    });
+  }
+  function replaceAll() {
+    const q = $("find-q").value, to = $("find-r").value;
+    if (!q) return;
+    commit();
+    const n = count(q);
+    const r = rx(q);
+    eachText((s, html) => html ? s.split(/(<[^>]+>)/).map((p) => (p.startsWith("<") ? p : p.replace(r, esc(to)))).join("") : String(s || "").replace(r, to));
+    commit(); render(); setDirty(true);
+    $("find-n").textContent = `Replaced ${n}`;
+  }
+  $("find-q").addEventListener("input", () => { clearTimeout(highlight.t); highlight.t = setTimeout(highlight, 250); });
+
+  // Enter = new bullet, Backspace on an empty bullet removes it, shortcuts
+  paper.addEventListener("keydown", (e) => {
+    const el = e.target.closest("[contenteditable=true]");
+    if (!el) return;
+    const mod = e.metaKey || e.ctrlKey, k = e.key.toLowerCase();
+    if (mod && ["b", "i", "u"].includes(k)) { e.preventDefault(); if (el.tagName === "LI") { document.execCommand({ b: "bold", i: "italic", u: "underline" }[k]); setDirty(true); } return; }
+    if (mod && k === "k") { e.preventDefault(); if (el.tagName === "LI") openLink(); return; }
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (el.tagName !== "LI") return;
+      commit();
+      const [, si, , ii, , bi] = el.dataset.k.split(".").map(Number);
+      state.sections[si].items[ii].bullets.splice(bi + 1, 0, "");
+      sel = { si, ii, bi: bi + 1 }; commit(); render(); setDirty(true);
+      paper.querySelector(`[data-k="s.${si}.i.${ii}.b.${bi + 1}"]`)?.focus();
+    } else if (e.key === "Backspace" && el.tagName === "LI" && !el.textContent.trim()) {
+      e.preventDefault();
+      commit();
+      const [, si, , ii, , bi] = el.dataset.k.split(".").map(Number);
+      state.sections[si].items[ii].bullets.splice(bi, 1);
+      sel = { si, ii, bi: Math.max(0, bi - 1) }; commit(); render(); setDirty(true);
+      const prev = paper.querySelector(`[data-k="s.${si}.i.${ii}.b.${Math.max(0, bi - 1)}"]`);
+      if (prev) { prev.focus(); const r = document.createRange(); r.selectNodeContents(prev); r.collapse(false); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    }
+  });
+  addEventListener("keydown", (e) => {
+    if (!editing || previewing) return;
+    const mod = e.metaKey || e.ctrlKey, k = e.key.toLowerCase();
+    if (mod && k === "z") { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+    else if (mod && k === "y") { e.preventDefault(); redo(); }
+    else if (mod && k === "f") { e.preventDefault(); act("find-open"); }
+    else if (mod && k === "s") { e.preventDefault(); $("b-save").click(); }
+  });
+  paper.addEventListener("paste", (e) => {
+    if (!e.target.closest("[contenteditable=true]")) return;
+    e.preventDefault();
+    document.execCommand("insertText", false, (e.clipboardData || window.clipboardData).getData("text/plain").replace(/\s+/g, " "));
+  });
+
+  // ---------- word count + one-page meter ----------
+  function updateMeter() {
+    paper.querySelectorAll(".page-line").forEach((l) => l.remove());
+    const doc = previewing ? previewing.doc : state;
+    if (!doc) { $("meter").innerHTML = ""; return; }
+    let words = 0;
+    const add = (s) => { words += (s || "").split(/\s+/).filter(Boolean).length; };
+    add(doc.name); doc.contact.forEach(add);
+    doc.sections.forEach((s) => { add(s.title); s.items.forEach((it) => { add(it.title); add(it.right); add(it.subtitle); it.bullets.forEach((b) => add(plain(b))); }); });
+    const scale = paper.clientWidth / 816;
+    const pageH = 1056 * scale;
+    const last = paper.lastElementChild;
+    const used = last ? last.offsetTop + last.offsetHeight + 56 * scale : 0;
+    const pages = used / pageH;
+    const over = pages > 1.001;
+    if (over && innerWidth > 640) {
+      const line = document.createElement("div");
+      line.className = "page-line"; line.style.top = pageH + "px";
+      line.innerHTML = "<span>Page 2 starts here</span>";
+      paper.append(line);
+    }
+    $("meter").innerHTML = `<span>${words} words</span><span class="pg ${over ? "over" : "ok"}">${over ? `${pages.toFixed(1)} pages` : "Fits on 1 page"}</span>`;
+  }
+  addEventListener("resize", () => requestAnimationFrame(updateMeter));
+
+  // ---------- top bar ----------
+  function setDirty(d) {
+    dirty = d;
+    const b = $("state-badge");
+    b.hidden = !editing && !d;
+    b.className = "badge" + (d ? " dirty" : "");
+    b.textContent = d ? "Unsaved changes" : "Editing";
+  }
+  function syncBar() {
+    $("b-edit").hidden = !isOwner || editing || !!previewing;
+    $("b-save").hidden = !editing;
+    $("b-discard").hidden = !editing;
+    $("b-history").hidden = !isOwner;
+    $("b-ai").hidden = !(isOwner && editing && ai.available());
+    $("b-pdf").disabled = !(previewing ? previewing.doc : state) || !window.jspdf;
+    $("tb").hidden = !(editing && !previewing);
+    if (panel === "ai" && !editing) panel = null;
+    $("panel").hidden = !panel;
+    $("wrap").classList.toggle("with-panel", !!panel);
+    $("b-ai").classList.toggle("on", panel === "ai");
+    $("b-history").classList.toggle("on", panel === "history");
+    $("tab-ai").hidden = !(editing && ai.available());
+    $("tab-ai").classList.toggle("on", panel === "ai");
+    $("tab-history").classList.toggle("on", panel === "history");
+    $("pane-ai").hidden = panel !== "ai";
+    $("pane-history").hidden = panel !== "history";
+    const n = $("notice");
+    if (previewing) {
+      n.hidden = false;
+      n.innerHTML = `<span>Previewing the version saved <b>${esc(fmt(previewing.savedAt))}</b>${previewing.note ? ` · ${esc(previewing.note)}` : ""}.</span><span class="spacer"><button class="btn" type="button" data-act="preview-exit">Back to current</button><button class="btn primary" type="button" data-act="restore">Restore into editor</button></span>`;
+    } else n.hidden = true;
+  }
+  const openPanel = (p) => { panel = panel === p ? null : p; syncBar(); };
+  $("b-ai").onclick = () => openPanel("ai");
+  $("b-history").onclick = () => openPanel("history");
+  $("tab-ai").onclick = () => { panel = "ai"; syncBar(); };
+  $("tab-history").onclick = () => { panel = "history"; syncBar(); };
+
+  // ---------- password: only the owner can set, change or use it ----------
+  // The hash lives in data/users/<owner id>/auth, which only the owner can read
+  // or write. On claude.ai the database also refuses edits from anyone else.
+  const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+  const unb64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  async function derive(pw, salt) {
+    const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveBits"]);
+    return b64(await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt, iterations: 210000 }, key, 256));
+  }
+  let unlocked = false;
+  try { unlocked = sessionStorage.getItem("resume.unlocked") === "1"; } catch {}
+  async function authRef() { if (!isOwner) return null; const id = await user?.id(); return id ? db.doc(`data/users/${id}/auth`) : null; }
+  function lockDialog(mode) { // mode: "unlock" | "change"
+    return new Promise(async (resolve) => {
+      if (!isOwner) { toast("Only the owner of this page can edit it."); return resolve(false); }
+      const ref = await authRef();
+      if (!ref) { toast("Sign in to edit."); return resolve(false); }
+      const snap = await ref.get().catch(() => null);
+      const auth = snap?.exists ? snap.data() : null;
+      const setting = !auth || mode === "change";
+      const needOld = !!auth && mode === "change";
+      $("lock-title").textContent = needOld ? "Change editing password" : setting ? "Set your editing password" : "Unlock editing";
+      $("lock-hint").textContent = setting ? "Only you, the owner, can set this. You'll need it each time you edit. At least 8 characters." : "Enter your editing password.";
+      $("pw0").hidden = !needOld;
+      $("pw1").placeholder = setting ? "New password" : "Password";
+      $("pw1").autocomplete = setting ? "new-password" : "current-password";
+      $("pw2").hidden = !setting;
+      $("lock-ok").textContent = setting ? "Save password" : "Unlock";
+      ["pw0", "pw1", "pw2"].forEach((i) => ($(i).value = ""));
+      $("lock-err").textContent = "";
+      $("lock").hidden = false;
+      (needOld ? $("pw0") : $("pw1")).focus();
+      const done = (ok) => { $("lock").hidden = true; $("lock-form").onsubmit = null; resolve(ok); };
+      $("lock-cancel").onclick = () => done(false);
+      $("lock-form").onsubmit = async (e) => {
+        e.preventDefault();
+        $("lock-ok").disabled = true;
+        try {
+          if (needOld && (await derive($("pw0").value, unb64(auth.salt))) !== auth.hash) { $("lock-err").textContent = "Your current password isn't right."; return; }
+          const pw = $("pw1").value;
+          if (setting) {
+            if (pw.length < 8) { $("lock-err").textContent = "Use at least 8 characters."; return; }
+            if (pw !== $("pw2").value) { $("lock-err").textContent = "The two passwords don't match."; return; }
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            await ref.set({ salt: b64(salt), hash: await derive(pw, salt), iterations: 210000, setAt: Date.now() });
+            toast(needOld ? "Password changed" : "Password set");
+            return done(true);
+          }
+          if ((await derive(pw, unb64(auth.salt))) !== auth.hash) { $("lock-err").textContent = "That password isn't right."; $("pw1").select(); return; }
+          done(true);
+        } catch { $("lock-err").textContent = "Couldn't reach the password store. Try again."; }
+        finally { $("lock-ok").disabled = false; }
+      };
+    });
+  }
+  $("b-change-pw").onclick = () => lockDialog("change");
+
+  // ---------- edit / save / discard ----------
+  $("b-edit").onclick = async () => {
+    if (!unlocked) {
+      if (!(await lockDialog("unlock"))) return;
+      unlocked = true;
+      try { sessionStorage.setItem("resume.unlocked", "1"); } catch {}
+    }
+    if (!state) state = { name: "", contact: ["", ""], sections: [] };
+    state = clone(state);
+    editing = true; past = []; future = []; committed = null; sel = { si: -1, ii: -1, bi: -1 };
+    render(); commit(); setDirty(false); syncBar();
+  };
+  $("b-discard").onclick = () => { editing = false; state = saved ? clone(saved) : null; render(); setDirty(false); syncBar(); };
+  $("b-save").onclick = async () => {
+    harvest();
+    const btn = $("b-save");
+    btn.disabled = true; btn.textContent = "Saving…";
+    const doc = clone(state);
+    const savedAt = Date.now();
+    const note = $("save-note").value.trim();
+    try {
+      await db.doc("resume/current").set({ ...doc, updatedAt: savedAt });
+      await db.collection("versions").add({ doc, savedAt, note });
+      $("save-note").value = "";
+      saved = clone(doc); editing = false; render(); setDirty(false); syncBar();
+      const b = $("state-badge"); b.hidden = false; b.className = "badge saved"; b.textContent = "Saved"; setTimeout(() => { if (!editing) b.hidden = true; }, 2200);
+      if (versions.length > 150) for (const v of versions.slice(150)) { try { await db.doc("versions/" + v.id).delete(); } catch {} }
+    } catch (err) {
+      toast(err?.code === "quota_exceeded" ? "Storage is full. Delete old versions, then save again." : "Couldn't save. Check your connection and try again.");
+    } finally { btn.disabled = false; btn.textContent = "Save"; }
+  };
+  addEventListener("beforeunload", (e) => { if (editing && dirty) { e.preventDefault(); e.returnValue = ""; } });
+
+  // ---------- versions ----------
+  function renderVersions() {
+    const list = $("ver-list");
+    list.innerHTML = versions.length ? "" : `<p class="hint">No saved versions yet.</p>`;
+    versions.forEach((v, i) => {
+      const d = document.createElement("div");
+      d.className = "ver" + (previewing?.id === v.id ? " on" : "");
+      const head = `<span class="when">${esc(fmt(v.savedAt))}${i === 0 ? " · latest" : ""}</span>`;
+      const note = () => (v.note ? `<span class="note">${esc(v.note)}</span>` : "");
+      const idle = () => {
+        d.innerHTML = head + note() + `<span class="acts"><button class="btn" type="button" data-v="prev">Preview</button><button class="btn" type="button" data-v="ren">Rename</button><button class="btn danger" type="button" data-v="del">Delete</button></span>`;
+        d.querySelector('[data-v="prev"]').onclick = () => { harvest(); previewing = v; render(); syncBar(); renderVersions(); scrollTo({ top: 0, behavior: "smooth" }); };
+        d.querySelector('[data-v="ren"]').onclick = () => {
+          d.innerHTML = head + `<input maxlength="80" value="${esc(v.note || "")}" placeholder="Name this version"><span class="acts"><button class="btn primary" type="button" data-v="ok">Save name</button><button class="btn" type="button" data-v="no">Cancel</button></span>`;
+          const inp = d.querySelector("input"); inp.focus(); inp.select();
+          const ok = async () => { try { await db.doc("versions/" + v.id).update({ note: inp.value.trim() }); toast("Version renamed"); } catch { toast("Couldn't rename it. Try again."); idle(); } };
+          d.querySelector('[data-v="ok"]').onclick = ok;
+          d.querySelector('[data-v="no"]').onclick = idle;
+          inp.onkeydown = (e) => { if (e.key === "Enter") ok(); if (e.key === "Escape") idle(); };
+        };
+        d.querySelector('[data-v="del"]').onclick = () => {
+          d.innerHTML = head + note() + `<span class="confirm">Delete this version for good?</span><span class="acts"><button class="btn danger" type="button" data-v="yes">Delete</button><button class="btn" type="button" data-v="no">Keep</button></span>`;
+          d.querySelector('[data-v="no"]').onclick = idle;
+          d.querySelector('[data-v="yes"]').onclick = async () => {
+            try { await db.doc("versions/" + v.id).delete(); if (previewing?.id === v.id) { previewing = null; render(); syncBar(); } toast("Version deleted"); }
+            catch { toast("Couldn't delete it. Try again."); idle(); }
+          };
+        };
+      };
+      idle();
+      list.append(d);
+    });
+  }
+
+  // ---------- AI assistant (Claude Haiku 5.5) ----------
+  // On claude.ai it runs on the owner's own Claude account. A self-hosted copy
+  // sends the same request to /api/resume-assist, which holds the Anthropic
+  // API key on the server and checks the editing password there.
+  const MODEL = "claude-haiku-5-5";
+  const ai = {
+    available: () => !!sample || ai.server,
+    server: !window.claude?.use && location.protocol.startsWith("http"),
+    password: null,
+    async ask(input, { json = false, onText, signal } = {}) {
+      if (sample) {
+        const o = { model: MODEL, modelTier: "quick", effort: "low", cache: false, signal, onText };
+        return json ? sample.json(input, o) : (await sample(input, o)).text;
+      }
+      const r = await fetch("/api/resume-assist", { method: "POST", signal, headers: { "content-type": "application/json" }, body: JSON.stringify({ input, json, password: ai.password }) });
+      if (r.status === 401) throw { code: "not_granted" };
+      if (!r.ok) throw { code: r.status === 429 ? "rate_limited" : r.status === 422 ? "refused" : "upstream_error" };
+      const d = await r.json();
+      onText?.({ text: d.text, delta: d.text });
+      return json ? d.json : d.text;
+    },
+  };
+  const resumeText = () => {
+    const d = state; if (!d) return "";
+    const out = [d.name, d.contact.join(" | ")];
+    d.sections.forEach((s) => { out.push("", s.title.toUpperCase()); s.items.forEach((it) => { if (it.title || it.right) out.push(`${it.title}${it.right ? " (" + it.right + ")" : ""}`); if (it.subtitle) out.push(it.subtitle); it.bullets.forEach((b) => out.push("- " + plain(b))); }); });
+    return out.join("\n").slice(0, 20000);
+  };
+  const RULES = `You are a résumé writing assistant helping Shaun Lim, a Business Analytics student at NUS, improve his own résumé.
+Rules:
+- Keep every claim true to what he wrote. Never invent numbers, names, tools or results. Where a number would make a point stronger, write a placeholder such as [X%] or [N users] for him to fill in.
+- Match the résumé's British spelling and its terse, past-tense bullet style.
+- Be direct and specific. No filler, no clichés such as "results-driven", "passionate", "leverage" or "spearheaded".`;
+  function syncAiTarget() {
+    const it = state?.sections[sel.si]?.items[sel.ii];
+    const b = it && sel.bi >= 0 ? plain(it.bullets[sel.bi]) : "";
+    $("ai-target").innerHTML = b ? `<b>Working on this bullet</b><br><q>${esc(b.slice(0, 220))}${b.length > 220 ? "…" : ""}</q>` : "Click a bullet on the sheet, then pick an action. Or ask anything below.";
+    document.querySelectorAll("#ai-quick button").forEach((x) => (x.disabled = !b || busy));
+  }
+  let busy = false, ctl = null;
+  const chat = $("chat");
+  const turns = [];
+  function bubble(cls, text) { const m = document.createElement("div"); m.className = "msg " + cls; m.textContent = text; chat.append(m); m.scrollIntoView({ block: "nearest" }); return m; }
+  function aiError(e) {
+    return ({ not_granted: "Claude isn't allowed for this page. Allow it from the page's permission prompt to use AI help.", rate_limited: "Claude is busy or you've hit a usage limit. Try again in a moment.", refused: "Claude couldn't help with that one. Try rewording it.", invalid_json: "The suggestions came back garbled. Try again.", sampling_disabled: "Claude isn't available on this account.", session_expired: "Sign in again to use AI help." })[e?.code] || "Something went wrong reaching Claude. Try again.";
+  }
+  function setBusy(b) { busy = b; $("ai-send").textContent = b ? "Stop" : "Send"; syncAiTarget(); }
+  const GOALS = {
+    improve: "Make it clearer and more compelling for a recruiter skimming in a few seconds.",
+    shorter: "Make it noticeably shorter while keeping the key facts. One line if possible.",
+    verbs: "Open with a stronger, specific action verb and cut weak phrasing.",
+    impact: "Bring out the outcome and impact. Use a placeholder like [X%] wherever a number is missing.",
+    grammar: "Fix grammar, spelling and punctuation only. Change as little as possible.",
+  };
+  document.querySelectorAll("#ai-quick button").forEach((btn) => btn.onclick = async () => {
+    const { si, ii, bi } = sel;
+    const it = state?.sections[si]?.items[ii];
+    if (!it || bi < 0 || busy) return;
+    commit();
+    const original = plain(it.bullets[bi]);
+    bubble("me", `${btn.textContent}: “${original.slice(0, 120)}${original.length > 120 ? "…" : ""}”`);
+    const wait = bubble("ai", "Thinking…");
+    setBusy(true); ctl = new AbortController();
+    const prompt = `${RULES}
+
+Rewrite one bullet from the résumé below. Goal: ${GOALS[btn.dataset.ai]}
+It sits under "${it.title || state.sections[si].title}".
+${btn.dataset.ai === "grammar" ? "Give one option." : "Give three distinct options."} Each is one sentence, under 32 words. You may wrap up to three key words in **double asterisks** to bold them.
+Reply with only JSON: {"options": ["..."], "note": "one short sentence on what you changed"}
+
+Résumé, for context:
+${resumeText()}
+
+The bullet:
+${original}`;
+    try {
+      const res = await ai.ask(prompt, { json: true, signal: ctl.signal });
+      const opts = (Array.isArray(res?.options) ? res.options : []).map(String).filter(Boolean).slice(0, 3);
+      if (!opts.length) throw { code: "invalid_json" };
+      wait.textContent = String(res.note || "Here are some options.");
+      opts.forEach((o) => {
+        const card = document.createElement("div");
+        card.className = "opt";
+        const body = document.createElement("div"); body.innerHTML = fromAI(o);
+        const row = document.createElement("div"); row.className = "row";
+        row.innerHTML = `<button class="btn primary" type="button">Use this</button><button class="btn" type="button">Copy</button>`;
+        row.children[0].onclick = () => {
+          const target = state.sections[si]?.items[ii];
+          if (!target || target.bullets[bi] == null) { toast("That bullet has moved. Click it again."); return; }
+          commit(); target.bullets[bi] = fromAI(o); commit(); render(); setDirty(true); toast("Bullet updated. Undo with ⌘Z.");
+        };
+        row.children[1].onclick = () => navigator.clipboard.writeText(body.textContent).then(() => toast("Copied"), () => toast("Couldn't copy. Select the text instead."));
+        card.append(body, row);
+        chat.append(card);
+      });
+      chat.lastElementChild.scrollIntoView({ block: "nearest" });
+    } catch (e) {
+      if (e?.code === "cancelled") wait.textContent = "Stopped.";
+      else { wait.textContent = aiError(e); wait.classList.add("err"); }
+    } finally { setBusy(false); }
+  });
+  $("ai-form").onsubmit = async (e) => {
+    e.preventDefault();
+    if (busy) { ctl?.abort(); return; }
+    const q = $("ai-in").value.trim();
+    if (!q) return;
+    commit();
+    $("ai-in").value = "";
+    bubble("me", q);
+    const out = bubble("ai", "Thinking…");
+    setBusy(true); ctl = new AbortController();
+    const it = state?.sections[sel.si]?.items[sel.ii];
+    const focus = it && sel.bi >= 0 ? `\nThe bullet Shaun has selected: ${plain(it.bullets[sel.bi])}` : "";
+    turns.push({ role: "user", content: q });
+    const intro = { role: "user", content: `${RULES}\n- If he pastes a job description, say which parts of his résumé match it best and give concrete rewording for bullets, quoting the bullet you mean.\n- Keep answers short: plain text, short paragraphs or "- " lists, no headings.\n\nHis current résumé:\n${resumeText()}${focus}` };
+    try {
+      const text = await ai.ask([intro, ...turns.slice(-12)], { signal: ctl.signal, onText: ({ text }) => { out.textContent = text; } });
+      out.textContent = text;
+      turns.push({ role: "assistant", content: text });
+    } catch (err) {
+      turns.pop();
+      if (err?.code === "cancelled") out.textContent = err.text || "Stopped.";
+      else { out.textContent = (err?.text ? err.text + "\n\n" : "") + aiError(err); out.classList.add("err"); }
+    } finally { setBusy(false); }
+  };
+  $("ai-in").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("ai-form").requestSubmit(); } });
+
+  // ---------- PDF: real text, laid out like the original ----------
+  function runsOf(html) {
+    const t = document.createElement("template"); t.innerHTML = clean(html);
+    const runs = [];
+    const walk = (n, f) => { for (const c of n.childNodes) {
+      if (c.nodeType === 3) runs.push({ t: c.textContent, ...f });
+      else if (c.nodeType === 1) walk(c, { ...f, b: f.b || c.tagName === "B", i: f.i || c.tagName === "I", u: f.u || c.tagName === "U", href: c.tagName === "A" ? c.getAttribute("href") : f.href });
+    } };
+    walk(t.content, {});
+    return runs;
+  }
+  $("b-pdf").onclick = async () => {
+    if (editing && !previewing) harvest();
+    const doc = previewing ? previewing.doc : state;
+    if (!doc || !window.jspdf) return;
+    const pdf = new window.jspdf.jsPDF({ unit: "pt", format: "letter" });
+    const W = 612, H = 792, M = 40, X1 = W - M, LH = 12.4;
+    let y = M + 16;
+    const style = (r) => (r.b && r.i ? "bolditalic" : r.b ? "bold" : r.i ? "italic" : "normal");
+    const font = (st, size) => { pdf.setFont("helvetica", st); pdf.setFontSize(size); };
+    const room = (h) => { if (y + h > H - M) { pdf.addPage(); y = M + 10; } };
+    font("bold", 20); pdf.text((doc.name || "").toUpperCase(), W / 2, y, { align: "center" }); y += 15;
+    font("normal", 10); pdf.text((doc.contact || []).filter(Boolean).join("      "), W / 2, y, { align: "center" }); y += 8;
+    const rich = (html, x, width, size = 10) => {
+      const words = [];
+      runsOf(html).forEach((r) => r.t.split(/(\s+)/).forEach((w) => { if (w && !/^\s+$/.test(w)) words.push({ ...r, w }); else if (w && words.length) words[words.length - 1].sp = true; }));
+      let line = [], lw = 0;
+      const flush = () => {
+        room(LH);
+        let cx = x;
+        line.forEach((t, k) => {
+          font(style(t), size);
+          const ww = pdf.getTextWidth(t.w);
+          pdf.text(t.w, cx, y);
+          const gap = k < line.length - 1 && t.sp !== false ? pdf.getTextWidth(" ") : 0;
+          if (t.u) { pdf.setLineWidth(0.5); pdf.line(cx, y + 1.3, cx + ww, y + 1.3); }
+          if (t.href) pdf.link(cx, y - size + 1, ww, size + 2, { url: t.href });
+          cx += ww + gap;
+        });
+        y += LH; line = []; lw = 0;
+      };
+      words.forEach((t) => {
+        font(style(t), size);
+        const ww = pdf.getTextWidth(t.w), sp = pdf.getTextWidth(" ");
+        if (line.length && lw + ww > width) flush();
+        line.push(t); lw += ww + sp;
+      });
+      if (line.length) flush();
+    };
+    doc.sections.forEach((sec) => {
+      y += 10; room(30);
+      font("bold", 11.5); pdf.text((sec.title || "").toUpperCase(), M, y); y += 3.5;
+      pdf.setLineWidth(1.4); pdf.line(M, y, X1, y);
+      pdf.setLineWidth(0.5); pdf.line(M, y + 2.6, X1, y + 2.6);
+      y += 13;
+      sec.items.forEach((it, ii) => {
+        if (ii) y += 4;
+        if (it.title || it.right) {
+          room(LH * 2);
+          font("bold", 10);
+          const rw = it.right ? pdf.getTextWidth(it.right) : 0;
+          const lines = pdf.splitTextToSize(it.title || "", X1 - M - rw - 18);
+          if (it.right) pdf.text(it.right, X1, y, { align: "right" });
+          lines.forEach((l) => { room(LH); pdf.text(l, M, y); y += LH; });
+        }
+        if (it.subtitle) { font("bold", 10); pdf.splitTextToSize(it.subtitle, X1 - M).forEach((l) => { room(LH); pdf.text(l, M, y); y += LH; }); }
+        it.bullets.filter((b) => plain(b).trim()).forEach((b) => { room(LH); font("normal", 10); pdf.text("•", M + 9, y); rich(b, M + 22, X1 - M - 22); });
+      });
+    });
+    const name = (doc.name || "Resume").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "_") + "_Resume.pdf";
+    try {
+      if (!downloads) { pdf.save(name); return; } // a plain website: let the browser download it
+      await downloads.save({ filename: name, data: pdf.output("blob") });
+      toast("PDF saved");
+    } catch (err) { if (err?.code !== "declined") toast("Downloads aren't available in this view."); }
+  };
+
+  // ---------- boot ----------
+  // Signed-out visitors can't read the database, so they get resume.json,
+  // a read-only copy published alongside the page.
+  async function showPublicCopy() {
+    try {
+      const r = await fetch("resume.json", { cache: "no-store" });
+      if (!r.ok) throw 0;
+      const data = await r.json();
+      saved = clone({ name: data.name, contact: data.contact || [], sections: data.sections || [] });
+      state = clone(saved);
+      render();
+    } catch { paper.innerHTML = `<p class="cv-empty">The résumé couldn't be loaded.</p>`; }
+    syncBar();
+    $("b-pdf").disabled = !state || !window.jspdf;
+  }
+  async function boot() {
+    const [d, u, dl, s] = await Promise.all([claude.use("db"), claude.use("user"), claude.use("downloads"), claude.use("sample")]);
+    db = d; user = u; downloads = dl; sample = s;
+    isOwner = (await user?.isOwner()) ?? false;
+    if (!db) { await showPublicCopy(); return; }
+    const slow = setTimeout(() => { if (!saved) paper.innerHTML = `<p class="cv-empty">Can't reach the résumé yet. It will appear when the connection returns.</p>`; }, 10000);
+    db.doc("resume/current").onSnapshot((snap) => {
+      if (!snap.metadata.fromCache) clearTimeout(slow);
+      const data = snap.exists ? snap.data() : null;
+      saved = data ? clone({ name: data.name, contact: data.contact || [], sections: data.sections || [] }) : null;
+      if (!editing) { state = saved ? clone(saved) : null; render(); }
+      syncBar();
+    }, () => { clearTimeout(slow); paper.innerHTML = `<p class="cv-empty">The résumé couldn't be loaded.</p>`; });
+    if (isOwner) db.collection("versions").orderBy("savedAt", "desc").limit(200).onSnapshot((snap) => { versions = snap.docs.map((x) => ({ id: x.id, ...x.data() })); renderVersions(); }, () => {});
+    syncBar();
+  }
+  if (VIEW_ONLY) {
+    // Hidden for good (syncBar still toggles .hidden, so inline display wins) and disarmed.
+    ["b-edit", "b-save", "b-discard", "b-history", "b-ai", "b-change-pw"].forEach((id) => { const b = $(id); if (b) { b.style.display = "none"; b.onclick = null; } });
+    showPublicCopy();
+  } else if (window.claude?.use) boot();
+  else showPublicCopy();
+  addEventListener("load", () => { $("b-pdf").disabled = !(state || previewing) || !window.jspdf; });
+})();
+</script>
+</html>
