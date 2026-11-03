@@ -1215,22 +1215,23 @@ footer {
       <article class="stack-card" style="--i:2">
         <div class="card has-trailer" style="--tint: rgba(185, 163, 255, 0.16)">
           <template class="writeup">
-            <section><h4>What I built</h4><ul><li>A recreation of an enterprise AI knowledge hub I worked on during my internship.</li><li>Rebuilt from scratch with fictional data, so it shares no company material.</li><li>Searchable product discovery, a toolkit people can scan in seconds, and editorial story cards.</li></ul></section>
+            <section><h4>What I built</h4><ul><li>A working recreation of an enterprise AI knowledge hub I worked on during my internship, rebuilt from scratch with fictional data.</li><li>Product catalogue and detail pages, a blog with likes, saves, threaded comments and per-post reading metrics, a resource library, and an activity feed.</li><li>An admin side you can try live: a page editor with rich text and drag-and-drop, a post and product editor, and an analytics dashboard with CSV export.</li></ul></section>
             <section><h4>Why I built it</h4><ul><li>The real platform is confidential, but the product and design thinking behind it is work I'm proud of.</li><li>Rebuilding it independently lets me show that thinking openly.</li></ul></section>
             <section><h4>What I learned</h4><ul><li>Organising dozens of AI tools so people find the right one fast.</li><li>Building responsive card systems that hold up from phone to widescreen.</li><li>Accessible front-end basics: landmarks, labels and focusable controls in Next.js.</li></ul></section>
           </template>
           <div class="card-text">
             <div class="meta"><span>Website</span><span>Next.js</span><span>TypeScript</span></div>
             <h3>AI Hub</h3>
-            <p>A recreation of an enterprise AI knowledge hub I worked on, rebuilt from scratch with fictional data so I can show it. Searchable product discovery, editorial story cards, and a layout that holds up from phone to widescreen.</p>
+            <p>A working recreation of an enterprise AI knowledge hub I worked on, rebuilt from scratch with fictional data so I can show it. Browse products, read and react to posts, then switch on admin view to edit pages and watch the metrics update.</p>
             <p class="learned"><b>What I learned:</b> organising dozens of AI tools so people find the right one in a few seconds.</p>
             <div class="built"><span>Built with</span><ul><li>Next.js 15</li><li>React 19</li><li>TypeScript</li><li>CSS</li></ul></div>
             <div class="card-actions">
-              <a class="btn primary magnetic" href="https://github.com/privateducksheep/ai-hub-portfolio-showcase" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+              <a class="btn primary magnetic" href="https://privateducksheep.github.io/ai-hub/" target="_blank" rel="noopener">Try it live <span class="arrow">→</span></a>
+              <a class="btn ghost magnetic" href="https://github.com/privateducksheep/ai-hub-portfolio-showcase" target="_blank" rel="noopener">Source code</a>
             </div>
           </div>
           <button class="card-visual media" type="button" data-tilt data-project="hub" aria-label="Open AI Hub">
-            <img src="media/hub-poster.jpg" alt="" loading="lazy">
+            <img src="media/hubn-poster.jpg" alt="" loading="lazy">
             <video class="hover-vid" muted playsinline loop preload="none" aria-hidden="true"></video>
             <span class="hover-bar" aria-hidden="true"></span>
           </button>
@@ -1533,7 +1534,7 @@ footer {
   const G = "media/gallery/";
   const PROJECTS = {
     pet: { trailer: "media/pet-f3.mp4", hevc: "media/pet-f3-hevc.mp4", preview: "media/preview/pet-f3.mp4", shots: [1, 2, 3, 4, 5, 6, 7].map(i => `${G}peti-${i}.jpg`) },
-    hub: { trailer: "media/hub.mp4", preview: "media/preview/hub.mp4", shots: ["hub-top", "hub-mid", "hub-low"].map(f => `${G}${f}.jpg`) },
+    hub: { trailer: null, preview: null, poster: "media/hubn-poster.jpg", shots: ["home", "products", "post", "blog", "resources", "dashboard", "editor", "admin"].map(f => `${G}hubn-${f}.jpg`) },
     fft: { trailer: "media/fft.mp4", preview: "media/preview/fft.mp4", shots: ["fft-top", "fft-wave", "fft-spec"].map(f => `${G}${f}.jpg`) },
     freddy: { trailer: "media/freddy.mp4", preview: "media/preview/freddy.mp4", shots: ["fz-word_cloud", "fz-review_length_vs_rating", "fz-confusion_OldPrompt_multiclass", "fz-rating_distribution"].map(f => `${G}${f}.jpg`) },
     swipe: { trailer: null, preview: null, shots: ["ss-bg", "ss-town", "ss-ruins", "ss-faces", "ss-menu"].map(f => `${G}${f}.jpg`) },
@@ -1617,7 +1618,7 @@ footer {
     const clone = text.cloneNode(true);
     clone.querySelector("h3")?.remove();
     clone.querySelector(".learned")?.remove();
-    side.innerHTML = `<img class="vp-cap" src="media/${key}-poster.jpg" alt="">`;
+    side.innerHTML = `<img class="vp-cap" src="${p.poster || `media/${key}-poster.jpg`}" alt="">`;
     side.append(...clone.childNodes);
     const wu = card.querySelector("template.writeup");
     document.getElementById("vp-write").replaceChildren(...(wu ? wu.content.cloneNode(true).childNodes : []));
