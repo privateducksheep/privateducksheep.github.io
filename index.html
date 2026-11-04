@@ -1164,23 +1164,24 @@ footer {
       <article class="stack-card" style="--i:0">
         <div class="card has-trailer" style="--tint: rgba(255, 154, 166, 0.16)">
           <template class="writeup">
-            <section><h4>What I built</h4><ul><li>A narrative survival game for Windows and Mac, built in Unity for NUS Orbital.</li><li>Each card is a person or event, from a desperate mother to a wandering trader. Drag it left or right to decide.</li><li>Every choice moves five resources: food, water, ammo, morale and medicine. Let one hit zero and the run ends.</li><li>Some cards only appear after others, so each run tells its own story.</li></ul></section>
+            <section><h4>What I built</h4><ul><li>A narrative survival game built in Unity for NUS Orbital. It plays in the browser on itch.io and as a download for Windows and Mac.</li><li>Each card is a person or event, from a desperate mother to a wandering trader. Drag it left or right to decide.</li><li>Every choice moves five resources: food, water, ammo, morale and medicine. Let one hit zero and the run ends.</li><li>Some cards only appear after others, so each run tells its own story.</li></ul></section>
             <section><h4>Why I built it</h4><ul><li>Orbital was a chance to take one idea all the way to a downloadable build.</li><li>A swipe-to-choose game is easy for anyone to pick up.</li><li>Every choice has a cost you can see straight away, which keeps each decision tense.</li></ul></section>
-            <section><h4>What I learned</h4><ul><li>Structuring a game's code with the Factory and Composite patterns, so new cards and events slot in without rewrites.</li><li>Wiring an Audio Mixer with settings that persist between sessions.</li><li>Managing a Unity project through Unity DevOps, and exporting downloadable Windows and Mac builds.</li></ul></section>
+            <section><h4>What I learned</h4><ul><li>Structuring a game's code with the Factory and Composite patterns, so new cards and events slot in without rewrites.</li><li>Wiring an Audio Mixer with settings that persist between sessions.</li><li>Managing a Unity project through Unity DevOps, and exporting builds for the web, Windows and Mac.</li></ul></section>
           </template>
           <div class="card-text">
-            <div class="meta"><span>Game</span><span>Unity</span><span>Orbital</span><span class="live">v1.0.2</span></div>
+            <div class="meta"><span>Game</span><span>Unity</span><span>Orbital</span><span class="live">Play in browser</span></div>
             <h3>Swipe Survival</h3>
             <p>A zombie survival game played one card at a time. Drag each card left or right to decide, then live with what it does to your food, water, ammo, morale and medicine. Let any of them hit zero and the run ends. A new day starts every five choices.</p>
-            <p class="learned"><b>What I learned:</b> taking a Unity game from card logic to downloadable Windows and Mac builds.</p>
+            <p class="learned"><b>What I learned:</b> taking a Unity game from card logic to builds that run in the browser, on Windows and on Mac.</p>
             <div class="built"><span>Built with</span><ul><li>Unity 6</li><li>C#</li><li>TextMesh Pro</li><li>Unity Audio Mixer</li><li>Unity DevOps</li></ul></div>
             <div class="card-actions">
-              <a class="btn primary magnetic" href="https://github.com/privateducksheep/SwipeSurvival/releases" target="_blank" rel="noopener">Download for Mac / PC <span class="arrow">→</span></a>
+              <a class="btn primary magnetic" href="https://privateducksheep.itch.io/swipesurvival" target="_blank" rel="noopener">Play on itch.io <span class="arrow">→</span></a>
+              <a class="btn ghost magnetic" href="https://github.com/privateducksheep/SwipeSurvival/releases" target="_blank" rel="noopener">Download for Mac / PC</a>
               <a class="btn ghost magnetic" href="https://github.com/privateducksheep/SwipeSurvival" target="_blank" rel="noopener">Source code</a>
             </div>
           </div>
           <button class="card-visual media" type="button" data-tilt data-project="swipe" aria-label="Open Swipe Survival">
-            <img src="media/swipe-poster.jpg" alt="" loading="lazy">
+            <img src="media/swipe-t1-poster.jpg" alt="" loading="lazy">
             <video class="hover-vid" muted playsinline loop preload="none" aria-hidden="true"></video>
             <span class="hover-bar" aria-hidden="true"></span>
           </button>
@@ -1537,7 +1538,7 @@ footer {
     hub: { trailer: null, preview: null, poster: "media/hubn-poster.jpg", shots: ["home", "products", "post", "blog", "resources", "dashboard", "editor", "admin"].map(f => `${G}hubn-${f}.jpg`) },
     fft: { trailer: "media/fft.mp4", preview: "media/preview/fft.mp4", shots: ["fft-top", "fft-wave", "fft-spec"].map(f => `${G}${f}.jpg`) },
     freddy: { trailer: "media/freddy.mp4", preview: "media/preview/freddy.mp4", shots: ["fz-word_cloud", "fz-review_length_vs_rating", "fz-confusion_OldPrompt_multiclass", "fz-rating_distribution"].map(f => `${G}${f}.jpg`) },
-    swipe: { trailer: null, preview: null, shots: ["ss-bg", "ss-town", "ss-ruins", "ss-faces", "ss-menu"].map(f => `${G}${f}.jpg`) },
+    swipe: { trailer: "media/swipe-t1.mp4", hevc: "media/swipe-t1-hevc.mp4", preview: "media/preview/swipe-t1.mp4", poster: "media/swipe-t1-poster.jpg", shots: ["ssn-menu", "ssn-alina", "ssn-map", "ssn-elder", "ssn-zombie", "ssn-died"].map(f => `${G}${f}.jpg`) },
   };
 
   // Netflix-style hover: rest for 1 s, the preview plays; leave and it stops
@@ -1612,7 +1613,7 @@ footer {
     items = [];
     // the sharper HEVC copy where this browser plays it, H.264 everywhere else
     const hevcOk = p.hevc && document.createElement("video").canPlayType('video/mp4; codecs="hvc1"');
-    if (p.trailer) items.push({ type: "video", src: hevcOk ? p.hevc : p.trailer, poster: `media/${key}-poster.jpg`, thumb: `media/${key}-poster.jpg` });
+    if (p.trailer) items.push({ type: "video", src: hevcOk ? p.hevc : p.trailer, poster: p.poster || `media/${key}-poster.jpg`, thumb: p.poster || `media/${key}-poster.jpg` });
     p.shots.forEach((src, n) => items.push({ type: "img", src, thumb: src, alt: `${text.querySelector("h3").textContent} screenshot ${n + 1}` }));
     strip.innerHTML = items.map((it, k) => `<button class="vp-thumb" type="button" role="tab" data-k="${k}" aria-label="${it.type === "video" ? "Trailer" : "Screenshot " + k}"><img src="${it.thumb}" alt="" loading="lazy">${it.type === "video" ? playIcon : ""}</button>`).join("");
     const clone = text.cloneNode(true);
