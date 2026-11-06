@@ -362,33 +362,75 @@ h2 {
 .field-chip:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.08); border-color: color-mix(in srgb, var(--c) 55%, transparent); }
 .field-chip:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; }
 
-/* ---------- about: dated path ---------- */
+/* ---------- timeline: years in a row, items above and below ---------- */
 .about { padding-block: clamp(70px, 12vh, 130px) 20px; }
-.path-wrap { position: relative; margin-inline: calc(-1 * var(--gutter, 0px)); }
-.path {
-  list-style: none; margin: 0; padding: 26px 2px 18px; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr);
-  gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; position: relative;
+.tl-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 26px; flex-wrap: wrap; }
+.tl-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.tl-nav { display: flex; gap: 8px; }
+.tl-nav[hidden] { display: none; }
+.tl-nav button { width: 40px; height: 40px; border-radius: 50%; font: inherit; font-size: 16px; color: var(--fg); cursor: pointer; background: rgba(255,255,255,.05); border: 1px solid var(--line-strong); transition: background .3s, opacity .3s; }
+.tl-nav button:hover { background: rgba(255,255,255,.12); }
+.tl-nav button:disabled { opacity: .3; cursor: default; }
+.tl-nav button:focus-visible { outline: 2px solid var(--lilac); outline-offset: 2px; }
+.tl-frame { position: relative; }
+.tl-frame::before, .tl-frame::after { content: ""; position: absolute; top: 0; bottom: 10px; width: 48px; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .3s; }
+.tl-frame::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.tl-frame::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
+.tl-frame.more-l::before, .tl-frame.more-r::after { opacity: 1; }
+.tl-legend span { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.tl-legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+.tl-scroll { overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scroll-behavior: smooth; }
+.tl {
+  display: grid; grid-template-columns: repeat(var(--cols), minmax(104px, 1fr)); grid-template-rows: auto 64px auto;
+  column-gap: 12px; min-width: calc(var(--cols) * 116px); position: relative;
 }
-.path li {
-  position: relative; scroll-snap-align: start; padding: 22px 20px 20px; border-radius: 22px;
-  background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px;
+.tl-axis { grid-row: 2; grid-column: 1 / -1; align-self: center; height: 2px; background: linear-gradient(90deg, var(--sun), var(--coral) 50%, var(--lilac)); opacity: 0.55; }
+.tl-div { grid-row: 1 / 4; border-left: 1px dashed var(--line-strong); margin-left: -6px; pointer-events: none; }
+.tl-label {
+  grid-row: 2; align-self: center; justify-self: start; position: relative; z-index: 1;
+  display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 14px; border-radius: 999px;
+  background: var(--bg); border: 1px solid var(--line-strong); white-space: nowrap;
 }
-.path li::before { /* the dot on the line */
-  content: ""; position: absolute; top: -21px; left: 22px; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--fg); box-shadow: 0 0 0 4px var(--bg);
+.tl-label b { font-size: 1.35rem; letter-spacing: -0.03em; }
+.tl-label small { font-size: 12px; color: var(--muted); }
+.tl-item {
+  --c: var(--fg); position: relative; display: flex; flex-direction: column; gap: 6px;
+  padding: 16px 16px 16px; border-radius: 18px; background: var(--surface);
+  border: 1px solid var(--line); border-top: 3px solid var(--c);
 }
-.path li::after { content: ""; position: absolute; top: -16px; left: 0; right: -14px; height: 1px; background: linear-gradient(90deg, var(--sun), var(--coral) 50%, var(--lilac)); opacity: 0.5; z-index: -1; }
-.path li:last-child::after { right: 0; }
-.path li::before { z-index: 1; }
-.path li.now::before { background: var(--coral); box-shadow: 0 0 0 4px var(--bg), 0 0 16px var(--coral); }
-.path time { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-.path h3 { margin: 0; font-size: 1.2rem; letter-spacing: -0.02em; }
-.path p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.tl-item.up { grid-row: 1; align-self: end; margin-bottom: 18px; }
+.tl-item.down { grid-row: 3; align-self: start; margin-top: 18px; }
+.tl-item::after { /* stalk to the axis */
+  content: ""; position: absolute; left: 22px; width: 2px; height: 32px; background: color-mix(in srgb, var(--c) 70%, transparent);
+}
+.tl-item::before { /* dot on the axis */
+  content: ""; position: absolute; left: 17px; width: 12px; height: 12px; border-radius: 50%; background: var(--c);
+  box-shadow: 0 0 0 4px var(--bg), 0 0 14px color-mix(in srgb, var(--c) 60%, transparent);
+}
+.tl-item.up::after { top: 100%; }
+.tl-item.up::before { top: calc(100% + 44px); }
+.tl-item.down::after { bottom: 100%; height: 34px; }
+.tl-item.down::before { bottom: calc(100% + 42px); }
+.tl-item time { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.tl-item h3 { margin: 0; font-size: 1.02rem; letter-spacing: -0.015em; line-height: 1.25; }
+.tl-item p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.tl-cat { font-size: 11px; font-weight: 600; color: var(--c); }
+@media (max-width: 700px) {
+  .tl { display: flex; flex-direction: column; min-width: 0; gap: 12px; padding-left: 28px; position: relative; }
+  .tl::before { content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(180deg, var(--sun), var(--coral) 50%, var(--lilac)); opacity: .55; }
+  .tl-axis, .tl-div { display: none; }
+  .tl-label { margin: 14px 0 2px -28px; align-self: flex-start; }
+  .tl-label:first-of-type { margin-top: 0; }
+  .tl-item.up, .tl-item.down { margin: 0; align-self: stretch; }
+  .tl-item::after { display: none; }
+  .tl-item.up::before, .tl-item.down::before { top: 20px; bottom: auto; left: -26px; }
+  .tl-scroll { overflow: visible; }
+}
 .path-go {
-  margin-top: auto; align-self: flex-start; font: inherit; font-size: 13px; font-weight: 600; color: var(--fg); cursor: pointer;
-  background: none; border: 0; padding: 6px 0 0;
+  align-self: flex-start; font: inherit; font-size: 13px; font-weight: 600; color: var(--fg); cursor: pointer;
+  background: none; border: 0; padding: 2px 0 0;
 }
-.path-go:hover { color: var(--coral); }
+.path-go:hover { color: var(--c, var(--coral)); }
 .path-go:focus-visible { outline: 2px solid var(--lilac); outline-offset: 2px; border-radius: 4px; }
 
 /* ---------- field pages ---------- */
@@ -399,7 +441,6 @@ h2 {
 }
 .field-page.open { opacity: 1; }
 .field-page:focus { outline: none; }
-.path-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 60px; pointer-events: none; background: linear-gradient(90deg, transparent, var(--bg)); }
 .fp-bar {
   position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
   padding: 14px max(16px, env(safe-area-inset-left, 0px)); background: rgba(12, 12, 13, 0.78);
@@ -1295,7 +1336,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
             <section><h4>What I learned</h4><p>I learned how to explain goals, tools and rules to people who have never touched an AI agent, without burying them in jargon. Designing the levels taught me to give each one a single idea, then let players watch their pet get it wrong and work out the fix themselves. On the build side, I put together a 3D world in Three.js with a Node server that plans every move your pet makes.</p></section>
           </template>
           <div class="card-text">
-            <div class="meta"><span>Game</span><span>Three.js</span><span>Hackathon</span><span class="live">New</span></div>
+            <div class="meta"><span>Game</span><span>Three.js</span><span>Internship</span><span class="live">New</span></div>
             <h3 class="with-icon"><img class="proj-icon" src="media/neko.svg" alt="">Pet Agents</h3>
             <p>A game about how AI agents work. You can't steer your pet. You pack its harness with a goal, tools, rules and a plan, press go, and watch it plan and act on its own. Type the job in your own words and an AI model turns it into steps the pet can follow.</p>
             <p class="learned"><b>What I learned:</b> how to teach goals, tools and rules to people who have never used an AI agent.</p>
@@ -1519,18 +1560,8 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       <p class="eyebrow">Timeline</p>
       <h2>How I got here,<br><span class="grad">one project at a time.</span></h2>
     </div>
-    <div class="path-wrap reveal">
-      <ol class="path" id="path">
-        <li><time>Aug 2024</time><h3>Started at NUS</h3><p>BSc Business Analytics, specialising in machine learning and financial analytics.</p></li>
-        <li><time>Feb 2025</time><h3>NUS Datathon</h3><p>A random forest that finds a company's corporate parent, at 0.949 ROC-AUC.</p><button class="path-go" type="button" data-open="dt">See it →</button></li>
-        <li><time>Mar 2025</time><h3>Project Sa'Bai</h3><p>Joined as a backend developer on the patient system for free eye screenings in Cambodia.</p><button class="path-go" type="button" data-jump="p-sabai">See it →</button></li>
-        <li><time>Mar 2025</time><h3>House Head, CAPT</h3><p>Led a 14-person committee running welfare and events for over 100 residents.</p></li>
-        <li><time>May 2025</time><h3>Swipe Survival</h3><p>My first full game, built in Unity for NUS Orbital and released on itch.io.</p><button class="path-go" type="button" data-open="swipe">See it →</button></li>
-        <li><time>Aug 2025</time><h3>TikTok TechJam</h3><p>Led evaluation for an LLM that moderates Google reviews.</p><button class="path-go" type="button" data-open="freddy">See it →</button></li>
-        <li><time>Jul 2026</time><h3>AI@CPF intern</h3><p>Product management and AI performance: shipping features and writing an AI Skills evaluation framework. I rebuilt the platform from scratch as AI Hub so I can show it.</p><button class="path-go" type="button" data-open="hub">See AI Hub →</button></li>
-        <li class="now"><time>Oct 2026</time><h3>Cambridge Battlecode</h3><p>Our C++ bot climbed to 11th of 824 teams.</p><button class="path-go" type="button" data-open="bc">See it →</button></li>
-      </ol>
-    </div>
+    <div class="tl-top reveal"><div class="tl-legend" id="tl-legend"></div><div class="tl-nav"><button type="button" id="tl-prev" aria-label="Scroll timeline back">←</button><button type="button" id="tl-next" aria-label="Scroll timeline forward">→</button></div></div>
+    <div class="tl-frame reveal"><div class="tl-scroll" id="tl-scroll"><div class="tl" id="tl"></div></div></div>
   </section>
 
   <!-- TOOLBOX -->
@@ -1929,11 +1960,55 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     else leaveField(it.jump);
   });
   addEventListener("keydown", (e) => { if (e.key === "Escape" && !fieldPage.hidden && viewer.hidden) leaveField(null); });
-  // timeline buttons
-  document.querySelectorAll(".path-go").forEach(b => b.addEventListener("click", () => {
+  // ---------- timeline ----------
+  const CATS = { school: ["School", "#b9a3ff"], hack: ["Hackathons & competitions", "#ff7e8e"], intern: ["Internship", "#ffc176"], lead: ["Leadership & volunteering", "#7ee0b5"] };
+  const TIMELINE = [
+    { y: 2024, when: "Aug 2024", cat: "school", title: "Started at NUS", line: "BSc Business Analytics, specialising in machine learning and financial analytics." },
+    { y: 2025, when: "Feb 2025", cat: "hack", title: "NUS Datathon", line: "Random forest that finds corporate parents, 0.949 ROC-AUC.", open: "dt" },
+    { y: 2025, when: "Feb 2025", cat: "lead", title: "Dodgeball captain", line: "Captain of Computing and CAPT dodgeball. I run weekly training." },
+    { y: 2025, when: "Mar 2025", cat: "lead", title: "Project Sa'Bai", line: "Backend developer for free eye screenings in Cambodia.", jump: "p-sabai" },
+    { y: 2025, when: "Mar 2025", cat: "lead", title: "House Head, CAPT", line: "Led a 14-person committee for over 100 residents." },
+    { y: 2025, when: "May 2025", cat: "school", title: "Swipe Survival", line: "My first full game, built in Unity for NUS Orbital.", open: "swipe" },
+    { y: 2025, when: "Aug 2025", cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
+    { y: 2026, when: "2026", cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
+    { y: 2026, when: "Jul 2026", cat: "intern", title: "AI@CPF intern", line: "Product management and AI performance: features, specs and an AI Skills evaluation framework." },
+    { y: 2026, when: "At CPF", cat: "intern", title: "Pet Agents", line: "A 3D game that teaches how AI agents work.", open: "pet" },
+    { y: 2026, when: "At CPF", cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
+    { y: 2026, when: "Oct 2026", cat: "hack", title: "Cambridge Battlecode", line: "Our C++ bot climbed to 11th of 824 teams.", open: "bc" },
+  ];
+  document.getElementById("tl-legend").innerHTML = Object.values(CATS).map(([n, c]) => `<span style="--c:${c}"><i></i>${n}</span>`).join("");
+  const years = [...new Set(TIMELINE.map(t => t.y))];
+  const tl = document.getElementById("tl");
+  let col = 1, html = '<i class="tl-axis"></i>';
+  years.forEach((y, yi) => {
+    const list = TIMELINE.filter(t => t.y === y);
+    const n = list.length + 2;  // one slot for the year label, then items span two columns, staggered up and down
+    if (yi) html += `<i class="tl-div" style="grid-column:${col}"></i>`;
+    html += `<div class="tl-label" style="grid-column:${col} / span 2"><b>${y}</b><small>${list.length} ${list.length === 1 ? "thing" : "things"}</small></div>`;
+    list.forEach((t, i) => { const [cn, cc] = CATS[t.cat]; html += `<article class="tl-item ${i % 2 ? "down" : "up"}" style="--c:${cc}; grid-column:${col + 1 + i} / span 2">
+        <time>${t.when}</time><h3>${fesc(t.title)}</h3><p>${fesc(t.line)}</p><span class="tl-cat">${cn}</span>
+        ${t.open ? `<button class="path-go" type="button" data-open="${t.open}">See it →</button>` : t.jump ? `<button class="path-go" type="button" data-jump="${t.jump}">See it →</button>` : ""}
+      </article>`; });
+    col += n;
+  });
+  tl.style.setProperty("--cols", col - 1);
+  tl.innerHTML = html;
+  const tlScroll = document.getElementById("tl-scroll"), tlFrame = tlScroll.parentElement;
+  const tlPrev = document.getElementById("tl-prev"), tlNext = document.getElementById("tl-next");
+  function tlEdges() {
+    const max = tlScroll.scrollWidth - tlScroll.clientWidth - 2;
+    tlFrame.classList.toggle("more-l", tlScroll.scrollLeft > 2); tlFrame.classList.toggle("more-r", tlScroll.scrollLeft < max);
+    tlPrev.disabled = tlScroll.scrollLeft <= 2; tlNext.disabled = tlScroll.scrollLeft >= max;
+    document.querySelector(".tl-nav").hidden = max <= 0;
+  }
+  tlScroll.addEventListener("scroll", tlEdges, { passive: true }); addEventListener("resize", tlEdges); tlEdges();
+  tlPrev.addEventListener("click", () => tlScroll.scrollBy({ left: -tlScroll.clientWidth * 0.7 }));
+  tlNext.addEventListener("click", () => tlScroll.scrollBy({ left: tlScroll.clientWidth * 0.7 }));
+  tl.addEventListener("click", (e) => {
+    const b = e.target.closest(".path-go"); if (!b) return;
     if (b.dataset.open) { const card = document.querySelector(`[data-project="${b.dataset.open}"]`)?.closest(".card.has-trailer"); if (card) openViewer(card); }
     else { const t = document.getElementById(b.dataset.jump); t?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }
-  }));
+  });
   route();
   document.getElementById("viewer-close").addEventListener("click", closeViewer);
   viewer.addEventListener("click", e => { if (e.target === viewer) closeViewer(); });
