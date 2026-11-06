@@ -378,6 +378,36 @@ h2 {
 /* ---------- field picker ---------- */
 .fields { padding-block: clamp(50px, 9vh, 100px) 20px; scroll-margin-top: 70px; }
 .field-chips { display: flex; flex-direction: column; border-top: 1px solid var(--line-strong); }
+/* skill graph (desktop); the numbered list stays for small screens */
+.sg-wrap { display: none; border: 1px solid var(--line); border-radius: 26px; padding: 18px 22px 10px;
+  background: radial-gradient(60% 80% at 20% 50%, rgba(255,255,255,.025), transparent 70%), linear-gradient(180deg, rgba(255,255,255,.02), transparent), var(--surface);
+  background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px); background-size: 22px 22px; background-color: #121214; }
+.sg-meta { display: flex; justify-content: space-between; gap: 16px; font-size: 13px; color: var(--muted); padding: 2px 4px 6px; font-variant-numeric: tabular-nums; }
+.sg-meta #sg-readout { color: var(--fg); opacity: .75; transition: opacity .2s; }
+.sg { width: 100%; height: auto; display: block; overflow: visible; }
+.sg text { font-family: var(--font); fill: var(--fg); }
+.sg-edge { fill: none; stroke: var(--c); stroke-width: 1.4; stroke-opacity: .32; transition: stroke-opacity .3s, stroke-width .3s; }
+.sg-edge.root { stroke: rgba(255,255,255,.35); stroke-opacity: .5; }
+.js .sg-wrap .sg-edge { stroke-dasharray: var(--L); stroke-dashoffset: var(--L); }
+.js .sg-wrap.in .sg-edge { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s var(--ease) calc(var(--k, 0) * 40ms + 200ms), stroke-opacity .3s, stroke-width .3s; }
+.js .sg-wrap.drawn .sg-edge { stroke-dasharray: none; transition: stroke-opacity .3s, stroke-width .3s; }
+.sg-area rect { fill: #18181b; stroke: color-mix(in srgb, var(--c) 45%, transparent); stroke-width: 1.2; transition: fill .3s, stroke .3s; }
+.sg-area .nm { font-size: 17px; font-weight: 650; letter-spacing: -0.02em; }
+.sg-area .ct { font-size: 13px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.sg-area circle, .sg-proj circle.dot { fill: var(--c); }
+.sg-area, .sg-proj { cursor: pointer; outline: none; transition: opacity .3s; }
+.sg-proj .nm { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.sg-proj .kd { font-size: 12px; fill: var(--muted); }
+.sg-proj circle.ring { fill: none; stroke: rgba(255,255,255,.25); stroke-width: 1; transition: stroke .3s, r .3s; }
+.sg-root circle { fill: url(#sg-grad); }
+.sg-root text { font-size: 13px; font-weight: 800; fill: var(--bg); }
+.sg.tracing .sg-edge { stroke-opacity: .06; }
+.js .sg-wrap .sg.tracing .sg-edge.on { stroke-opacity: .95; stroke-width: 2.2; stroke-dasharray: 6 6; stroke-dashoffset: 0; animation: sgflow 1s linear infinite; }
+.sg.tracing .sg-area:not(.on), .sg.tracing .sg-proj:not(.on) { opacity: .28; }
+.sg-area.on rect, .sg-area:focus-visible rect { fill: color-mix(in srgb, var(--c) 14%, #18181b); stroke: var(--c); }
+.sg-proj.on circle.ring, .sg-proj:focus-visible circle.ring { stroke: #fff; }
+@keyframes sgflow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -24; } }
+@media (min-width: 761px) { .sg-wrap { display: block; } .field-chips { display: none; } }
 .area {
   --c: var(--fg); position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto 104px 48px; align-items: center; gap: 20px;
   padding: 22px 8px; border-bottom: 1px solid var(--line-strong); color: var(--fg); text-decoration: none; isolation: isolate;
@@ -1346,6 +1376,10 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       <p class="eyebrow">Areas of focus</p>
       <h2 id="fields-title">Six areas I've worked in.<br><span class="grad">Pick one to go deeper.</span></h2>
     </div>
+    <div class="sg-wrap reveal" id="sg-wrap">
+      <div class="sg-meta"><span id="sg-stats"></span><span id="sg-readout">Hover a node to trace it. Click to open.</span></div>
+      <svg class="sg" id="sg" viewBox="0 0 1100 580" role="group" aria-label="Areas of focus and the projects in each"></svg>
+    </div>
     <div class="field-chips" id="field-chips"></div>
   </section>
 
@@ -1960,6 +1994,60 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     const thumbs = f.items.slice(0, 4).map((k, i) => { const it = ITEMS[k]; return `<span style="--r:${[-6, 4, -3, 7][i]}">${it.thumb ? `<img src="${it.thumb}" alt="" loading="lazy">` : fesc(it.mark)}</span>`; }).join("");
     return `<a class="area" href="#field/${f.id}" style="--c:${f.c}"><span class="area-no">${String(n + 1).padStart(2, "0")}</span><span class="area-name">${fesc(f.name)}</span><span class="area-thumbs" aria-hidden="true">${thumbs}</span><span class="area-count">${f.items.length} projects</span><span class="area-go" aria-hidden="true">${arrow}</span></a>`;
   }).join("");
+  // ---------- skill graph: you -> areas -> projects ----------
+  (function drawGraph() {
+    const svg = document.getElementById("sg"); if (!svg) return;
+    const H = 580, top = 46, bot = 40;
+    const keys = [];
+    FIELDS.forEach((f) => f.items.forEach(k => { if (!keys.includes(k)) keys.push(k); }));
+    const aY = (i) => top + 24 + i * ((H - top - bot - 48) / (FIELDS.length - 1));
+    // order projects by the average row of the areas they belong to, so lines cross less
+    const bary = (k) => { const ix = FIELDS.map((f, i) => f.items.includes(k) ? i : -1).filter(i => i >= 0); return ix.reduce((a, b) => a + b, 0) / ix.length; };
+    keys.sort((a, b) => bary(a) - bary(b));
+    const pY = (j) => top + 4 + j * ((H - top - bot - 8) / (keys.length - 1));
+    const rootY = H / 2, AX = 150, AW = 250, PX = 760;
+    let edges = "", k = 0;
+    FIELDS.forEach((f, i) => { const y = aY(i);
+      edges += `<path class="sg-edge root" data-a="${f.id}" style="--k:${k++}" d="M58 ${rootY} C 105 ${rootY}, 100 ${y}, ${AX} ${y}"/>`; });
+    FIELDS.forEach((f, i) => { const y = aY(i);
+      f.items.forEach(key => { const y2 = pY(keys.indexOf(key));
+        edges += `<path class="sg-edge" data-a="${f.id}" data-p="${key}" style="--c:${f.c};--k:${k++}" d="M${AX + AW} ${y} C ${AX + AW + 170} ${y}, ${PX - 170} ${y2}, ${PX - 8} ${y2}"/>`; }); });
+    const areas = FIELDS.map((f, i) => { const y = aY(i);
+      return `<a class="sg-area" href="#field/${f.id}" data-a="${f.id}" style="--c:${f.c}" aria-label="${fesc(f.name)}, ${f.items.length} projects">
+        <rect x="${AX}" y="${y - 23}" width="${AW}" height="46" rx="14"/><circle cx="${AX + 20}" cy="${y}" r="4.5"/>
+        <text class="nm" x="${AX + 36}" y="${y + 6}">${fesc(f.name)}</text><text class="ct" x="${AX + AW - 16}" y="${y + 5}" text-anchor="end">${f.items.length}</text></a>`; }).join("");
+    const projs = keys.map((key, j) => { const it = ITEMS[key], y = pY(j);
+      return `<g class="sg-proj" data-p="${key}" tabindex="0" role="button" aria-label="Open ${fesc(it.title)}">
+        <circle class="ring" cx="${PX}" cy="${y}" r="8"/><circle class="dot" cx="${PX}" cy="${y}" r="3.5" style="--c:#f5f5f7"/>
+        <text class="nm" x="${PX + 20}" y="${y + 1}">${fesc(it.title)}</text><text class="kd" x="${PX + 20}" y="${y + 17}">${fesc(it.kind)}</text></g>`; }).join("");
+    const root = `<g class="sg-root"><circle cx="40" cy="${rootY}" r="20"/><text x="40" y="${rootY + 4.5}" text-anchor="middle">SL</text></g>`;
+    const cols = `<text x="${AX}" y="18" class="kd" style="fill:var(--muted);font-size:12px">Areas</text><text x="${PX - 8}" y="18" class="kd" style="fill:var(--muted);font-size:12px">Projects</text>`;
+    svg.innerHTML = `<defs><linearGradient id="sg-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc176"/><stop offset=".5" stop-color="#ff7e8e"/><stop offset="1" stop-color="#b9a3ff"/></linearGradient></defs>${cols}${edges}${root}${areas}${projs}`;
+    svg.querySelectorAll(".sg-edge").forEach(e => e.style.setProperty("--L", Math.ceil(e.getTotalLength())));
+    const sgWrap = document.getElementById("sg-wrap");
+    new IntersectionObserver((en, ob) => { if (en.some(x => x.isIntersecting)) { ob.disconnect(); setTimeout(() => sgWrap.classList.add("drawn"), reduce ? 0 : 2800); } }, { threshold: 0.12 }).observe(sgWrap);
+    const linkCount = FIELDS.reduce((n, f) => n + f.items.length, 0);
+    document.getElementById("sg-stats").textContent = `${FIELDS.length} areas · ${keys.length} projects · ${linkCount} links`;
+    const readout = document.getElementById("sg-readout"), idle = readout.textContent;
+    const trace = (a, pk) => {
+      svg.classList.add("tracing");
+      const on = new Set();
+      svg.querySelectorAll(".sg-edge").forEach(e => { const hit = a ? e.dataset.a === a : e.dataset.p === pk || (e.classList.contains("root") && FIELDS.find(f => f.id === e.dataset.a).items.includes(pk));
+        e.classList.toggle("on", !!hit); if (hit) { on.add("a:" + e.dataset.a); if (e.dataset.p) on.add("p:" + e.dataset.p); } });
+      svg.querySelectorAll(".sg-area").forEach(n => n.classList.toggle("on", on.has("a:" + n.dataset.a)));
+      svg.querySelectorAll(".sg-proj").forEach(n => n.classList.toggle("on", on.has("p:" + n.dataset.p)));
+      if (a) { const f = fieldById[a]; readout.textContent = `${f.name} → ${f.items.length} projects`; }
+      else { const ins = FIELDS.filter(f => f.items.includes(pk)).map(f => f.name); readout.textContent = `${ITEMS[pk].title} ← ${ins.join(", ")}`; }
+    };
+    const clear = () => { svg.classList.remove("tracing"); svg.querySelectorAll(".on").forEach(n => n.classList.remove("on")); readout.textContent = idle; };
+    svg.querySelectorAll(".sg-area").forEach(n => { n.addEventListener("mouseenter", () => trace(n.dataset.a)); n.addEventListener("focus", () => trace(n.dataset.a)); n.addEventListener("mouseleave", clear); n.addEventListener("blur", clear); });
+    const openProj = (key) => { const it = ITEMS[key];
+      if (it.open) { const card = document.querySelector(`[data-project="${it.open}"]`)?.closest(".card.has-trailer"); if (card) openViewer(card); }
+      else { const t = document.getElementById(it.jump); t?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); } };
+    svg.querySelectorAll(".sg-proj").forEach(n => { n.addEventListener("mouseenter", () => trace(null, n.dataset.p)); n.addEventListener("focus", () => trace(null, n.dataset.p));
+      n.addEventListener("mouseleave", clear); n.addEventListener("blur", clear);
+      n.addEventListener("click", () => openProj(n.dataset.p)); n.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openProj(n.dataset.p); } }); });
+  })();
   document.getElementById("fp-switch").innerHTML = FIELDS.map(f => `<a href="#field/${f.id}" data-f="${f.id}">${fesc(f.name)}</a>`).join("");
 
   function renderField(f) {
