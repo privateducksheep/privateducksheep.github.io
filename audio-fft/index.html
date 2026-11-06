@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio FFT Visualizer · Shaun Lim</title>
+<meta name="description" content="Record or upload a sound, see its FFT and spectrogram, remove frequencies and hear what is left. Runs in your browser.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stlite/browser@1.12.0/build/stlite.css">
+<style>
+  body { margin: 0; background: #0e1117; }
+  #boot { position: fixed; inset: 0; display: grid; place-items: center; color: #c9c9cf; font: 16px/1.5 -apple-system, system-ui, sans-serif; text-align: center; padding: 24px; }
+  #boot small { color: #8e8e96; }
+</style>
+</head>
+<body>
+<div id="boot"><div>Loading Python in your browser…<br><small>The first visit downloads about 30 MB. Later visits load from cache.</small></div></div>
+<div id="root"></div>
+<script type="module">
+import { mount } from "https://cdn.jsdelivr.net/npm/@stlite/browser@1.12.0/build/stlite.js";
+mount({
+  requirements: ["numpy", "scipy", "matplotlib"],
+  entrypoint: "app.py",
+  files: { "app.py": { url: "./app.py" } },
+  streamlitConfig: { "theme.base": "dark", "client.toolbarMode": "viewer" },
+}, document.getElementById("root"));
+new MutationObserver((_, o) => { if (document.querySelector("#root [data-testid]")) { document.getElementById("boot").remove(); o.disconnect(); } })
+  .observe(document.getElementById("root"), { childList: true, subtree: true });
+</script>
+</body>
+</html>

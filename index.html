@@ -1079,6 +1079,39 @@ footer {
   .portrait-wrap { width: 62vw; }
 }
 
+/* Hackathons */
+.hack { padding-block: 40px 60px; }
+.hack-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.hcard.wide { grid-column: 1 / -1; }
+.hcard .card { height: 100%; grid-template-columns: minmax(0, 1fr); align-content: start; padding: clamp(22px, 3vw, 34px); border-radius: 28px; box-shadow: none; }
+.hcard.wide .card { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; }
+.hcard .card-visual { order: -1; aspect-ratio: 16 / 10; border-radius: 20px; }
+.hcard.wide .card-visual { order: 0; }
+.hcard.slim .card { grid-template-columns: minmax(0, 1fr); }
+.hcard .card h3 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
+.hcard .card p { max-width: none; }
+.stat { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.stat b { font-size: clamp(2rem, 3.6vw, 2.8rem); font-weight: 750; letter-spacing: -0.04em; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat span { color: var(--muted); font-size: 15px; }
+.hcard .phone.fin { transform: scale(0.82); }
+
+/* Sa'Bai API visual */
+.card-visual.api { aspect-ratio: 4 / 3.4; place-items: stretch; padding: clamp(16px, 2.4vw, 28px); background: radial-gradient(80% 80% at 80% 10%, rgba(126, 200, 255, 0.14), transparent 60%), var(--surface-2); }
+.api-panel { border: 1px solid var(--line-strong); border-radius: 18px; background: #0f0f11; overflow: hidden; font-family: var(--mono); font-size: clamp(12px, 1.2vw, 15px); }
+.api-panel .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-strong); }
+.api-panel .bar span { margin-left: 8px; color: var(--muted); font-size: 12px; }
+.api-panel ul { list-style: none; margin: 0; padding: 10px 0; }
+.api-panel li { display: flex; align-items: center; gap: 10px; padding: 7px 18px; color: var(--muted); }
+.api-panel li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); flex: none; }
+.api-panel li.mine { color: var(--fg); background: rgba(126, 200, 255, 0.07); }
+.api-panel li.mine::before { background: #7ec8ff; box-shadow: 0 0 10px #7ec8ff; }
+.api-panel em { margin-left: auto; font-style: normal; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #7ec8ff; }
+@media (max-width: 820px) {
+  .hack-grid { grid-template-columns: minmax(0, 1fr); }
+  .hcard.wide .card { grid-template-columns: minmax(0, 1fr); }
+  .hcard.wide .card-visual { order: -1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
@@ -1097,7 +1130,8 @@ footer {
   <a class="mark" href="#top" aria-label="Back to top">SL</a>
   <a href="#work">Work</a>
   <a href="#about" class="hide-sm">About</a>
-  <a href="#how">How I work</a>
+  <a href="#hackathons">Hackathons</a>
+  <a href="#how" class="hide-sm">How I work</a>
   <a href="#contact" class="hide-sm">Contact</a>
   <a class="play" href="#work">Play</a>
 </nav>
@@ -1202,7 +1236,7 @@ footer {
             <p class="learned"><b>What I learned:</b> how to teach goals, tools and rules to people who have never used an AI agent.</p>
             <div class="built"><span>Built with</span><ul><li>JavaScript</li><li>Three.js</li><li>Node.js</li><li>Claude API</li><li>HTML & CSS</li></ul></div>
             <div class="card-actions">
-              <a class="btn primary magnetic" href="#">Play on itch.io <span class="arrow">→</span></a>
+              <button class="btn primary magnetic" type="button">Watch the trailer <span class="arrow">→</span></button>
             </div>
           </div>
           <button class="card-visual media" type="button" data-tilt data-project="pet" aria-label="Open Pet Agents">
@@ -1242,18 +1276,19 @@ footer {
       <article class="stack-card" style="--i:3">
         <div class="card has-trailer" style="--tint: rgba(255, 193, 118, 0.14)">
           <template class="writeup">
-            <section><h4>What I built</h4><ul><li>An interactive tool that pulls a sound apart into its frequencies.</li><li>Record or upload audio, then see its waveform, FFT and spectrogram.</li><li>Cut low or high frequencies, or keep only the strongest K, and play back the result.</li></ul></section>
-            <section><h4>Why I built it</h4><ul><li>Fourier transforms are easy to learn as equations and hard to feel.</li><li>Hearing what disappears when you remove frequencies makes the idea stick.</li></ul></section>
-            <section><h4>What I learned</h4><ul><li>How the numbers in a Fourier transform map to what you actually hear.</li><li>Reconstructing a signal from a filtered spectrum.</li><li>Building a quick, interactive data app in Streamlit.</li></ul></section>
+            <section><h4>Why I made it</h4><p>In class, the Fourier transform was a formula: any signal can be written as a sum of sine waves, and the transform tells you how much of each one is there. I could work through the maths, but I couldn't hear it. So I built a study tool where you change one thing and hear the result straight away. Record your voice, remove everything above 1 kHz, and the muffled playback shows you what those frequencies were doing.</p></section>
+            <section><h4>What the maths says</h4><p>The app takes a real FFT of the clip. Bin k of an N-sample signal sits at k·f<sub>s</sub>/N Hz, so a longer recording gives finer frequency steps. A sample rate of f<sub>s</sub> can only represent frequencies up to f<sub>s</sub>/2, the Nyquist limit, which is why a 44.1 kHz recording stops at 22.05 kHz and the sliders stop there too. A real-valued signal has a mirror-image spectrum, so only the positive half is kept (rfft), and irfft rebuilds the sound from it. The FFT does all this in O(N log N) steps instead of the O(N²) of a direct DFT, which is what makes it fast enough to run on every slider change.</p></section>
+            <section><h4>What I learned by listening</h4><p>Zeroing bins is a perfect brick-wall filter on paper, but the sharp cut leaves a faint ring around sudden sounds. That's the Gibbs effect, and it's why real filters taper off instead. Keeping only the K strongest bins shows the idea behind compression: a hummed note survives on a handful of bins, while speech needs hundreds. A clap spreads its energy across every frequency, because a sound that is short in time has to be wide in frequency. The spectrogram makes that trade-off visible. It runs FFTs over 1,024-sample windows, and a longer window sharpens frequency but blurs timing.</p></section>
           </template>
           <div class="card-text">
-            <div class="meta"><span>Tool</span><span>Python</span><span>Streamlit</span></div>
+            <div class="meta"><span>Tool</span><span>Python</span><span>Signals</span><span class="live">Live</span></div>
             <h3>Audio FFT Visualizer</h3>
             <p>Record or upload a sound and watch it come apart into frequencies. See the waveform, FFT and spectrogram, cut the lows or highs, keep only the strongest K frequencies, then play back what's left to hear what you removed.</p>
-            <p class="learned"><b>What I learned:</b> how the numbers in a Fourier transform map to what your ears pick up.</p>
+            <p class="learned"><b>What I learned:</b> the Nyquist limit, spectral leakage and the time–frequency trade-off, by hearing each one.</p>
             <div class="built"><span>Built with</span><ul><li>Python</li><li>Streamlit</li><li>NumPy</li><li>SciPy</li><li>Matplotlib</li></ul></div>
             <div class="card-actions">
-              <a class="btn primary magnetic" href="https://github.com/privateducksheep/Audio-FFT-Visualizer" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+              <a class="btn primary magnetic" href="https://privateducksheep.github.io/audio-fft/" target="_blank" rel="noopener">Try it live <span class="arrow">→</span></a>
+              <a class="btn ghost magnetic" href="https://github.com/privateducksheep/Audio-FFT-Visualizer" target="_blank" rel="noopener">Run it locally</a>
             </div>
           </div>
           <button class="card-visual media" type="button" data-tilt data-project="fft" aria-label="Open Audio FFT Visualizer">
@@ -1265,20 +1300,124 @@ footer {
       </article>
 
       <article class="stack-card" style="--i:4">
-        <div class="card" style="--tint: rgba(126, 224, 181, 0.12)">
+        <div class="card" style="--tint: rgba(126, 200, 255, 0.13)">
+          <div class="card-text">
+            <div class="meta"><span>Full-stack</span><span>Backend</span><span>Health tech</span></div>
+            <h3>Project Sa'Bai</h3>
+            <p>Project Sa'Bai is a student-run NUS project that has held free health and eye screenings in Cambodia since 2006. I was a backend developer on the patient record system its volunteers use on those trips, from March 2025 to February 2026, working in Django REST and PostgreSQL.</p>
+            <p>I built the APIs for glasses fitting, including astigmatism in the vitals record, plus vision screening, village configuration and patient consults. I also built user sync with Auth0 and role-based access. That came to six merged pull requests in a ten-person codebase, and I documented every payload for the Next.js frontend team.</p>
+            <p class="learned"><b>What I learned:</b> agree on the payload with the frontend before writing the model, and validate in the serializer so bad data never reaches the database.</p>
+            <div class="built"><span>Built with</span><ul><li>Python</li><li>Django REST Framework</li><li>PostgreSQL</li><li>Auth0</li><li>Next.js (frontend team)</li></ul></div>
+            <div class="card-actions">
+              <a class="btn primary magnetic" href="https://github.com/NUS-Project-SaBai/BackEnd" target="_blank" rel="noopener">Backend repo <span class="arrow">→</span></a>
+              <a class="btn ghost magnetic" href="https://github.com/NUS-Project-SaBai/BackEnd/pulls?q=is%3Apr+author%3Aprivateducksheep" target="_blank" rel="noopener">My pull requests</a>
+            </div>
+          </div>
+          <div class="card-visual api" data-tilt aria-hidden="true">
+            <div class="api-panel">
+              <div class="bar"><i></i><i></i><i></i><span>sabaibiometrics / api / urls.py</span></div>
+              <ul>
+                <li>/patients/</li>
+                <li>/visits/</li>
+                <li>/vitals/</li>
+                <li class="mine">/glasses/<em>mine</em></li>
+                <li class="mine">/vision/<em>mine</em></li>
+                <li class="mine">/patient_consult/<em>mine</em></li>
+                <li class="mine">/villages/<em>mine</em></li>
+                <li class="mine">/users/<em>Auth0 sync</em></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- HACKATHONS -->
+  <section class="hack wrap" id="hackathons">
+    <div class="section-head reveal">
+      <p class="eyebrow">Hackathons &amp; competitions</p>
+      <h2>Short deadlines,<br><span class="grad">real scoreboards.</span></h2>
+    </div>
+    <div class="hack-grid">
+
+      <article class="hcard wide reveal">
+        <div class="card has-trailer" style="--tint: rgba(255, 126, 142, 0.16)">
           <template class="writeup">
-            <section><h4>What I built</h4><ul><li>A peer-to-peer payments concept for foreign exchange students, pitched at the NUS Fintech Summit 2026.</li><li>Students link a phone number to the bank they already have.</li><li>They can then pay each other, buy and sell tokens, and cash out over the XRP Ledger.</li></ul></section>
-            <section><h4>Why I built it</h4><ul><li>Exchange students often have to open a local bank account just to split a bill.</li><li>Paying by phone number over the XRP Ledger skips that step.</li></ul></section>
-            <section><h4>What I learned</h4><ul><li>Scoping for a hackathon: one working service makes a better demo than three half-built ones.</li><li>How an Expo app, a FastAPI backend and an XRPL service fit together.</li></ul></section>
+            <section><h4>What we built</h4><p>Cambridge Battlecode is a month-long AI programming competition. Each team writes a bot, and every champion on the map runs its own copy with no human in control. The bot drafts its champions, clears monster camps for gold and gems, fights, and tributes gems at altars. The first team to 1,000 gems wins. Our team, OneTap, wrote ours in C++ and shipped 159 versions. Each one was frozen as its own folder so we could always compare a change against the last version.</p></section>
+            <section><h4>How we got to 11th</h4><p>We treated it as a data problem. I wrote a tracker that pulled our ranked results every 10 minutes and showed win rate and margin per map. We also harvested 13,025 public games to study how the top 30 teams play. They fell into five styles, and the first three picks of a draft were enough to tell which. Every big change went through a paired test against the same opponents, maps and seats before it reached the ranked ladder.</p></section>
+            <section><h4>Takeaways</h4><ul><li>Measure before you believe. Most "improvements" sat inside the noise once we paired the tests properly.</li><li>Staying alive beats dealing damage. On fight maps the winner died about half as often as the loser.</li><li>Draft picks mattered less than play. Our draft model barely beat plain Elo (AUC 0.60 vs 0.55).</li><li>Never edit an old version. Frozen versions made every regression traceable.</li></ul></section>
           </template>
           <div class="card-text">
-            <div class="meta"><span>Payments</span><span>XRPL</span><span>Hackathon</span><span>Concept</span></div>
-            <h3>FintechFanatics</h3>
-            <p>Peer-to-peer payments for foreign exchange students, pitched at the NUS Fintech Summit 2026. Students skip opening a local bank account: they link their phone number to the bank they already have, then pay each other, buy and sell tokens and cash out over the XRP Ledger. We planned an Expo app, a FastAPI backend and an XRPL service, but didn't reach a working prototype.</p>
-            <p class="learned"><b>What I learned:</b> cut scope early. One working service makes a better demo than three half-built ones.</p>
-            <div class="built"><span>Built with</span><ul><li>Expo</li><li>React Native</li><li>TypeScript</li><li>FastAPI</li><li>Node.js</li><li>XRP Ledger</li></ul></div>
+            <div class="meta"><span>AI bots</span><span>C++</span><span>Data analysis</span></div>
+            <h3>Cambridge Battlecode 2026</h3>
+            <div class="stat"><b>11th</b><span>of 824 teams at our peak · top 1.4%</span></div>
+            <p>Team OneTap, with Aeo and jyang. We wrote a C++ bot that plays a full strategy game on its own, then improved it with live match data across 3,321 ranked games. We qualified for all three sprints and the International Qualifiers.</p>
+            <p class="learned"><b>My part:</b> the bot versions I owned, the match tracker, and the data work that told us which changes helped.</p>
             <div class="card-actions">
-              <a class="btn primary magnetic" href="https://github.com/privateducksheep/FintechFanatics" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
+              <a class="btn primary magnetic" href="https://privateducksheep.github.io/pdsheep-tracker/" target="_blank" rel="noopener">Our match tracker <span class="arrow">→</span></a>
+            </div>
+          </div>
+          <button class="card-visual media" type="button" data-tilt data-project="bc" aria-label="Open Cambridge Battlecode">
+            <img src="media/bc-poster.jpg" alt="" loading="lazy">
+          </button>
+        </div>
+      </article>
+
+      <article class="hcard reveal">
+        <div class="card has-trailer" style="--tint: rgba(255, 126, 142, 0.14)">
+          <template class="writeup">
+            <section><h4>What we built</h4><p>Our TikTok TechJam 2025 entry was an LLM pipeline that moderates Google location reviews. It sorts each review into one of four types: an ad, irrelevant, a rant from someone who never visited, or a valid review. Fake and off-topic reviews make it hard to trust what a place is like, and the challenge was to filter them out automatically.</p></section>
+            <section><h4>My part</h4><p>I led evaluation. I ran pseudo-labelling, built a balanced test set and the metric dashboards (precision, recall, F1 and confusion matrices), and wrote validation scripts so malformed model output couldn't skew the scores. Batching requests cut inference time.</p></section>
+            <section><h4>Takeaways</h4><ul><li>Compare zero-shot, few-shot and chain-of-thought prompts on the same labelled set, or the comparison means nothing.</li><li>Structured output plus a parser check matters as much as the prompt.</li></ul></section>
+          </template>
+          <div class="card-text">
+            <div class="meta"><span>LLMs</span><span>Evaluation</span></div>
+            <h3>TikTok TechJam 2025</h3>
+            <div class="stat"><b>90.5%</b><span>accuracy · 0.84 macro F1 on 242 hand-labelled reviews</span></div>
+            <p>Team FreddyFazbytes. An LLM pipeline on Gemma that sorts Google reviews into ads, irrelevant posts, rants from people who never visited, and real reviews. I led evaluation.</p>
+            <div class="card-actions">
+              <a class="btn primary magnetic" href="https://github.com/assistacat/FreddyFazbytes" target="_blank" rel="noopener">GitHub <span class="arrow">→</span></a>
+              <a class="btn ghost magnetic" href="https://devpost.com/software/freddyfazbytes" target="_blank" rel="noopener">Devpost</a>
+            </div>
+          </div>
+          <button class="card-visual media" type="button" data-tilt data-project="freddy" aria-label="Open TikTok TechJam 2025">
+            <img src="media/freddy-poster.jpg" alt="" loading="lazy">
+            <video class="hover-vid" muted playsinline loop preload="none" aria-hidden="true"></video>
+            <span class="hover-bar" aria-hidden="true"></span>
+          </button>
+        </div>
+      </article>
+
+      <article class="hcard reveal">
+        <div class="card has-trailer" style="--tint: rgba(126, 224, 181, 0.14)">
+          <template class="writeup">
+            <section><h4>The problem</h4><p>NUS Datathon 2025 gave us company records from the Champions Group and asked which companies sit at the top of their corporate family: the domestic ultimate parent in their country, and the global ultimate parent overall. There were 29,182 rows.</p></section>
+            <section><h4>What we did</h4><p>We cleaned the data, filled missing values with medians and kept five features: domestic and global employee totals, domestic and global sales totals, and single-site headcount. A random forest with balanced class weights went through a 36-setting grid search with 5-fold cross-validation, scored on ROC-AUC. We then used feature importance to explain to the judges why each prediction came out the way it did.</p></section>
+            <section><h4>Takeaways</h4><ul><li>A few features that capture group structure beat a long list of raw columns.</li><li>Check class balance first. Domestic parents were 50/50, but global parents were only 26% of rows.</li><li>Judges remember the explanation more than the score.</li></ul></section>
+          </template>
+          <div class="card-text">
+            <div class="meta"><span>Machine learning</span><span>Python</span></div>
+            <h3>NUS Datathon 2025</h3>
+            <div class="stat"><b>0.949</b><span>ROC-AUC · 0.90 F1 on 5,837 held-out companies</span></div>
+            <p>A tuned random forest that predicts whether a company is the top parent of its corporate group, from 29,182 company records.</p>
+          </div>
+          <button class="card-visual media" type="button" data-tilt data-project="dt" aria-label="Open NUS Datathon 2025">
+            <img src="media/dt-poster.jpg" alt="" loading="lazy">
+          </button>
+        </div>
+      </article>
+
+      <article class="hcard wide reveal">
+        <div class="card" style="--tint: rgba(126, 224, 181, 0.12)">
+          <div class="card-text">
+            <div class="meta"><span>Payments</span><span>XRPL</span><span>Pitch</span></div>
+            <h3>NUS Fintech Summit 2026</h3>
+            <div class="stat"><b>Crypto wallet</b><span>pay by phone number over the XRP Ledger</span></div>
+            <p>Team FintechFanatics. A wallet for exchange students: link your phone number to the bank you already have, then pay friends, buy and sell tokens and cash out over the XRP Ledger, without opening a local account. We planned an Expo app, a FastAPI backend and an XRPL service.</p>
+            <p class="learned"><b>Takeaway:</b> cut scope early. One working service makes a better demo than three half-built ones.</p>
+            <div class="card-actions">
+              <a class="btn primary magnetic" href="https://github.com/privateducksheep/FintechFanatics" target="_blank" rel="noopener">GitHub <span class="arrow">→</span></a>
             </div>
           </div>
           <div class="card-visual" data-tilt aria-hidden="true">
@@ -1293,31 +1432,16 @@ footer {
         </div>
       </article>
 
-      <article class="stack-card" style="--i:5">
-        <div class="card has-trailer" style="--tint: rgba(255, 126, 142, 0.14)">
-          <template class="writeup">
-            <section><h4>What I built</h4><ul><li>Our TikTok TechJam 2025 entry: an LLM pipeline that moderates Google location reviews.</li><li>It sorts each review into an ad, irrelevant, a rant from someone who never visited, or a valid review.</li></ul></section>
-            <section><h4>Why I built it</h4><ul><li>Fake and off-topic reviews make it hard to trust what a place is actually like.</li><li>The challenge was to filter that noise automatically, at scale.</li></ul></section>
-            <section><h4>What I learned</h4><ul><li>As evaluation lead: pseudo-labelling, building a balanced evaluation set, and reporting precision, recall and F1.</li><li>Comparing zero-shot, few-shot and chain-of-thought prompts on Gemma. The best reached 90.5% accuracy and 0.84 macro F1 on 242 hand-labelled reviews.</li></ul></section>
-          </template>
+      <article class="hcard wide slim reveal">
+        <div class="card" style="--tint: rgba(185, 163, 255, 0.14)">
           <div class="card-text">
-            <div class="meta"><span>Machine learning</span><span>LLMs</span><span>TikTok TechJam 2025</span></div>
-            <h3>FreddyFazbytes</h3>
-            <p>Our TikTok TechJam 2025 entry: an LLM pipeline that moderates Google location reviews. It sorts each review into an ad, irrelevant, a rant from someone who never visited, or a valid review, using zero-shot, few-shot and chain-of-thought prompts on Gemma.</p>
-            <p class="learned"><b>My role, evaluation lead:</b> I ran pseudo-labelling, built the metrics and reported results. Our best prompt reached 90.5% accuracy and 0.84 macro F1 on 242 hand-labelled reviews.</p>
-            <div class="built"><span>Built with</span><ul><li>Python</li><li>Gemma</li><li>Hugging Face</li><li>pandas</li><li>scikit-learn</li><li>Jupyter</li></ul></div>
-            <div class="card-actions">
-              <a class="btn primary magnetic" href="https://github.com/assistacat/FreddyFazbytes" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
-              <a class="btn ghost magnetic" href="https://devpost.com/software/freddyfazbytes" target="_blank" rel="noopener">Devpost</a>
-            </div>
+            <div class="meta"><span>Business analytics</span><span>Case competition</span></div>
+            <h3>Micron × NUS-ISE Business Analytics Case Competition</h3>
+            <p>A business analytics case competition run by the NUS Industrial and Systems Engineering Club, with Micron Technology as the industry partner.</p>
           </div>
-          <button class="card-visual media" type="button" data-tilt data-project="freddy" aria-label="Open FreddyFazbytes">
-            <img src="media/freddy-poster.jpg" alt="" loading="lazy">
-            <video class="hover-vid" muted playsinline loop preload="none" aria-hidden="true"></video>
-            <span class="hover-bar" aria-hidden="true"></span>
-          </button>
         </div>
       </article>
+
     </div>
   </section>
 
@@ -1538,6 +1662,8 @@ footer {
     hub: { trailer: null, preview: null, poster: "media/hubn-poster.jpg", shots: ["home", "products", "post", "blog", "resources", "dashboard", "editor", "admin"].map(f => `${G}hubn-${f}.jpg`) },
     fft: { trailer: "media/fft.mp4", preview: "media/preview/fft.mp4", shots: ["fft-top", "fft-wave", "fft-spec"].map(f => `${G}${f}.jpg`) },
     freddy: { trailer: "media/freddy.mp4", preview: "media/preview/freddy.mp4", shots: ["fz-word_cloud", "fz-review_length_vs_rating", "fz-confusion_OldPrompt_multiclass", "fz-rating_distribution"].map(f => `${G}${f}.jpg`) },
+    bc: { trailer: null, preview: null, poster: "media/bc-poster.jpg", shots: [`${G}bc-rating.jpg`] },
+    dt: { trailer: null, preview: null, poster: "media/dt-poster.jpg", shots: [`${G}dt-results.jpg`] },
     swipe: { trailer: "media/swipe-t1.mp4", hevc: "media/swipe-t1-hevc.mp4", preview: "media/preview/swipe-t1.mp4", poster: "media/swipe-t1-poster.jpg", shots: ["ssn-menu", "ssn-alina", "ssn-map", "ssn-elder", "ssn-zombie", "ssn-died"].map(f => `${G}${f}.jpg`) },
   };
 
