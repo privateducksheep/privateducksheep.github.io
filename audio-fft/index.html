@@ -26,5 +26,5 @@ mount({
 new MutationObserver((_, o) => { if (document.querySelector("#root [data-testid]")) { document.getElementById("boot").remove(); o.disconnect(); } })
   .observe(document.getElementById("root"), { childList: true, subtree: true });
 </script>
-</body>
+<script src="/analytics.js" defer></script></body>
 </html>

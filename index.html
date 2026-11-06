@@ -1052,6 +1052,8 @@ footer {
   font-size: 14px;
 }
 
+footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1305,7 +1307,7 @@ footer {
             <div class="meta"><span>Full-stack</span><span>Backend</span><span>Health tech</span></div>
             <h3>Project Sa'Bai</h3>
             <p>Project Sa'Bai is a student-run NUS project that has held free health and eye screenings in Cambodia since 2006. I was a backend developer on the patient record system its volunteers use on those trips, from March 2025 to February 2026, working in Django REST and PostgreSQL.</p>
-            <p>I built the APIs for glasses fitting, including astigmatism in the vitals record, plus vision screening, village configuration and patient consults. I also built user sync with Auth0 and role-based access. That came to six merged pull requests in a ten-person codebase, and I documented every payload for the Next.js frontend team.</p>
+            <p>I built the APIs for glasses fitting, including astigmatism in the vitals record, plus vision screening, village configuration and patient consults. I also built user sync with Auth0 and role-based access. That came to six merged pull requests in a codebase with 20 contributors, and I documented the payloads for the Next.js frontend team.</p>
             <p class="learned"><b>What I learned:</b> agree on the payload with the frontend before writing the model, and validate in the serializer so bad data never reaches the database.</p>
             <div class="built"><span>Built with</span><ul><li>Python</li><li>Django REST Framework</li><li>PostgreSQL</li><li>Auth0</li><li>Next.js (frontend team)</li></ul></div>
             <div class="card-actions">
@@ -1344,16 +1346,17 @@ footer {
       <article class="hcard wide reveal">
         <div class="card has-trailer" style="--tint: rgba(255, 126, 142, 0.16)">
           <template class="writeup">
-            <section><h4>What we built</h4><p>Cambridge Battlecode is a month-long AI programming competition. Each team writes a bot, and every champion on the map runs its own copy with no human in control. The bot drafts its champions, clears monster camps for gold and gems, fights, and tributes gems at altars. The first team to 1,000 gems wins. Our team, OneTap, wrote ours in C++ and shipped 159 versions. Each one was frozen as its own folder so we could always compare a change against the last version.</p></section>
-            <section><h4>How we got to 11th</h4><p>We treated it as a data problem. I wrote a tracker that pulled our ranked results every 10 minutes and showed win rate and margin per map. We also harvested 13,025 public games to study how the top 30 teams play. They fell into five styles, and the first three picks of a draft were enough to tell which. Every big change went through a paired test against the same opponents, maps and seats before it reached the ranked ladder.</p></section>
-            <section><h4>Takeaways</h4><ul><li>Measure before you believe. Most "improvements" sat inside the noise once we paired the tests properly.</li><li>Staying alive beats dealing damage. On fight maps the winner died about half as often as the loser.</li><li>Draft picks mattered less than play. Our draft model barely beat plain Elo (AUC 0.60 vs 0.55).</li><li>Never edit an old version. Frozen versions made every regression traceable.</li></ul></section>
+            <section><h4>The competition</h4><p>Cambridge Battlecode runs for five weeks, from 12 October to 18 November, and is sponsored by HRT, Citadel, G-Research, Jane Street and QuantCo. The prize pool is £18,000, and the top 16 teams play the final at the Cambridge Union. Every team writes a bot for a turn-based strategy game, and each champion on the map runs its own copy with no human in control. The bot drafts its champions, clears monster camps for gold and gems, fights, and tributes gems at altars. The first team to tribute 1,000 gems wins.</p></section>
+            <section><h4>How we climbed</h4><p>I entered as Team OneTap with my friends Ethan (Aeo) and Jie Yang (jyang), and we wrote our bot in C++. We uploaded 479 versions over the season. The platform keeps every upload, so any change could be replayed against the version before it. To learn from the strongest teams, we pulled 13,025 public games and studied how the top 30 played. They fell into five styles, and the first three picks of a draft were enough to tell which one we were facing.</p></section>
+            <section><h4>Why I built the tracker</h4><p>Ranked results arrive one match at a time, which makes it hard to see where you are winning and losing. So I built a tracker that pulls our ranked results from the platform's public API every 10 minutes. It shows win rate and winning margin for every map and side, plus our rating after each best-of-5 set. It told us which maps to fix first and whether a new version had helped or just got lucky.</p></section>
+            <section><h4>Takeaways</h4><ul><li>Measure before you believe. Most "improvements" sat inside the noise once we tested them against the same opponents, maps and seats.</li><li>Staying alive beats dealing damage. On fight maps, the winning side died about half as often as the losing side.</li><li>Draft picks mattered less than play. Our draft model barely beat plain Elo at predicting results (AUC 0.60 vs 0.55).</li><li>Never edit an old version. Frozen copies made every regression easy to trace.</li></ul></section>
           </template>
           <div class="card-text">
             <div class="meta"><span>AI bots</span><span>C++</span><span>Data analysis</span></div>
             <h3>Cambridge Battlecode 2026</h3>
-            <div class="stat"><b>11th</b><span>of 824 teams at our peak · top 1.4%</span></div>
-            <p>Team OneTap, with Aeo and jyang. We wrote a C++ bot that plays a full strategy game on its own, then improved it with live match data across 3,321 ranked games. We qualified for all three sprints and the International Qualifiers.</p>
-            <p class="learned"><b>My part:</b> the bot versions I owned, the match tracker, and the data work that told us which changes helped.</p>
+            <div class="stat"><b>11th</b><span>of 824 teams at our peak · top 1.4% · peak rating 2,035</span></div>
+            <p>A five-week AI programming competition sponsored by HRT, Citadel, G-Research, Jane Street and QuantCo, with a £18,000 prize pool. I competed as Team OneTap with my friends Ethan (Aeo) and Jie Yang (jyang). Our C++ bot plays a full strategy game with no human input, and we improved it over 479 versions using live data from more than 3,300 ranked matches.</p>
+            <p class="learned"><b>My part:</b> the bot versions I owned, plus a live tracker I built to show which maps we lost and whether each new version helped.</p>
             <div class="card-actions">
               <a class="btn primary magnetic" href="https://privateducksheep.github.io/pdsheep-tracker/" target="_blank" rel="noopener">Our match tracker <span class="arrow">→</span></a>
             </div>
@@ -1369,12 +1372,12 @@ footer {
           <template class="writeup">
             <section><h4>What we built</h4><p>Our TikTok TechJam 2025 entry was an LLM pipeline that moderates Google location reviews. It sorts each review into one of four types: an ad, irrelevant, a rant from someone who never visited, or a valid review. Fake and off-topic reviews make it hard to trust what a place is like, and the challenge was to filter them out automatically.</p></section>
             <section><h4>My part</h4><p>I led evaluation. I ran pseudo-labelling, built a balanced test set and the metric dashboards (precision, recall, F1 and confusion matrices), and wrote validation scripts so malformed model output couldn't skew the scores. Batching requests cut inference time.</p></section>
-            <section><h4>Takeaways</h4><ul><li>Compare zero-shot, few-shot and chain-of-thought prompts on the same labelled set, or the comparison means nothing.</li><li>Structured output plus a parser check matters as much as the prompt.</li></ul></section>
+            <section><h4>Takeaways</h4><ul><li>Compare zero-shot, few-shot and chain-of-thought prompts on the same labelled set, or the comparison means nothing. Our chain-of-thought prompt caught every ad with no false flags.</li><li>Structured output plus a parser check matters as much as the prompt.</li></ul></section>
           </template>
           <div class="card-text">
             <div class="meta"><span>LLMs</span><span>Evaluation</span></div>
             <h3>TikTok TechJam 2025</h3>
-            <div class="stat"><b>90.5%</b><span>accuracy · 0.84 macro F1 on 242 hand-labelled reviews</span></div>
+            <div class="stat"><b>90.5%</b><span>accuracy · 0.84 macro F1 on 242 labelled reviews</span></div>
             <p>Team FreddyFazbytes. An LLM pipeline on Gemma that sorts Google reviews into ads, irrelevant posts, rants from people who never visited, and real reviews. I led evaluation.</p>
             <div class="card-actions">
               <a class="btn primary magnetic" href="https://github.com/assistacat/FreddyFazbytes" target="_blank" rel="noopener">GitHub <span class="arrow">→</span></a>
@@ -1662,7 +1665,7 @@ footer {
     hub: { trailer: null, preview: null, poster: "media/hubn-poster.jpg", shots: ["home", "products", "post", "blog", "resources", "dashboard", "editor", "admin"].map(f => `${G}hubn-${f}.jpg`) },
     fft: { trailer: "media/fft.mp4", preview: "media/preview/fft.mp4", shots: ["fft-top", "fft-wave", "fft-spec"].map(f => `${G}${f}.jpg`) },
     freddy: { trailer: "media/freddy.mp4", preview: "media/preview/freddy.mp4", shots: ["fz-word_cloud", "fz-review_length_vs_rating", "fz-confusion_OldPrompt_multiclass", "fz-rating_distribution"].map(f => `${G}${f}.jpg`) },
-    bc: { trailer: null, preview: null, poster: "media/bc-poster.jpg", shots: [`${G}bc-rating.jpg`] },
+    bc: { trailer: null, preview: null, poster: "media/bc-poster.jpg", shots: [`${G}bc-game.jpg`, `${G}bc-team.jpg`, `${G}bc-tracker.jpg`, `${G}bc-rating.jpg`] },
     dt: { trailer: null, preview: null, poster: "media/dt-poster.jpg", shots: [`${G}dt-results.jpg`] },
     swipe: { trailer: "media/swipe-t1.mp4", hevc: "media/swipe-t1-hevc.mp4", preview: "media/preview/swipe-t1.mp4", poster: "media/swipe-t1-poster.jpg", shots: ["ssn-menu", "ssn-alina", "ssn-map", "ssn-elder", "ssn-zombie", "ssn-died"].map(f => `${G}${f}.jpg`) },
   };
@@ -1786,4 +1789,4 @@ footer {
   });
 })();
 </script>
-</html>
+<script src="/analytics.js" defer></script></html>
