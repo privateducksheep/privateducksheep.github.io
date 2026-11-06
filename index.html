@@ -240,6 +240,12 @@ h2 {
   font-weight: 400;
 }
 .lede strong { font-weight: 700; }
+.lede-link { font-weight: 700; text-decoration: none; background-image: linear-gradient(90deg, var(--sun), var(--coral) 55%, var(--lilac)), linear-gradient(90deg, var(--sun), var(--coral) 55%, var(--lilac)); background-size: 100% 100%, 0% 2px; background-position: 0 0, 0 100%; background-repeat: no-repeat; -webkit-background-clip: text, border-box; background-clip: text, border-box; transition: background-size .35s var(--ease); }
+.lede-link:hover, .lede-link:focus-visible { background-size: 100% 100%, 100% 2px; }
+.lede-link:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; border-radius: 4px; }
+#p-datathon, #p-fintech { scroll-margin-top: 110px; }
+.hcard.pulse { animation: cardpulse 1.6s var(--ease) 1; }
+@keyframes cardpulse { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 30% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--coral) 70%, transparent); } }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* portrait: three layers */
@@ -1157,7 +1163,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         <p class="status" data-in style="--d:0"><span class="dot"></span>Open to new roles</p>
         <h1 class="name" data-in style="--d:1">Shaun<br>Lim</h1>
         <p class="lede" data-in style="--d:2">
-          Hi, I'm Shaun. I study Business Analytics at NUS, specialising in machine learning and financial analytics. I'm <strong class="grad">curious</strong> about things I don't know yet, especially new technology, and I love working out how they connect to products, data and the people who use them.
+          Hi! I'm Shaun, a Business Analytics student at NUS specialising in <a class="grad lede-link" href="#p-datathon">machine learning</a> and <a class="grad lede-link" href="#p-fintech">financial analytics</a>. I'm <strong class="grad">curious</strong> by default, and I don't wait for a class to teach me something new. I pick it up and build with it, from a C++ bot that peaked in the top 1.4% of Cambridge Battlecode to full-stack features I shipped as an AI@CPF intern.
         </p>
         <div class="cta-row" data-in style="--d:3">
           <a class="btn primary magnetic" href="#work">See my work <span class="arrow">→</span></a>
@@ -1435,7 +1441,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         </div>
       </article>
 
-      <article class="hcard reveal">
+      <article id="p-datathon" class="hcard reveal">
         <div class="card has-trailer" style="--tint: rgba(126, 224, 181, 0.14)">
           <template class="writeup">
             <section><h4>The problem</h4><p>NUS Datathon 2025 gave us company records from the Champions Group and asked which companies sit at the top of their corporate family: the domestic ultimate parent in their country, and the global ultimate parent overall. There were 29,182 rows.</p></section>
@@ -1454,7 +1460,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         </div>
       </article>
 
-      <article class="hcard wide reveal">
+      <article id="p-fintech" class="hcard wide reveal">
         <div class="card" style="--tint: rgba(126, 224, 181, 0.12)">
           <div class="card-text">
             <div class="meta"><span>Payments</span><span>XRPL</span><span>Pitch</span></div>
@@ -1787,6 +1793,12 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   document.querySelectorAll(".proof[data-open]").forEach(b => b.addEventListener("click", () => {
     const card = document.querySelector(`[data-project="${b.dataset.open}"]`)?.closest(".card.has-trailer");
     if (card) openViewer(card);
+  }));
+  document.querySelectorAll(".lede-link").forEach(a => a.addEventListener("click", () => {
+    const t = document.querySelector(a.getAttribute("href"));
+    if (!t) return;
+    t.classList.add("in"); t.classList.remove("pulse");
+    setTimeout(() => { t.classList.add("pulse"); setTimeout(() => t.classList.remove("pulse"), 1700); }, 700);
   }));
   document.getElementById("viewer-close").addEventListener("click", closeViewer);
   viewer.addEventListener("click", e => { if (e.target === viewer) closeViewer(); });
