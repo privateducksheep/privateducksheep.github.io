@@ -415,6 +415,8 @@ h2 {
 .tl-item h3 { margin: 0; font-size: 1.02rem; letter-spacing: -0.015em; line-height: 1.25; }
 .tl-item p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
 .tl-cat { font-size: 11px; font-weight: 600; color: var(--c); }
+.tl-when { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.tl-term { font-size: 11px; font-weight: 600; color: var(--fg); padding: 3px 8px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid var(--line-strong); white-space: nowrap; }
 @media (max-width: 700px) {
   .tl { display: flex; flex-direction: column; min-width: 0; gap: 12px; padding-left: 28px; position: relative; }
   .tl::before { content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(180deg, var(--sun), var(--coral) 50%, var(--lilac)); opacity: .55; }
@@ -1963,20 +1965,22 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   // ---------- timeline ----------
   const CATS = { school: ["School", "#b9a3ff"], hack: ["Hackathons & competitions", "#ff7e8e"], intern: ["Internship", "#ffc176"], lead: ["Leadership & volunteering", "#7ee0b5"] };
   const TIMELINE = [
-    { y: 2024, when: "Aug 2024", cat: "school", title: "Started at NUS", line: "BSc Business Analytics, specialising in machine learning and financial analytics." },
-    { y: 2025, when: "Feb 2025", cat: "hack", title: "NUS Datathon", line: "Random forest that finds corporate parents, 0.949 ROC-AUC.", open: "dt" },
-    { y: 2025, when: "Feb 2025", cat: "lead", title: "Dodgeball captain", line: "Captain of Computing and CAPT dodgeball. I run weekly training." },
-    { y: 2025, when: "Mar 2025", cat: "lead", title: "Project Sa'Bai", line: "Backend developer for free eye screenings in Cambodia.", jump: "p-sabai" },
-    { y: 2025, when: "Mar 2025", cat: "lead", title: "House Head, CAPT", line: "Led a 14-person committee for over 100 residents." },
-    { y: 2025, when: "May 2025", cat: "school", title: "Swipe Survival", line: "My first full game, built in Unity for NUS Orbital.", open: "swipe" },
-    { y: 2025, when: "Aug 2025", cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
-    { y: 2026, when: "Jan 2026", cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
-    { y: 2026, when: "Mar 2026", cat: "school", title: "Audio FFT Visualizer", line: "A study tool for hearing what the Fourier maths from class describes.", open: "fft" },
-    { y: 2026, when: "Jul 2026", cat: "intern", title: "AI@CPF intern", line: "Product management and AI performance: features, specs and an AI Skills evaluation framework." },
-    { y: 2026, when: "Aug 2026", cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
-    { y: 2026, when: "Oct 2026", cat: "hack", title: "Cambridge Battlecode", line: "Our C++ bot climbed to 11th of 824 teams.", open: "bc" },
-    { y: 2026, when: "Oct 2026", cat: "hack", title: "Pet Agents", line: "A 3D game that teaches how AI agents work, built for a hackathon.", open: "pet" },
+    { y: 2024, when: "Aug 2024", m: 8, cat: "school", title: "Started at NUS", line: "BSc Business Analytics, specialising in machine learning and financial analytics." },
+    { y: 2025, when: "Feb 2025", m: 2, cat: "hack", title: "NUS Datathon", line: "Random forest that finds corporate parents, 0.949 ROC-AUC.", open: "dt" },
+    { y: 2025, when: "Feb 2025", m: 2, cat: "lead", title: "Dodgeball captain", line: "Captain of Computing and CAPT dodgeball. I run weekly training." },
+    { y: 2025, when: "Mar 2025", m: 3, cat: "lead", title: "Project Sa'Bai", line: "Backend developer for free eye screenings in Cambodia.", jump: "p-sabai" },
+    { y: 2025, when: "Mar 2025", m: 3, cat: "lead", title: "House Head, CAPT", line: "Led a 14-person committee for over 100 residents." },
+    { y: 2025, when: "May 2025", m: 5, cat: "school", title: "Swipe Survival", line: "My first full game, built in Unity for NUS Orbital.", open: "swipe" },
+    { y: 2025, when: "Aug 2025", m: 8, cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
+    { y: 2026, when: "Jan 2026", m: 1, cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
+    { y: 2026, when: "Mar 2026", m: 3, cat: "school", title: "Audio FFT Visualizer", line: "A study tool for hearing what the Fourier maths from class describes.", open: "fft" },
+    { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "AI@CPF intern", line: "Product management and AI performance: features, specs and an AI Skills evaluation framework." },
+    { y: 2026, when: "Aug 2026", m: 8, cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
+    { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Cambridge Battlecode", line: "Our C++ bot climbed to 11th of 824 teams.", open: "bc" },
+    { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Pet Agents", line: "A 3D game that teaches how AI agents work, built for a hackathon.", open: "pet" },
   ];
+  // NUS terms: Sem 1 runs Aug to Dec, Sem 2 Jan to early May, then the summer break
+  const term = (y, m) => { const yr = (m >= 8 ? y : y - 1) - 2023; return `Year ${yr} · ${m >= 8 ? "Sem 1" : m <= 4 ? "Sem 2" : "Summer"}`; };
   document.getElementById("tl-legend").innerHTML = Object.values(CATS).map(([n, c]) => `<span style="--c:${c}"><i></i>${n}</span>`).join("");
   const years = [...new Set(TIMELINE.map(t => t.y))];
   const tl = document.getElementById("tl");
@@ -1987,7 +1991,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     if (yi) html += `<i class="tl-div" style="grid-column:${col}"></i>`;
     html += `<div class="tl-label" style="grid-column:${col} / span 2"><b>${y}</b><small>${list.length} ${list.length === 1 ? "thing" : "things"}</small></div>`;
     list.forEach((t, i) => { const [cn, cc] = CATS[t.cat]; html += `<article class="tl-item ${i % 2 ? "down" : "up"}" style="--c:${cc}; grid-column:${col + 1 + i} / span 2">
-        <time>${t.when}</time><h3>${fesc(t.title)}</h3><p>${fesc(t.line)}</p><span class="tl-cat">${cn}</span>
+        <div class="tl-when"><time>${t.when}</time><span class="tl-term">${term(t.y, t.m)}</span></div><h3>${fesc(t.title)}</h3><p>${fesc(t.line)}</p><span class="tl-cat">${cn}</span>
         ${t.open ? `<button class="path-go" type="button" data-open="${t.open}">See it →</button>` : t.jump ? `<button class="path-go" type="button" data-jump="${t.jump}">See it →</button>` : ""}
       </article>`; });
     col += n;
