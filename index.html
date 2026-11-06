@@ -243,8 +243,8 @@ h2 {
 .lede-link { font-weight: 700; text-decoration: none; background-image: linear-gradient(90deg, var(--sun), var(--coral) 55%, var(--lilac)), linear-gradient(90deg, var(--sun), var(--coral) 55%, var(--lilac)); background-size: 100% 100%, 0% 2px; background-position: 0 0, 0 100%; background-repeat: no-repeat; -webkit-background-clip: text, border-box; background-clip: text, border-box; transition: background-size .35s var(--ease); }
 .lede-link:hover, .lede-link:focus-visible { background-size: 100% 100%, 100% 2px; }
 .lede-link:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; border-radius: 4px; }
-#p-datathon, #p-fintech { scroll-margin-top: 110px; }
-.hcard.pulse { animation: cardpulse 1.6s var(--ease) 1; }
+#p-sabai, #p-micron { scroll-margin-top: 110px; }
+.pulse { animation: cardpulse 1.6s var(--ease) 1; }
 @keyframes cardpulse { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 30% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--coral) 70%, transparent); } }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -348,37 +348,97 @@ h2 {
 }
 .js .reveal.in { opacity: 1; transform: none; filter: none; }
 
-/* ---------- statement ---------- */
-.statement { position: relative; height: 230vh; }
-.statement-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 28px;
+
+/* ---------- field picker ---------- */
+.fields { padding-block: 10px 30px; display: flex; flex-direction: column; gap: 16px; }
+.field-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.field-chip {
+  display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong); color: var(--fg);
+  font: inherit; font-size: 15px; font-weight: 600; text-decoration: none;
+  transition: transform 0.35s var(--ease), background 0.3s, border-color 0.3s;
 }
-.words {
-  margin: 0;
-  max-width: 22ch;
-  font-size: clamp(2rem, 5.4vw, 4.6rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.06;
+.field-chip i { font-style: normal; width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 12px var(--c); }
+.field-chip small { font-size: 12px; font-weight: 500; color: var(--muted); }
+.field-chip:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.08); border-color: color-mix(in srgb, var(--c) 55%, transparent); }
+.field-chip:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; }
+
+/* ---------- about: dated path ---------- */
+.about { padding-block: clamp(70px, 12vh, 130px) 20px; }
+.path-wrap { position: relative; margin-inline: calc(-1 * var(--gutter, 0px)); }
+.path {
+  list-style: none; margin: 0; padding: 26px 2px 18px; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr);
+  gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; position: relative;
 }
-.words .w {
-  opacity: 0.16;
-  transition: opacity 0.45s var(--ease), filter 0.45s var(--ease);
+.path li {
+  position: relative; scroll-snap-align: start; padding: 22px 20px 20px; border-radius: 22px;
+  background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px;
 }
-.words .w.lit { opacity: 1; }
-.words .w.hl {
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.path li::before { /* the dot on the line */
+  content: ""; position: absolute; top: -21px; left: 22px; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--fg); box-shadow: 0 0 0 4px var(--bg);
 }
+.path::before { content: ""; position: absolute; top: 10px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--sun), var(--coral) 50%, var(--lilac)); opacity: 0.5; }
+.path li.now::before { background: var(--coral); box-shadow: 0 0 0 4px var(--bg), 0 0 16px var(--coral); }
+.path time { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.path h3 { margin: 0; font-size: 1.2rem; letter-spacing: -0.02em; }
+.path p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.path-go {
+  margin-top: auto; align-self: flex-start; font: inherit; font-size: 13px; font-weight: 600; color: var(--fg); cursor: pointer;
+  background: none; border: 0; padding: 6px 0 0;
+}
+.path-go:hover { color: var(--coral); }
+.path-go:focus-visible { outline: 2px solid var(--lilac); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- field pages ---------- */
+.field-page {
+  position: fixed; inset: 0; z-index: 70; overflow-y: auto; overscroll-behavior: contain;
+  background: radial-gradient(70% 50% at 80% 0%, color-mix(in srgb, var(--fc, #ff7e8e) 16%, transparent), transparent 70%), var(--bg);
+  opacity: 0; transition: opacity 0.35s var(--ease);
+}
+.field-page.open { opacity: 1; }
+.field-page:focus { outline: none; }
+.path-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 60px; pointer-events: none; background: linear-gradient(90deg, transparent, var(--bg)); }
+.fp-bar {
+  position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px max(16px, env(safe-area-inset-left, 0px)); background: rgba(12, 12, 13, 0.78);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line);
+}
+.fp-back { font: inherit; font-size: 14px; font-weight: 600; color: var(--fg); background: rgba(255,255,255,.06); border: 1px solid var(--line-strong); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+.fp-back:hover { background: rgba(255,255,255,.12); }
+.fp-switch { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+.fp-switch a { flex: none; font-size: 13px; color: var(--muted); text-decoration: none; padding: 7px 12px; border-radius: 999px; border: 1px solid transparent; }
+.fp-switch a:hover { color: var(--fg); }
+.fp-switch a[aria-current="page"] { color: var(--fg); border-color: var(--line-strong); background: rgba(255,255,255,.06); }
+.fp-body { padding-block: clamp(40px, 7vh, 80px) 90px; display: flex; flex-direction: column; gap: clamp(36px, 5vw, 56px); }
+.fp-head { display: flex; flex-direction: column; gap: 16px; max-width: 760px; }
+.fp-head h2 { font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: -0.045em; line-height: 0.95; }
+.fp-head p { margin: 0; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.55; color: #c9c9cf; }
+.fp-block h3 { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+.fp-work { padding: 22px 24px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); max-width: 860px; }
+.fp-work b { display: block; margin-bottom: 6px; }
+.fp-work p { margin: 0; color: var(--muted); line-height: 1.55; }
+.fp-mods { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.fp-mods li { padding: 18px 20px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.fp-mods b { display: block; font-size: 15px; margin-bottom: 4px; }
+.fp-mods span { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.fp-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.fp-card {
+  display: flex; flex-direction: column; text-align: left; font: inherit; color: inherit; cursor: pointer; padding: 0; overflow: hidden;
+  border-radius: 22px; border: 1px solid var(--line); background: var(--surface); transition: transform 0.4s var(--ease), border-color 0.3s;
+}
+.fp-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+.fp-card:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; }
+.fp-thumb { aspect-ratio: 16 / 9; background: linear-gradient(135deg, color-mix(in srgb, var(--fc) 30%, #1b1b1f), #141416); display: grid; place-items: center; overflow: hidden; }
+.fp-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.fp-thumb span { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; color: rgba(255,255,255,.85); }
+.fp-card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
+.fp-card-body small { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.fp-card-body b { font-size: 1.15rem; letter-spacing: -0.02em; }
+.fp-card-body span { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.fp-card-body em { font-style: normal; font-size: 13px; font-weight: 600; margin-top: 4px; }
+.fp-more { color: var(--muted); font-size: 15px; }
+.fp-more a { color: var(--fg); }
 
 /* ---------- work: stacked cards ---------- */
 .work { padding-block: 40px 60px; }
@@ -1135,8 +1195,6 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; filter: none; }
-  .statement { height: auto; }
-  .statement-sticky { position: static; height: auto; padding-block: 120px; }
   .words .w { opacity: 1; }
   .ask .typed { width: 28ch; }
 }
@@ -1163,7 +1221,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         <p class="status" data-in style="--d:0"><span class="dot"></span>Open to new roles</p>
         <h1 class="name" data-in style="--d:1">Shaun<br>Lim</h1>
         <p class="lede" data-in style="--d:2">
-          Hi! I'm Shaun, a Business Analytics student at NUS specialising in <a class="grad lede-link" href="#p-datathon">machine learning</a> and <a class="grad lede-link" href="#p-fintech">financial analytics</a>. I'm <strong class="grad">curious</strong> by default, and I don't wait for a class to teach me something new. I pick it up and build with it, from a C++ bot that peaked in the top 1.4% of Cambridge Battlecode to full-stack features I shipped as an AI@CPF intern.
+          Hi! I'm Shaun, a Business Analytics student at NUS specialising in <a class="grad lede-link" href="#field/ai">machine learning</a> and <a class="grad lede-link" href="#field/finance">financial analytics</a>. I'm <strong class="grad">curious</strong> by default, and I don't wait for a class to teach me something new. I pick it up and build with it, from a C++ bot that peaked in the top 1.4% of Cambridge Battlecode to full-stack features I shipped as an AI@CPF intern.
         </p>
         <div class="cta-row" data-in style="--d:3">
           <a class="btn primary magnetic" href="#work">See my work <span class="arrow">→</span></a>
@@ -1198,10 +1256,29 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   </header>
 
   <!-- STATEMENT -->
-  <section class="statement" id="about" aria-label="About me">
-    <div class="statement-sticky wrap">
+  <!-- FIELDS -->
+  <section class="fields wrap" id="fields" aria-labelledby="fields-title">
+    <p class="eyebrow" id="fields-title">Hiring for something specific?</p>
+    <div class="field-chips" id="field-chips"></div>
+  </section>
+
+  <!-- ABOUT: a dated path -->
+  <section class="about wrap" id="about">
+    <div class="section-head reveal">
       <p class="eyebrow">About</p>
-      <p class="words" id="words">Most of what I know, I learned by *trying* it first. I open a blank file, make something *rough*, show it to a friend, and keep going until it *feels* *right.* Then I pick the next thing I don't know how to do.</p>
+      <h2>How I got here,<br><span class="grad">one project at a time.</span></h2>
+    </div>
+    <div class="path-wrap reveal">
+      <ol class="path" id="path">
+        <li><time>Aug 2024</time><h3>Started at NUS</h3><p>BSc Business Analytics, specialising in machine learning and financial analytics.</p></li>
+        <li><time>Feb 2025</time><h3>NUS Datathon</h3><p>A random forest that finds a company's corporate parent, at 0.949 ROC-AUC.</p><button class="path-go" type="button" data-open="dt">See it →</button></li>
+        <li><time>Mar 2025</time><h3>Project Sa'Bai</h3><p>Joined as a backend developer on the patient system for free eye screenings in Cambodia.</p><button class="path-go" type="button" data-jump="p-sabai">See it →</button></li>
+        <li><time>Mar 2025</time><h3>House Head, CAPT</h3><p>Led a 14-person committee running welfare and events for over 100 residents.</p></li>
+        <li><time>May 2025</time><h3>Swipe Survival</h3><p>My first full game, built in Unity for NUS Orbital and released on itch.io.</p><button class="path-go" type="button" data-open="swipe">See it →</button></li>
+        <li><time>Aug 2025</time><h3>TikTok TechJam</h3><p>Led evaluation for an LLM that moderates Google reviews.</p><button class="path-go" type="button" data-open="freddy">See it →</button></li>
+        <li><time>Jul 2026</time><h3>AI@CPF intern</h3><p>Product management and AI performance: shipping features and writing an AI Skills evaluation framework.</p></li>
+        <li class="now"><time>Oct 2026</time><h3>Cambridge Battlecode</h3><p>Our C++ bot climbed to 11th of 824 teams.</p><button class="path-go" type="button" data-open="bc">See it →</button></li>
+      </ol>
     </div>
   </section>
 
@@ -1350,7 +1427,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         </div>
       </article>
 
-      <article class="stack-card" style="--i:4">
+      <article id="p-sabai" class="stack-card" style="--i:4">
         <div class="card" style="--tint: rgba(126, 200, 255, 0.13)">
           <div class="card-text">
             <div class="meta"><span>Full-stack</span><span>Backend</span><span>Health tech</span></div>
@@ -1484,7 +1561,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         </div>
       </article>
 
-      <article class="hcard wide slim reveal">
+      <article id="p-micron" class="hcard wide slim reveal">
         <div class="card" style="--tint: rgba(185, 163, 255, 0.14)">
           <div class="card-text">
             <div class="meta"><span>Business analytics</span><span>Case competition</span></div>
@@ -1521,9 +1598,9 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         <button class="btn primary copy magnetic" id="copy" type="button">Copy email</button>
       </div>
       <div class="link-tiles">
-        <a class="lt lt-wide" style="--c:#ff9a8a" href="resume.html" target="_blank" rel="noopener">
+        <a class="lt lt-wide" style="--c:#ff9a8a" href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">
           <span class="lt-icon" style="background:linear-gradient(135deg,#ffc176,#ff7e8e 55%,#b9a3ff)"><svg viewBox="0 0 24 24" fill="none" stroke="#141416" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6M9 9h2"/></svg></span>
-          <span class="lt-text"><b>Résumé</b><small>Read it online or download the PDF</small></span><span class="lt-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          <span class="lt-text"><b>Résumé</b><small>One page, PDF</small></span><span class="lt-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
         </a>
         <a class="lt" style="--c:#f5f5f7" href="https://github.com/privateducksheep" target="_blank" rel="noopener">
           <span class="lt-icon" style="background:#f5f5f7"><svg viewBox="0 0 24 24" fill="#141416"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></span>
@@ -1546,6 +1623,14 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     <span>Designed and built by hand, one experiment at a time.</span>
   </footer>
 </main>
+
+<div class="field-page" id="field-page" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="fp-title" hidden>
+  <div class="fp-bar">
+    <button class="fp-back" id="fp-back" type="button"><span aria-hidden="true">←</span> Everything</button>
+    <nav class="fp-switch" id="fp-switch" aria-label="Fields"></nav>
+  </div>
+  <div class="fp-body wrap" id="fp-body"></div>
+</div>
 
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="vp-title" hidden>
   <div class="vp">
@@ -1576,15 +1661,6 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     [...t.children].slice(t.children.length / 2).forEach(c => c.setAttribute("aria-hidden", "true"));
   });
 
-  // split statement into words; *word* gets the gradient
-  const wordsEl = document.getElementById("words");
-  wordsEl.innerHTML = wordsEl.textContent.trim().split(/\s+/).map(w => {
-    const m = w.match(/^\*(.+)\*(\W*)$/);
-    return m ? `<span class="w hl">${m[1]}</span><span class="w">${m[2]}</span>` : `<span class="w">${w}</span>`;
-  }).join(" ");
-  const wordSpans = [...wordsEl.querySelectorAll(".w")];
-  const statement = document.querySelector(".statement");
-
   // reveal on scroll
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -1597,15 +1673,6 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   const nav = document.getElementById("nav");
   const cards = [...document.querySelectorAll(".stack-card")];
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-
-  function updateWords() {
-    const r = statement.getBoundingClientRect();
-    const span = r.height - innerHeight;
-    if (span <= 0) return;
-    const p = clamp((-r.top + innerHeight * 0.2) / (span * 0.8));
-    const lit = Math.round(p * wordSpans.length);
-    wordSpans.forEach((w, i) => w.classList.toggle("lit", i < lit));
-  }
 
   function updateStack() {
     const stacked = innerWidth > 820;
@@ -1627,7 +1694,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     const max = root.scrollHeight - innerHeight;
     progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
     nav.classList.toggle("scrolled", scrollY > 40);
-    if (!reduce) { updateWords(); updateStack(); }
+    if (!reduce) { updateStack(); }
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   addEventListener("scroll", onScroll, { passive: true });
@@ -1781,7 +1848,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   }
   function closeViewer() {
     viewer.classList.remove("open");
-    document.body.classList.remove("locked");
+    if (fieldPage.hidden) document.body.classList.remove("locked");
     stage.querySelector("video")?.pause();
     setTimeout(() => { if (!viewer.classList.contains("open")) { viewer.hidden = true; stage.innerHTML = ""; } }, 420);
     if (lastFocus) lastFocus.focus();
@@ -1794,12 +1861,123 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     const card = document.querySelector(`[data-project="${b.dataset.open}"]`)?.closest(".card.has-trailer");
     if (card) openViewer(card);
   }));
-  document.querySelectorAll(".lede-link").forEach(a => a.addEventListener("click", () => {
-    const t = document.querySelector(a.getAttribute("href"));
-    if (!t) return;
-    t.classList.add("in"); t.classList.remove("pulse");
-    setTimeout(() => { t.classList.add("pulse"); setTimeout(() => t.classList.remove("pulse"), 1700); }, 700);
+
+  // ---------- field pages: one view per area a recruiter might hire for ----------
+  const fieldPage = document.getElementById("field-page");
+  const WORK = "At AI@CPF (Jul 2026 to now)";
+  const ITEMS = {
+    swipe:   { title: "Swipe Survival", kind: "Game", line: "Narrative survival game in Unity. Swipe to decide and keep five resources above zero.", thumb: "media/swipe-t1-poster.jpg", open: "swipe" },
+    pet:     { title: "Pet Agents", kind: "Game · AI", line: "3D game in Three.js that teaches how AI agents plan, use tools and follow rules.", thumb: "media/pet-poster-f1.jpg", open: "pet" },
+    hub:     { title: "AI Hub", kind: "Web app", line: "Rebuild of an enterprise AI knowledge hub, with a working admin side and analytics.", thumb: "media/hubn-poster.jpg", open: "hub" },
+    fft:     { title: "Audio FFT Visualizer", kind: "Tool · Python", line: "Study tool: remove frequencies from a recording and hear what changes. Runs in the browser.", thumb: "media/fft-poster.jpg", open: "fft" },
+    sabai:   { title: "Project Sa'Bai", kind: "Backend", line: "Django REST APIs for the patient system used on free health screenings in Cambodia.", mark: "API", jump: "p-sabai" },
+    bc:      { title: "Cambridge Battlecode 2026", kind: "Competition", line: "C++ bot that peaked at 11th of 824 teams, plus a live match tracker I built.", thumb: "media/bc-poster.jpg", open: "bc" },
+    freddy:  { title: "TikTok TechJam 2025", kind: "Hackathon", line: "LLM pipeline that flags fake and off-topic Google reviews. I led evaluation.", thumb: "media/freddy-poster.jpg", open: "freddy" },
+    dt:      { title: "NUS Datathon 2025", kind: "Hackathon", line: "Random forest that finds a company's corporate parent, at 0.949 ROC-AUC.", thumb: "media/dt-poster.jpg", open: "dt" },
+    fintech: { title: "NUS Fintech Summit 2026", kind: "Hackathon", line: "Crypto wallet that pays by phone number over the XRP Ledger.", mark: "XRPL", jump: "p-fintech" },
+    micron:  { title: "Micron × NUS-ISE case competition", kind: "Case competition", line: "Business analytics case competition with Micron as the industry partner.", mark: "Case", jump: "p-micron" },
+  };
+  const FIELDS = [
+    { id: "ai", name: "AI & machine learning", c: "#b9a3ff",
+      intro: "Most of my machine learning work has been about measuring models honestly: building the test set, choosing the metric, and checking the output parses before trusting a score. At CPF I do the same for AI agents.",
+      work: "I wrote an evaluation framework and guidebook for AI Skills, covering skill triggering, instruction adherence, tool use, output quality and regression testing across LLMs and agent harnesses.",
+      mods: [["Feature Engineering", "Building model inputs from raw data. Our Datathon model ran on five engineered features."], ["Econometrics Modelling for Data Analytics", "Regression and inference, and the habit of asking whether a result is noise."], ["Data Structures and Algorithms", "The fundamentals behind the search and planning in our Battlecode bot."]],
+      items: ["freddy", "dt", "pet", "bc"] },
+    { id: "finance", name: "Financial analytics", c: "#7ee0b5",
+      intro: "This is my specialisation at NUS. I'm most interested in how risk gets measured and how money moves between people, and I've started building on the payments side.",
+      mods: [["Risk Analytics for Financial Services", "How financial institutions measure and manage risk."], ["Blockchains and Distributed Ledger Technologies", "How ledgers like the XRP Ledger settle payments, which our Fintech Summit wallet runs on."], ["Econometrics Modelling for Data Analytics", "Regression and time-series tools for financial data."]],
+      items: ["fintech", "dt"] },
+    { id: "data", name: "Data analytics", c: "#ffc176",
+      intro: "I like data work that ends in a decision: which maps our bot should fix first, which prompt to ship, which companies sit at the top of a group.",
+      mods: [["Data Management and Visualisation", "Modelling, querying and charting data so other people can read it."], ["Econometrics Modelling for Data Analytics", "Regression and inference for real-world data."], ["Feature Engineering", "Turning raw columns into features a model can use."]],
+      items: ["bc", "dt", "freddy", "fft", "micron"] },
+    { id: "product", name: "Product & UX", c: "#ff7e8e",
+      intro: "I care how things feel to use, and I test them on real people. At CPF that means turning what stakeholders ask for into specs people can build and test.",
+      work: "I turn stakeholder requirements and user journeys into product specs, user stories and frontend changes, then run end-to-end testing and UAT before each release. I also design user journeys for a company-wide AI Skills marketplace.",
+      mods: [["Application Systems Development for Business Analytics", "Going from business requirements to a working application."]],
+      items: ["hub", "pet", "swipe"] },
+    { id: "web", name: "Full-stack & web", c: "#7cc4ff",
+      intro: "I've worked across the stack: Django REST and PostgreSQL on the backend, React and Next.js on the front, and plain HTML, CSS and JavaScript for pages like this one.",
+      work: "I build features and UI improvements for an organisation-wide AI learning site, from specs through frontend changes and bug fixes.",
+      mods: [["Application Systems Development for Business Analytics", "Designing and building database-backed applications."], ["Data Structures and Algorithms", "The core structures behind efficient code."], ["Computing Methodology", "Programming fundamentals and problem solving."]],
+      items: ["sabai", "hub", "fft", "fintech"] },
+    { id: "games", name: "Game dev", c: "#ff9a8a",
+      intro: "Games are how I learn new tools. I picked up Unity for Swipe Survival and Three.js for Pet Agents, and wrote a competition bot in C++ for Battlecode.",
+      mods: [],
+      items: ["swipe", "pet", "bc"] },
+  ];
+  const fieldById = Object.fromEntries(FIELDS.map(f => [f.id, f]));
+  const fesc = (t) => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  document.getElementById("field-chips").innerHTML = FIELDS.map(f =>
+    `<a class="field-chip" href="#field/${f.id}" style="--c:${f.c}"><i></i>${fesc(f.name)}<small aria-label="${f.items.length} projects" title="${f.items.length} projects">${f.items.length}</small></a>`).join("");
+  document.getElementById("fp-switch").innerHTML = FIELDS.map(f => `<a href="#field/${f.id}" data-f="${f.id}">${fesc(f.name)}</a>`).join("");
+
+  function renderField(f) {
+    fieldPage.style.setProperty("--fc", f.c);
+    document.querySelectorAll("#fp-switch a").forEach(a => { if (a.dataset.f === f.id) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    const cards = f.items.map(k => { const it = ITEMS[k]; return `<button class="fp-card" type="button" data-k="${k}">
+        <div class="fp-thumb">${it.thumb ? `<img src="${it.thumb}" alt="" loading="lazy">` : `<span>${fesc(it.mark)}</span>`}</div>
+        <div class="fp-card-body"><small>${fesc(it.kind)}</small><b>${fesc(it.title)}</b><span>${fesc(it.line)}</span><em>${it.open ? "Open the write-up →" : "See it on the page →"}</em></div>
+      </button>`; }).join("");
+    document.getElementById("fp-body").innerHTML = `
+      <header class="fp-head"><p class="eyebrow">Field</p><h2 id="fp-title" class="grad">${fesc(f.name)}</h2><p>${fesc(f.intro)}</p></header>
+      ${f.work ? `<section class="fp-block"><h3>At work</h3><div class="fp-work"><b>${WORK}</b><p>${fesc(f.work)}</p></div></section>` : ""}
+      <section class="fp-block"><h3>Projects</h3><div class="fp-projects">${cards}</div></section>
+      ${f.mods.length ? `<section class="fp-block"><h3>Modules I've taken</h3><ul class="fp-mods">${f.mods.map(([m, d]) => `<li><b>${fesc(m)}</b><span>${fesc(d)}</span></li>`).join("")}</ul></section>` : `<section class="fp-block"><h3>Modules</h3><p class="fp-more">No module covers this one. I learned it by shipping games.</p></section>`}
+      <p class="fp-more">Want the full picture? <a href="#work" data-close>See everything I've made</a> or <a href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">read my résumé</a>.</p>`;
+    fieldPage.scrollTop = 0;
+  }
+  let fieldFocus = null;
+  function showField(id) {
+    const f = fieldById[id]; if (!f) return hideField();
+    if (fieldPage.hidden) { fieldFocus = document.activeElement; fieldPage.hidden = false; requestAnimationFrame(() => fieldPage.classList.add("open")); }
+    renderField(f);
+    document.body.classList.add("locked");
+    document.title = `${f.name} · Shaun Lim`;
+    fieldPage.focus({ preventScroll: true });
+    window.posthog?.capture?.("field_opened", { field: id });
+  }
+  function hideField() {
+    if (fieldPage.hidden) return;
+    fieldPage.classList.remove("open");
+    setTimeout(() => { if (!fieldPage.classList.contains("open")) fieldPage.hidden = true; }, 360);
+    if (viewer.hidden) document.body.classList.remove("locked");
+    document.title = baseTitle;
+    fieldFocus?.focus?.({ preventScroll: true });
+  }
+  const baseTitle = document.title;
+  function route() {
+    const m = location.hash.match(/^#field\/([a-z]+)/);
+    if (m) showField(m[1]); else hideField();
+  }
+  function leaveField(thenId) {
+    history.replaceState(null, "", location.pathname + location.search + (thenId ? "#" + thenId : ""));
+    hideField();
+    if (thenId) setTimeout(() => {
+      const t = document.getElementById(thenId); if (!t) return;
+      t.classList.add("in"); t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      const box = t.querySelector(".card") || t;
+      setTimeout(() => { box.classList.remove("pulse"); void box.offsetWidth; box.classList.add("pulse"); setTimeout(() => box.classList.remove("pulse"), 1700); }, 700);
+    }, 380);
+  }
+  addEventListener("hashchange", route);
+  document.getElementById("fp-back").addEventListener("click", () => leaveField(null));
+  fieldPage.addEventListener("click", (e) => {
+    const close = e.target.closest("[data-close]");
+    if (close) { e.preventDefault(); leaveField(close.getAttribute("href").slice(1)); return; }
+    const c = e.target.closest(".fp-card"); if (!c) return;
+    const it = ITEMS[c.dataset.k];
+    if (it.open) { const card = document.querySelector(`[data-project="${it.open}"]`)?.closest(".card.has-trailer"); if (card) openViewer(card); }
+    else leaveField(it.jump);
+  });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !fieldPage.hidden && viewer.hidden) leaveField(null); });
+  // timeline buttons
+  document.querySelectorAll(".path-go").forEach(b => b.addEventListener("click", () => {
+    if (b.dataset.open) { const card = document.querySelector(`[data-project="${b.dataset.open}"]`)?.closest(".card.has-trailer"); if (card) openViewer(card); }
+    else { const t = document.getElementById(b.dataset.jump); t?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }
   }));
+  route();
   document.getElementById("viewer-close").addEventListener("click", closeViewer);
   viewer.addEventListener("click", e => { if (e.target === viewer) closeViewer(); });
   addEventListener("keydown", e => {
