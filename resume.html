@@ -144,6 +144,7 @@ mark.hit { background: #ffe27a; color: inherit; border-radius: 2px; }
 .ai-form textarea { flex: 1; resize: vertical; min-height: 42px; max-height: 160px; background: var(--bg); border: 1px solid var(--line-strong); border-radius: 12px; color: var(--fg); padding: 10px 12px; font: inherit; font-size: 14px; }
 
 /* lock dialog + toast */
+[hidden] { display: none !important; }
 .lock { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); background: rgba(6, 6, 7, 0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .lock-card { width: min(380px, 100%); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
 .lock-card h2 { margin: 0; font-size: 19px; letter-spacing: -0.02em; }
