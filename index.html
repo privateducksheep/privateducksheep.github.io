@@ -378,7 +378,9 @@ h2 {
   content: ""; position: absolute; top: -21px; left: 22px; width: 10px; height: 10px; border-radius: 50%;
   background: var(--fg); box-shadow: 0 0 0 4px var(--bg);
 }
-.path::before { content: ""; position: absolute; top: 10px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--sun), var(--coral) 50%, var(--lilac)); opacity: 0.5; }
+.path li::after { content: ""; position: absolute; top: -16px; left: 0; right: -14px; height: 1px; background: linear-gradient(90deg, var(--sun), var(--coral) 50%, var(--lilac)); opacity: 0.5; z-index: -1; }
+.path li:last-child::after { right: 0; }
+.path li::before { z-index: 1; }
 .path li.now::before { background: var(--coral); box-shadow: 0 0 0 4px var(--bg), 0 0 16px var(--coral); }
 .path time { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .path h3 { margin: 0; font-size: 1.2rem; letter-spacing: -0.02em; }
@@ -1205,9 +1207,9 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 
 <nav class="nav" id="nav" aria-label="Main">
   <a class="mark" href="#top" aria-label="Back to top">SL</a>
-  <a href="#work">Work</a>
-  <a href="#about" class="hide-sm">About</a>
+  <a href="#work">Projects</a>
   <a href="#hackathons">Hackathons</a>
+  <a href="#timeline" class="hide-sm">Timeline</a>
     <a href="#contact" class="hide-sm">Contact</a>
   <a class="play" href="#work">Play</a>
 </nav>
@@ -1224,7 +1226,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
           Hi! I'm Shaun, a Business Analytics student at NUS specialising in <a class="grad lede-link" href="#field/ai">machine learning</a> and <a class="grad lede-link" href="#field/finance">financial analytics</a>. I'm <strong class="grad">curious</strong> by default, and I don't wait for a class to teach me something new. I pick it up and build with it, from a C++ bot that peaked in the top 1.4% of Cambridge Battlecode to full-stack features I shipped as an AI@CPF intern.
         </p>
         <div class="cta-row" data-in style="--d:3">
-          <a class="btn primary magnetic" href="#work">See my work <span class="arrow">→</span></a>
+          <a class="btn primary magnetic" href="#work">See my projects <span class="arrow">→</span></a>
           <a class="btn ghost magnetic" href="#contact">Say hello</a>
         </div>
       </div>
@@ -1260,59 +1262,6 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <section class="fields wrap" id="fields" aria-labelledby="fields-title">
     <p class="eyebrow" id="fields-title">Hiring for something specific?</p>
     <div class="field-chips" id="field-chips"></div>
-  </section>
-
-  <!-- ABOUT: a dated path -->
-  <section class="about wrap" id="about">
-    <div class="section-head reveal">
-      <p class="eyebrow">About</p>
-      <h2>How I got here,<br><span class="grad">one project at a time.</span></h2>
-    </div>
-    <div class="path-wrap reveal">
-      <ol class="path" id="path">
-        <li><time>Aug 2024</time><h3>Started at NUS</h3><p>BSc Business Analytics, specialising in machine learning and financial analytics.</p></li>
-        <li><time>Feb 2025</time><h3>NUS Datathon</h3><p>A random forest that finds a company's corporate parent, at 0.949 ROC-AUC.</p><button class="path-go" type="button" data-open="dt">See it →</button></li>
-        <li><time>Mar 2025</time><h3>Project Sa'Bai</h3><p>Joined as a backend developer on the patient system for free eye screenings in Cambodia.</p><button class="path-go" type="button" data-jump="p-sabai">See it →</button></li>
-        <li><time>Mar 2025</time><h3>House Head, CAPT</h3><p>Led a 14-person committee running welfare and events for over 100 residents.</p></li>
-        <li><time>May 2025</time><h3>Swipe Survival</h3><p>My first full game, built in Unity for NUS Orbital and released on itch.io.</p><button class="path-go" type="button" data-open="swipe">See it →</button></li>
-        <li><time>Aug 2025</time><h3>TikTok TechJam</h3><p>Led evaluation for an LLM that moderates Google reviews.</p><button class="path-go" type="button" data-open="freddy">See it →</button></li>
-        <li><time>Jul 2026</time><h3>AI@CPF intern</h3><p>Product management and AI performance: shipping features and writing an AI Skills evaluation framework.</p></li>
-        <li class="now"><time>Oct 2026</time><h3>Cambridge Battlecode</h3><p>Our C++ bot climbed to 11th of 824 teams.</p><button class="path-go" type="button" data-open="bc">See it →</button></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="how wrap" id="how">
-    <div class="section-head reveal">
-      <p class="eyebrow">How I work</p>
-      <h2>Curious first.<br><span class="grad">Then I build.</span></h2>
-    </div>
-    <div class="tiles">
-      <div class="tile reveal" style="--d:0">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#ffc176" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
-        <h3>Curious</h3>
-        <p>I keep asking why until the answer gets interesting. I built Audio FFT so I could hear what the Fourier maths from class was describing.</p>
-        <button class="proof" type="button" data-open="fft">Audio FFT <span aria-hidden="true">→</span></button>
-      </div>
-      <div class="tile reveal" style="--d:1">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#b9a3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M6 9v5c0 1.7 2.7 3 6 3s6-1.3 6-3V9"/></svg></div>
-        <h3>Learner</h3>
-        <p>When something catches my interest, I don't wait for a class to teach it. I pick it up and try it. Pet Agents is how I taught myself what goes on inside an AI agent.</p>
-        <button class="proof" type="button" data-open="pet">Pet Agents <span aria-hidden="true">→</span></button>
-      </div>
-      <div class="tile reveal" style="--d:2">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#ff7e8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
-        <h3>Builder</h3>
-        <p>Ideas get a working version within days, then a better one after that. Our Battlecode team uploaded 479 versions of our bot in five weeks.</p>
-        <button class="proof" type="button" data-open="bc">Cambridge Battlecode <span aria-hidden="true">→</span></button>
-      </div>
-      <div class="tile reveal" style="--d:3">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#7ee0b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5"/><path d="M9 5h10v10"/></svg></div>
-        <h3>Go-getter</h3>
-        <p>I put things out in the world, even small ones, and let real players tell me what to fix. Swipe Survival is live on itch.io.</p>
-        <button class="proof" type="button" data-open="swipe">Swipe Survival <span aria-hidden="true">→</span></button>
-      </div>
-    </div>
   </section>
 
   <!-- WORK -->
@@ -1575,6 +1524,26 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   </section>
 
   <!-- HOW I WORK -->
+
+  <!-- TIMELINE -->
+  <section class="about wrap" id="timeline">
+    <div class="section-head reveal">
+      <p class="eyebrow">Timeline</p>
+      <h2>How I got here,<br><span class="grad">one project at a time.</span></h2>
+    </div>
+    <div class="path-wrap reveal">
+      <ol class="path" id="path">
+        <li><time>Aug 2024</time><h3>Started at NUS</h3><p>BSc Business Analytics, specialising in machine learning and financial analytics.</p></li>
+        <li><time>Feb 2025</time><h3>NUS Datathon</h3><p>A random forest that finds a company's corporate parent, at 0.949 ROC-AUC.</p><button class="path-go" type="button" data-open="dt">See it →</button></li>
+        <li><time>Mar 2025</time><h3>Project Sa'Bai</h3><p>Joined as a backend developer on the patient system for free eye screenings in Cambodia.</p><button class="path-go" type="button" data-jump="p-sabai">See it →</button></li>
+        <li><time>Mar 2025</time><h3>House Head, CAPT</h3><p>Led a 14-person committee running welfare and events for over 100 residents.</p></li>
+        <li><time>May 2025</time><h3>Swipe Survival</h3><p>My first full game, built in Unity for NUS Orbital and released on itch.io.</p><button class="path-go" type="button" data-open="swipe">See it →</button></li>
+        <li><time>Aug 2025</time><h3>TikTok TechJam</h3><p>Led evaluation for an LLM that moderates Google reviews.</p><button class="path-go" type="button" data-open="freddy">See it →</button></li>
+        <li><time>Jul 2026</time><h3>AI@CPF intern</h3><p>Product management and AI performance: shipping features and writing an AI Skills evaluation framework. I rebuilt the platform from scratch as AI Hub so I can show it.</p><button class="path-go" type="button" data-open="hub">See AI Hub →</button></li>
+        <li class="now"><time>Oct 2026</time><h3>Cambridge Battlecode</h3><p>Our C++ bot climbed to 11th of 824 teams.</p><button class="path-go" type="button" data-open="bc">See it →</button></li>
+      </ol>
+    </div>
+  </section>
 
   <!-- TOOLBOX -->
   <section class="toolbox" aria-label="Toolbox">
@@ -1882,7 +1851,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       intro: "Most of my machine learning work has been about measuring models honestly: building the test set, choosing the metric, and checking the output parses before trusting a score. At CPF I do the same for AI agents.",
       work: "I wrote an evaluation framework and guidebook for AI Skills, covering skill triggering, instruction adherence, tool use, output quality and regression testing across LLMs and agent harnesses.",
       mods: [["Feature Engineering", "Building model inputs from raw data. Our Datathon model ran on five engineered features."], ["Econometrics Modelling for Data Analytics", "Regression and inference, and the habit of asking whether a result is noise."], ["Data Structures and Algorithms", "The fundamentals behind the search and planning in our Battlecode bot."]],
-      items: ["freddy", "dt", "pet", "bc"] },
+      items: ["freddy", "dt", "pet", "bc", "hub"] },
     { id: "finance", name: "Financial analytics", c: "#7ee0b5",
       intro: "This is my specialisation at NUS. I'm most interested in how risk gets measured and how money moves between people, and I've started building on the payments side.",
       mods: [["Risk Analytics for Financial Services", "How financial institutions measure and manage risk."], ["Blockchains and Distributed Ledger Technologies", "How ledgers like the XRP Ledger settle payments, which our Fintech Summit wallet runs on."], ["Econometrics Modelling for Data Analytics", "Regression and time-series tools for financial data."]],
