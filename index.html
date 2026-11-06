@@ -375,21 +375,22 @@ h2 {
 
 
 /* ---------- field picker ---------- */
-.fields { padding-block: 30px 40px; display: flex; flex-direction: column; gap: 22px; scroll-margin-top: 90px; }
-.fields-head { display: flex; flex-direction: column; gap: 6px; }
-.fields-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); letter-spacing: -0.035em; line-height: 1.05; }
-.fields-head p { margin: 0; color: var(--muted); font-size: 15px; }
-.field-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.fields { padding-block: clamp(50px, 9vh, 100px) 20px; scroll-margin-top: 70px; }
+.field-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .field-chip {
-  display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line-strong); color: var(--fg);
-  font: inherit; font-size: 16px; font-weight: 600; text-decoration: none;
+  display: flex; align-items: center; gap: 12px; padding: 20px 22px; border-radius: 20px;
+  background: var(--surface); border: 1px solid var(--line); color: var(--fg);
+  font: inherit; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; text-decoration: none;
   transition: transform 0.35s var(--ease), background 0.3s, border-color 0.3s;
 }
-.field-chip i { font-style: normal; width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 12px var(--c); }
-.field-chip small { font-size: 12px; font-weight: 500; color: var(--muted); }
-.field-chip:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.08); border-color: color-mix(in srgb, var(--c) 55%, transparent); }
+.field-chip i { flex: none; font-style: normal; width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 12px var(--c); }
+.field-chip small { margin-left: auto; font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+.field-chip::after { content: "→"; color: var(--muted); transition: transform .3s var(--ease), color .3s; }
+.field-chip:hover { transform: translateY(-3px); background: color-mix(in srgb, var(--c) 7%, var(--surface)); border-color: color-mix(in srgb, var(--c) 50%, transparent); }
+.field-chip:hover::after { transform: translateX(3px); color: var(--c); }
 .field-chip:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; }
+@media (max-width: 900px) { .field-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .field-chips { grid-template-columns: minmax(0, 1fr); } .field-chip { padding: 16px 18px; font-size: 16px; } }
 
 /* ---------- timeline: years in a row, items above and below ---------- */
 .about { padding-block: clamp(70px, 12vh, 130px) 20px; }
@@ -1318,9 +1319,9 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <!-- STATEMENT -->
   <!-- FIELDS -->
   <section class="fields wrap" id="fields" aria-labelledby="fields-title">
-    <div class="fields-head">
-      <h2 id="fields-title">Areas of focus</h2>
-      <p>Pick one to see the projects, work and modules behind it.</p>
+    <div class="section-head reveal">
+      <p class="eyebrow">Areas of focus</p>
+      <h2 id="fields-title">Six areas I've worked in.<br><span class="grad">Pick one to go deeper.</span></h2>
     </div>
     <div class="field-chips" id="field-chips"></div>
   </section>
@@ -1329,7 +1330,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <section class="work wrap" id="work">
     <div class="section-head reveal">
       <p class="eyebrow">Selected work</p>
-      <h2>Things I've made<br>and put out there.</h2>
+      <h2>Things I've made<br><span class="grad">and put out there.</span></h2>
     </div>
 
     <div class="stack" id="stack">
@@ -1932,7 +1933,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   const fesc = (t) => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   document.getElementById("field-chips").innerHTML = FIELDS.map(f =>
-    `<a class="field-chip" href="#field/${f.id}" style="--c:${f.c}"><i></i>${fesc(f.name)}<small aria-label="${f.items.length} projects" title="${f.items.length} projects">${f.items.length}</small></a>`).join("");
+    `<a class="field-chip" href="#field/${f.id}" style="--c:${f.c}"><i></i>${fesc(f.name)}<small>${f.items.length} projects</small></a>`).join("");
   document.getElementById("fp-switch").innerHTML = FIELDS.map(f => `<a href="#field/${f.id}" data-f="${f.id}">${fesc(f.name)}</a>`).join("");
 
   function renderField(f) {
