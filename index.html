@@ -146,8 +146,11 @@ h2 {
 }
 .nav-ind::after { content: ""; position: absolute; left: 50%; bottom: -3px; width: 14px; height: 2px; margin-left: -7px; border-radius: 2px; background: var(--grad); }
 .nav-ind.on { opacity: 1; }
+@media (max-width: 420px) { .nav { gap: 0; padding: 5px; } .nav a { padding: 8px 9px; font-size: 13px; } .nav .mark { width: 32px; height: 32px; } }
+@media (max-width: 380px) { .nav a { padding: 8px 6px; font-size: 12.5px; } }
+@media (max-width: 345px) { .nav { overflow-x: auto; scrollbar-width: none; } .nav::-webkit-scrollbar { display: none; } .nav .play span { display: none; } }
 .nav .mark {
-  width: 32px; height: 32px;
+  width: 32px; height: 32px; flex: none;
   padding: 0;
   display: grid;
   place-items: center;
@@ -372,12 +375,15 @@ h2 {
 
 
 /* ---------- field picker ---------- */
-.fields { padding-block: 10px 30px; display: flex; flex-direction: column; gap: 16px; }
+.fields { padding-block: 30px 40px; display: flex; flex-direction: column; gap: 22px; scroll-margin-top: 90px; }
+.fields-head { display: flex; flex-direction: column; gap: 6px; }
+.fields-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); letter-spacing: -0.035em; line-height: 1.05; }
+.fields-head p { margin: 0; color: var(--muted); font-size: 15px; }
 .field-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .field-chip {
-  display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong); color: var(--fg);
-  font: inherit; font-size: 15px; font-weight: 600; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line-strong); color: var(--fg);
+  font: inherit; font-size: 16px; font-weight: 600; text-decoration: none;
   transition: transform 0.35s var(--ease), background 0.3s, border-color 0.3s;
 }
 .field-chip i { font-style: normal; width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 12px var(--c); }
@@ -1273,6 +1279,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 <nav class="nav" id="nav" aria-label="Main">
   <span class="nav-ind" id="nav-ind" aria-hidden="true"></span>
   <a class="mark" href="#top" aria-label="Back to top">SL</a>
+  <a href="#fields">Focus<span class="hide-sm"> areas</span></a>
   <a href="#work">Projects</a>
   <a href="#hackathons">Hackathons</a>
   <a href="#timeline" class="hide-sm">Timeline</a>
@@ -1311,7 +1318,10 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <!-- STATEMENT -->
   <!-- FIELDS -->
   <section class="fields wrap" id="fields" aria-labelledby="fields-title">
-    <p class="eyebrow" id="fields-title">Hats I've worn</p>
+    <div class="fields-head">
+      <h2 id="fields-title">Areas of focus</h2>
+      <p>Pick one to see the projects, work and modules behind it.</p>
+    </div>
     <div class="field-chips" id="field-chips"></div>
   </section>
 
