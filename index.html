@@ -136,6 +136,16 @@ h2 {
   white-space: nowrap;
 }
 .nav a:hover { color: var(--fg); background: rgba(255, 255, 255, 0.06); }
+.nav a { position: relative; z-index: 1; }
+.nav a.active { color: var(--fg); }
+.nav a.active:hover { background: transparent; }
+.nav-ind { /* slides under whichever section you're in */
+  position: absolute; z-index: 0; top: 6px; height: calc(100% - 12px); left: 0; width: 0; border-radius: 999px; pointer-events: none;
+  background: rgba(255, 255, 255, 0.1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  opacity: 0; transition: transform 0.45s var(--ease), width 0.45s var(--ease), opacity 0.3s;
+}
+.nav-ind::after { content: ""; position: absolute; left: 50%; bottom: -3px; width: 14px; height: 2px; margin-left: -7px; border-radius: 2px; background: var(--grad); }
+.nav-ind.on { opacity: 1; }
 .nav .mark {
   width: 32px; height: 32px;
   padding: 0;
@@ -1261,6 +1271,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 <div class="glow" id="glow" aria-hidden="true"></div>
 
 <nav class="nav" id="nav" aria-label="Main">
+  <span class="nav-ind" id="nav-ind" aria-hidden="true"></span>
   <a class="mark" href="#top" aria-label="Back to top">SL</a>
   <a href="#work">Projects</a>
   <a href="#hackathons">Hackathons</a>
@@ -1971,6 +1982,30 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     else leaveField(it.jump);
   });
   addEventListener("keydown", (e) => { if (e.key === "Escape" && !fieldPage.hidden && viewer.hidden) leaveField(null); });
+  // ---------- nav: show which section you're in ----------
+  const spyLinks = [...document.querySelectorAll('#nav a[href^="#"]:not(.mark):not(.play)')];
+  const spyTargets = spyLinks.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+  const navInd = document.getElementById("nav-ind");
+  let spyLock = 0;
+  function setActive(link) {
+    spyLinks.forEach(a => { const on = a === link; a.classList.toggle("active", on); if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    const visible = link && link.offsetParent !== null;
+    navInd.classList.toggle("on", !!visible);
+    if (visible) { navInd.style.width = link.offsetWidth + "px"; navInd.style.transform = `translateX(${link.offsetLeft}px)`; }
+  }
+  function spy() {
+    if (Date.now() < spyLock) return;
+    const line = innerHeight * 0.35;
+    let cur = null;
+    spyTargets.forEach((t, i) => { if (t.getBoundingClientRect().top <= line) cur = spyLinks[i]; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = spyLinks[spyLinks.length - 1];
+    if (cur !== spyLinks.find(a => a.classList.contains("active"))) setActive(cur);
+  }
+  spyLinks.forEach(a => a.addEventListener("click", () => { setActive(a); spyLock = Date.now() + 900; }));
+  addEventListener("scroll", spy, { passive: true });
+  addEventListener("resize", () => setActive(spyLinks.find(a => a.classList.contains("active")) || null));
+  spy();
+
   // ---------- photo stack: the front photo slides to the back ----------
   const stackPhotos = [...document.querySelectorAll("#portrait .layer.photo")];
   let shuffling = false;
