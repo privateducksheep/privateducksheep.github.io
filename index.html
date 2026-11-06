@@ -919,8 +919,18 @@ body.locked { overflow: hidden; }
 }
 .tile:hover .glyph { transform: rotate(-8deg) scale(1.08); }
 .tile .glyph svg { width: 22px; height: 22px; }
-.tile h3 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em; margin-top: auto; }
+.tile h3 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em; margin-top: 18px; }
 .tile p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.tile .proof {
+  position: relative; z-index: 1; align-self: flex-start; margin-top: auto;
+  font: inherit; font-size: 13px; font-weight: 600; color: var(--fg);
+  padding: 7px 12px; border-radius: 999px; cursor: pointer;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line-strong);
+  transition: background 0.3s, transform 0.3s var(--ease);
+}
+.tile .proof:hover { background: rgba(255, 255, 255, 0.12); transform: translateX(3px); }
+.tile .proof:focus-visible { outline: 2px solid var(--lilac); outline-offset: 2px; }
+.how { padding-block: clamp(40px, 8vh, 90px) 40px; }
 
 /* ---------- toolbox marquee ---------- */
 .toolbox { padding-block: clamp(70px, 12vh, 130px); display: flex; flex-direction: column; gap: 28px; }
@@ -1062,8 +1072,9 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 @media (max-width: 820px) {
   .hero-grid { grid-template-columns: 1fr; }
   .portrait-wrap { order: -1; width: min(300px, 70vw); justify-self: start; margin-left: 12px; }
-  .chip.c1 { left: auto; right: -18%; top: 6%; }
-  .chip.c3 { left: auto; right: -22%; bottom: 14%; }
+  .chip { font-size: 12.5px; padding: 8px 13px; }
+  .chip.c1 { left: auto; right: -4%; top: 6%; }
+  .chip.c3 { left: auto; right: -4%; bottom: 12%; }
   .chip.c2 { display: none; }
   .card { grid-template-columns: 1fr; }
   .card-visual { order: -1; aspect-ratio: 4 / 3; }
@@ -1133,8 +1144,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <a href="#work">Work</a>
   <a href="#about" class="hide-sm">About</a>
   <a href="#hackathons">Hackathons</a>
-  <a href="#how" class="hide-sm">How I work</a>
-  <a href="#contact" class="hide-sm">Contact</a>
+    <a href="#contact" class="hide-sm">Contact</a>
   <a class="play" href="#work">Play</a>
 </nav>
 
@@ -1147,7 +1157,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         <p class="status" data-in style="--d:0"><span class="dot"></span>Open to new roles</p>
         <h1 class="name" data-in style="--d:1">Shaun<br>Lim</h1>
         <p class="lede" data-in style="--d:2">
-          I learn by <strong class="grad">building</strong>. Hand me a half-formed idea and I'll have a rough version running by the weekend, then a better one the week after. I make games, websites and interfaces, and I care about how they feel: the bounce of a card, the timing of a fade.
+          Hi, I'm Shaun. I study Business Analytics at NUS, specialising in machine learning and financial analytics. I'm <strong class="grad">curious</strong> about things I don't know yet, especially new technology, and I love working out how they connect to products, data and the people who use them.
         </p>
         <div class="cta-row" data-in style="--d:3">
           <a class="btn primary magnetic" href="#work">See my work <span class="arrow">→</span></a>
@@ -1174,9 +1184,9 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
             </svg>
           </div>
         </div>
-        <span class="chip c1"><i>●</i>curious</span>
-        <span class="chip c2"><i>●</i>ships fast</span>
-        <span class="chip c3"><i>●</i>always learning</span>
+        <span class="chip c1"><i>●</i>NUS Business Analytics</span>
+        <span class="chip c2"><i>●</i>AI@CPF intern</span>
+        <span class="chip c3"><i>●</i>Top 1.4% at Battlecode</span>
       </div>
     </div>
   </header>
@@ -1186,6 +1196,39 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     <div class="statement-sticky wrap">
       <p class="eyebrow">About</p>
       <p class="words" id="words">Most of what I know, I learned by *trying* it first. I open a blank file, make something *rough*, show it to a friend, and keep going until it *feels* *right.* Then I pick the next thing I don't know how to do.</p>
+    </div>
+  </section>
+
+  <section class="how wrap" id="how">
+    <div class="section-head reveal">
+      <p class="eyebrow">How I work</p>
+      <h2>Curious first.<br><span class="grad">Then I build.</span></h2>
+    </div>
+    <div class="tiles">
+      <div class="tile reveal" style="--d:0">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#ffc176" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+        <h3>Curious</h3>
+        <p>I keep asking why until the answer gets interesting. I built Audio FFT so I could hear what the Fourier maths from class was describing.</p>
+        <button class="proof" type="button" data-open="fft">Audio FFT <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="tile reveal" style="--d:1">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#b9a3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M6 9v5c0 1.7 2.7 3 6 3s6-1.3 6-3V9"/></svg></div>
+        <h3>Learner</h3>
+        <p>When something catches my interest, I don't wait for a class to teach it. I pick it up and try it. Pet Agents is how I taught myself what goes on inside an AI agent.</p>
+        <button class="proof" type="button" data-open="pet">Pet Agents <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="tile reveal" style="--d:2">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#ff7e8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
+        <h3>Builder</h3>
+        <p>Ideas get a working version within days, then a better one after that. Our Battlecode team uploaded 479 versions of our bot in five weeks.</p>
+        <button class="proof" type="button" data-open="bc">Cambridge Battlecode <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="tile reveal" style="--d:3">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#7ee0b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5"/><path d="M9 5h10v10"/></svg></div>
+        <h3>Go-getter</h3>
+        <p>I put things out in the world, even small ones, and let real players tell me what to fix. Swipe Survival is live on itch.io.</p>
+        <button class="proof" type="button" data-open="swipe">Swipe Survival <span aria-hidden="true">→</span></button>
+      </div>
     </div>
   </section>
 
@@ -1449,34 +1492,6 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   </section>
 
   <!-- HOW I WORK -->
-  <section class="how wrap" id="how">
-    <div class="section-head reveal">
-      <p class="eyebrow">How I work</p>
-      <h2>Curious first.<br><span class="grad">Then I build.</span></h2>
-    </div>
-    <div class="tiles">
-      <div class="tile reveal" style="--d:0">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#ffc176" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
-        <h3>Curious</h3>
-        <p>I keep asking why until the answer gets interesting, then I go and test it.</p>
-      </div>
-      <div class="tile reveal" style="--d:1">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#ff7e8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
-        <h3>Builder</h3>
-        <p>Ideas get a working prototype within days. Sketches are fine; a clickable thing is better.</p>
-      </div>
-      <div class="tile reveal" style="--d:2">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#b9a3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M6 9v5c0 1.7 2.7 3 6 3s6-1.3 6-3V9"/></svg></div>
-        <h3>Learner</h3>
-        <p>Every project, I pick one tool I haven't used before and learn it on the job.</p>
-      </div>
-      <div class="tile reveal" style="--d:3">
-        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#7ee0b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5"/><path d="M9 5h10v10"/></svg></div>
-        <h3>Go-getter</h3>
-        <p>I put things out in the world, even small ones, and let real players tell me what to fix.</p>
-      </div>
-    </div>
-  </section>
 
   <!-- TOOLBOX -->
   <section class="toolbox" aria-label="Toolbox">
@@ -1769,6 +1784,10 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   document.querySelectorAll(".card.has-trailer").forEach(card => {
     card.addEventListener("click", e => { if (!e.target.closest("a")) openViewer(card); });
   });
+  document.querySelectorAll(".proof[data-open]").forEach(b => b.addEventListener("click", () => {
+    const card = document.querySelector(`[data-project="${b.dataset.open}"]`)?.closest(".card.has-trailer");
+    if (card) openViewer(card);
+  }));
   document.getElementById("viewer-close").addEventListener("click", closeViewer);
   viewer.addEventListener("click", e => { if (e.target === viewer) closeViewer(); });
   addEventListener("keydown", e => {
