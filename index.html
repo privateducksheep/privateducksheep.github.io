@@ -1336,7 +1336,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
             <section><h4>What I learned</h4><p>I learned how to explain goals, tools and rules to people who have never touched an AI agent, without burying them in jargon. Designing the levels taught me to give each one a single idea, then let players watch their pet get it wrong and work out the fix themselves. On the build side, I put together a 3D world in Three.js with a Node server that plans every move your pet makes.</p></section>
           </template>
           <div class="card-text">
-            <div class="meta"><span>Game</span><span>Three.js</span><span>Internship</span><span class="live">New</span></div>
+            <div class="meta"><span>Game</span><span>Three.js</span><span>Hackathon</span><span class="live">New</span></div>
             <h3 class="with-icon"><img class="proj-icon" src="media/neko.svg" alt="">Pet Agents</h3>
             <p>A game about how AI agents work. You can't steer your pet. You pack its harness with a goal, tools, rules and a plan, press go, and watch it plan and act on its own. Type the job in your own words and an AI model turns it into steps the pet can follow.</p>
             <p class="learned"><b>What I learned:</b> how to teach goals, tools and rules to people who have never used an AI agent.</p>
@@ -1855,7 +1855,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   const WORK = "At AI@CPF (Jul 2026 to now)";
   const ITEMS = {
     swipe:   { title: "Swipe Survival", kind: "Game", line: "Narrative survival game in Unity. Swipe to decide and keep five resources above zero.", thumb: "media/swipe-t1-poster.jpg", open: "swipe" },
-    pet:     { title: "Pet Agents", kind: "Game · AI", line: "3D game in Three.js that teaches how AI agents plan, use tools and follow rules.", thumb: "media/pet-poster-f1.jpg", open: "pet" },
+    pet:     { title: "Pet Agents", kind: "Game · Hackathon", line: "3D game in Three.js that teaches how AI agents plan, use tools and follow rules.", thumb: "media/pet-poster-f1.jpg", open: "pet" },
     hub:     { title: "AI Hub", kind: "Web app", line: "Rebuild of an enterprise AI knowledge hub, with a working admin side and analytics.", thumb: "media/hubn-poster.jpg", open: "hub" },
     fft:     { title: "Audio FFT Visualizer", kind: "Tool · Python", line: "Study tool: remove frequencies from a recording and hear what changes. Runs in the browser.", thumb: "media/fft-poster.jpg", open: "fft" },
     sabai:   { title: "Project Sa'Bai", kind: "Backend", line: "Django REST APIs for the patient system used on free health screenings in Cambodia.", mark: "API", jump: "p-sabai" },
@@ -1970,11 +1970,12 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     { y: 2025, when: "Mar 2025", cat: "lead", title: "House Head, CAPT", line: "Led a 14-person committee for over 100 residents." },
     { y: 2025, when: "May 2025", cat: "school", title: "Swipe Survival", line: "My first full game, built in Unity for NUS Orbital.", open: "swipe" },
     { y: 2025, when: "Aug 2025", cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
-    { y: 2026, when: "2026", cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
+    { y: 2026, when: "Jan 2026", cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
+    { y: 2026, when: "Mar 2026", cat: "school", title: "Audio FFT Visualizer", line: "A study tool for hearing what the Fourier maths from class describes.", open: "fft" },
     { y: 2026, when: "Jul 2026", cat: "intern", title: "AI@CPF intern", line: "Product management and AI performance: features, specs and an AI Skills evaluation framework." },
-    { y: 2026, when: "At CPF", cat: "intern", title: "Pet Agents", line: "A 3D game that teaches how AI agents work.", open: "pet" },
-    { y: 2026, when: "At CPF", cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
+    { y: 2026, when: "Aug 2026", cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
     { y: 2026, when: "Oct 2026", cat: "hack", title: "Cambridge Battlecode", line: "Our C++ bot climbed to 11th of 824 teams.", open: "bc" },
+    { y: 2026, when: "Oct 2026", cat: "hack", title: "Pet Agents", line: "A 3D game that teaches how AI agents work, built for a hackathon.", open: "pet" },
   ];
   document.getElementById("tl-legend").innerHTML = Object.values(CATS).map(([n, c]) => `<span style="--c:${c}"><i></i>${n}</span>`).join("");
   const years = [...new Set(TIMELINE.map(t => t.y))];
