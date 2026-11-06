@@ -1521,15 +1521,17 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       <article id="p-datathon" class="hcard reveal">
         <div class="card has-trailer" style="--tint: rgba(126, 224, 181, 0.14)">
           <template class="writeup">
-            <section><h4>The problem</h4><p>NUS Datathon 2025 gave us company records from the Champions Group and asked which companies sit at the top of their corporate family: the domestic ultimate parent in their country, and the global ultimate parent overall. There were 29,182 rows.</p></section>
-            <section><h4>What we did</h4><p>We cleaned the data, filled missing values with medians and kept five features: domestic and global employee totals, domestic and global sales totals, and single-site headcount. A random forest with balanced class weights went through a 36-setting grid search with 5-fold cross-validation, scored on ROC-AUC. We then used feature importance to explain to the judges why each prediction came out the way it did.</p></section>
-            <section><h4>Takeaways</h4><ul><li>A few features that capture group structure beat a long list of raw columns.</li><li>Check class balance first. Domestic parents were 50/50, but global parents were only 26% of rows.</li><li>Judges remember the explanation more than the score.</li></ul></section>
+            <section><h4>The problem</h4><p>NUS Datathon 2025 gave us 29,182 company records from Champions Group. For each company we had to predict two flags: whether it is the domestic ultimate parent, meaning the top of its corporate group in its country, and whether it is the global ultimate parent. The results here are for the domestic model.</p></section>
+            <section><h4>How we built it</h4><p>We dropped the parent company, parent country and square footage columns, turned infinite values into blanks and filled gaps with each column's median. The model used five columns: employees and sales for the domestic group, employees and sales for the global group, and employees at the company's own site. We held out 20% of companies, stratified so both sets had the same share of parents. A grid search tried 36 combinations of forest size, tree depth and minimum split size, each scored on ROC-AUC with 5-fold cross-validation. The best used 300 trees, a maximum depth of 20 and at least 10 samples per split.</p></section>
+            <section><h4>Why a random forest</h4><ul><li>Employee and sales figures vary hugely between companies. Trees split on thresholds, so they aren't thrown by scale or skew.</li><li>Whether a company is the parent depends on how its own numbers compare with its group's. Trees learn combinations like that without us building ratio features by hand.</li><li>Averaging 300 trees, each trained on a different sample of rows, cuts the overfitting a single deep tree would have.</li><li>It outputs probabilities, which ROC-AUC needs, and supports balanced class weights for the global target, where only about 26% of companies are parents.</li><li>Its feature importances gave us a simple way to show the judges what the model relied on.</li></ul></section>
+            <section><h4>Reading the results</h4><p>On the 5,837 held-out companies the model scored 0.949 ROC-AUC, 0.90 F1 and 0.895 accuracy. It leans towards catching parents. Recall is 0.945, so it missed 162 of 2,919 real parents, while precision is 0.859, because 451 companies it flagged were not parents.</p></section>
+            <section><h4>Takeaways</h4><ul><li>Check class balance first. Domestic parents were 50/50 but global parents were about 26%, which is why we weighted the classes.</li><li>Trees don't need scaled inputs. Our pipeline standardised the features anyway, and next time I'd drop that step.</li><li>Next time I'd back up feature importance with permutation importance, because the built-in measure tends to favour wide-ranging numeric columns.</li></ul></section>
           </template>
           <div class="card-text">
             <div class="meta"><span>Machine learning</span><span>Python</span></div>
             <h3>NUS Datathon 2025</h3>
             <div class="stat"><b>0.949</b><span>ROC-AUC · 0.90 F1 on 5,837 held-out companies</span></div>
-            <p>A tuned random forest that predicts whether a company is the top parent of its corporate group, from 29,182 company records.</p>
+            <p>A tuned random forest that predicts whether a company is the top parent of its corporate group in its country, from 29,182 company records.</p>
           </div>
           <button class="card-visual media" type="button" data-tilt data-project="dt" aria-label="Open NUS Datathon 2025">
             <img src="media/dt-poster.jpg" alt="" loading="lazy">
@@ -1883,7 +1885,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     sabai:   { title: "Project Sa'Bai", kind: "Backend", line: "Django REST APIs for the patient system used on free health screenings in Cambodia.", mark: "API", jump: "p-sabai" },
     bc:      { title: "Cambridge Battlecode 2026", kind: "Competition", line: "C++ bot that peaked at 11th of 824 teams, plus a live match tracker I built.", thumb: "media/bc-poster.jpg", open: "bc" },
     freddy:  { title: "TikTok TechJam 2025", kind: "Hackathon", line: "LLM pipeline that flags fake and off-topic Google reviews. I led evaluation.", thumb: "media/freddy-poster.jpg", open: "freddy" },
-    dt:      { title: "NUS Datathon 2025", kind: "Hackathon", line: "Random forest that finds a company's corporate parent, at 0.949 ROC-AUC.", thumb: "media/dt-poster.jpg", open: "dt" },
+    dt:      { title: "NUS Datathon 2025", kind: "Hackathon", line: "Random forest that predicts whether a company tops its corporate group, at 0.949 ROC-AUC.", thumb: "media/dt-poster.jpg", open: "dt" },
     fintech: { title: "NUS Fintech Summit 2026", kind: "Hackathon", line: "Crypto wallet that pays by phone number over the XRP Ledger.", mark: "XRPL", jump: "p-fintech" },
     micron:  { title: "Micron × NUS-ISE case competition", kind: "Case competition", line: "Business analytics case competition with Micron as the industry partner.", mark: "Case", jump: "p-micron" },
   };
@@ -1891,7 +1893,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     { id: "ai", name: "AI & machine learning", c: "#b9a3ff",
       intro: "Most of my machine learning work has been about measuring models honestly: building the test set, choosing the metric, and checking the output parses before trusting a score. At CPF I do the same for AI agents.",
       work: "I wrote an evaluation framework and guidebook for AI Skills, covering skill triggering, instruction adherence, tool use, output quality and regression testing across LLMs and agent harnesses.",
-      mods: [["Feature Engineering", "Building model inputs from raw data. Our Datathon model ran on five engineered features."], ["Econometrics Modelling for Data Analytics", "Regression and inference, and the habit of asking whether a result is noise."], ["Data Structures and Algorithms", "The fundamentals behind the search and planning in our Battlecode bot."]],
+      mods: [["Feature Engineering", "Choosing and building model inputs from raw data. For the Datathon we narrowed the dataset to five columns."], ["Econometrics Modelling for Data Analytics", "Regression and inference, and the habit of asking whether a result is noise."], ["Data Structures and Algorithms", "The fundamentals behind the search and planning in our Battlecode bot."]],
       items: ["freddy", "dt", "pet", "bc", "hub"] },
     { id: "finance", name: "Financial analytics", c: "#7ee0b5",
       intro: "This is my specialisation at NUS. I'm most interested in how risk gets measured and how money moves between people, and I've started building on the payments side.",
@@ -2029,7 +2031,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   const CATS = { school: ["School", "#b9a3ff"], hack: ["Hackathons & competitions", "#ff7e8e"], intern: ["Internship", "#ffc176"], lead: ["Leadership & volunteering", "#7ee0b5"] };
   const TIMELINE = [
     { y: 2024, when: "Aug 2024", m: 8, cat: "school", title: "Started at NUS", line: "BSc Business Analytics, specialising in machine learning and financial analytics." },
-    { y: 2025, when: "Feb 2025", m: 2, cat: "hack", title: "NUS Datathon", line: "Random forest that finds corporate parents, 0.949 ROC-AUC.", open: "dt" },
+    { y: 2025, when: "Feb 2025", m: 2, cat: "hack", title: "NUS Datathon", line: "Random forest that predicts which companies top their corporate group, 0.949 ROC-AUC.", open: "dt" },
     { y: 2025, when: "Feb 2025", m: 2, cat: "lead", title: "Dodgeball captain", line: "Captain of Computing and CAPT dodgeball. I run weekly training." },
     { y: 2025, when: "Mar 2025", m: 3, cat: "lead", title: "Project Sa'Bai", line: "Built backend APIs from Singapore for a patient system used on free eye screenings in Cambodia.", jump: "p-sabai" },
     { y: 2025, when: "Mar 2025", m: 3, cat: "lead", title: "House Head, CAPT", line: "Led a 14-person committee for over 100 residents." },
