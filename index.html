@@ -147,6 +147,22 @@ h2 {
 }
 .nav-ind::after { content: ""; position: absolute; left: 50%; bottom: -3px; width: 14px; height: 2px; margin-left: -7px; border-radius: 2px; background: var(--grad); }
 .nav-ind.on { opacity: 1; }
+.nav-drop { position: relative; display: flex; }
+.nav-menu {
+  position: absolute; top: calc(100% + 14px); left: 50%; width: 300px; padding: 8px; border-radius: 20px; z-index: 5;
+  background: rgba(20, 20, 23, 0.92); border: 1px solid var(--line-strong); box-shadow: 0 24px 60px rgba(0,0,0,.55);
+  backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  opacity: 0; visibility: hidden; transform: translate(-50%, -6px); transition: opacity .25s var(--ease), transform .3s var(--ease), visibility 0s .3s;
+}
+.nav-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 16px; } /* hover bridge */
+.nav-menu p { margin: 4px 10px 8px; font-size: 12px; color: var(--muted); }
+.nav .nav-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; color: var(--fg); font-size: 14px; font-weight: 550; }
+.nav .nav-menu a i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+.nav .nav-menu a small { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 500; }
+.nav .nav-menu a:hover, .nav .nav-menu a:focus-visible { background: rgba(255,255,255,.07); }
+@media (hover: hover) and (min-width: 761px) {
+  .nav-drop:hover .nav-menu, .nav-drop:focus-within .nav-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .25s var(--ease), transform .3s var(--ease), visibility 0s; }
+}
 @media (max-width: 420px) { .nav { gap: 0; padding: 5px; } .nav a { padding: 8px 9px; font-size: 13px; } .nav .mark { width: 32px; height: 32px; } }
 @media (max-width: 380px) { .nav a { padding: 8px 6px; font-size: 12.5px; } }
 @media (max-width: 345px) { .nav { overflow-x: auto; scrollbar-width: none; } .nav::-webkit-scrollbar { display: none; } .nav .play span { display: none; } }
@@ -545,7 +561,7 @@ h2 {
 
 /* ---------- field pages ---------- */
 .field-page {
-  position: fixed; inset: 0; z-index: 70; overflow-y: auto; overscroll-behavior: contain;
+  position: fixed; inset: 0; z-index: 70; overflow-y: auto; overscroll-behavior-y: contain;
   background: radial-gradient(70% 50% at 80% 0%, color-mix(in srgb, var(--fc, #ff7e8e) 16%, transparent), transparent 70%), var(--bg);
   opacity: 0; transition: opacity 0.35s var(--ease);
 }
@@ -1356,7 +1372,10 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 <nav class="nav" id="nav" aria-label="Main">
   <span class="nav-ind" id="nav-ind" aria-hidden="true"></span>
   <a class="mark" href="#top" aria-label="Back to top">SL</a>
-  <a href="#fields">Focus<span class="hide-sm"> areas</span></a>
+  <div class="nav-drop" id="nav-drop">
+    <a href="#fields" aria-haspopup="true">Focus<span class="hide-sm"> areas</span></a>
+    <div class="nav-menu" id="nav-menu" role="menu" aria-label="Focus areas"></div>
+  </div>
   <a href="#work">Projects</a>
   <a href="#hackathons">Hackathons</a>
   <a href="#timeline" class="hide-sm">Timeline</a>
@@ -2080,6 +2099,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       n.addEventListener("mouseleave", clear); n.addEventListener("blur", clear);
       n.addEventListener("click", () => openProj(n.dataset.p)); n.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openProj(n.dataset.p); } }); });
   })();
+  document.getElementById("nav-menu").innerHTML = '<p>Jump straight to an area</p>' + FIELDS.map(f => `<a role="menuitem" href="#field/${f.id}" style="--c:${f.c}"><i></i>${fesc(f.name)}<small>${f.items.length}</small></a>`).join("");
   document.getElementById("fp-switch").innerHTML = FIELDS.map(f => `<a href="#field/${f.id}" data-f="${f.id}">${fesc(f.name)}</a>`).join("");
 
   function renderField(f) {
@@ -2140,9 +2160,17 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     if (it.open) { const card = document.querySelector(`[data-project="${it.open}"]`)?.closest(".card.has-trailer"); if (card) openViewer(card); }
     else leaveField(it.jump);
   });
+  addEventListener("keydown", (e) => {
+    if (fieldPage.hidden || !viewer.hidden || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    const m = location.hash.match(/^#field\/([a-z]+)/); if (!m) return;
+    const i = FIELDS.findIndex(f => f.id === m[1]); if (i < 0) return;
+    const next = FIELDS[(i + (e.key === "ArrowRight" ? 1 : FIELDS.length - 1)) % FIELDS.length];
+    e.preventDefault(); history.replaceState(null, "", "#field/" + next.id); showField(next.id);
+  });
   addEventListener("keydown", (e) => { if (e.key === "Escape" && !fieldPage.hidden && viewer.hidden) leaveField(null); });
   // ---------- nav: show which section you're in ----------
-  const spyLinks = [...document.querySelectorAll('#nav a[href^="#"]:not(.mark):not(.play)')];
+  const spyLinks = [...document.querySelectorAll('#nav > a[href^="#"]:not(.mark):not(.play), #nav > .nav-drop > a')];
   const spyTargets = spyLinks.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
   const navInd = document.getElementById("nav-ind");
   let spyLock = 0;
