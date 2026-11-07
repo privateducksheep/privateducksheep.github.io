@@ -585,6 +585,8 @@ h2 {
 .fp-block h3 { font-size: 15px; font-weight: 600; color: var(--muted); margin: 0 0 14px; }
 .fp-work { padding: 22px 24px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); max-width: 860px; }
 .fp-work b { display: block; margin-bottom: 6px; }
+.fp-work h4 { margin: 16px 0 4px; font-size: 15px; font-weight: 650; color: var(--fg); }
+.fp-work b + h4 { margin-top: 8px; }
 .fp-work p { margin: 0; color: var(--muted); line-height: 1.55; }
 .fp-mods { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 .fp-mods li { padding: 18px 20px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,.02); }
@@ -1392,7 +1394,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         <p class="status" data-in style="--d:0"><span class="dot"></span>Open to new roles</p>
         <h1 class="name" data-in style="--d:1">Shaun<br>Lim</h1>
         <p class="lede" data-in style="--d:2">
-          Hi! I'm Shaun, a Business Analytics student at NUS specialising in <a class="grad lede-link" href="#field/ai">machine learning</a> and <a class="grad lede-link" href="#field/finance">financial analytics</a>. I'm <strong class="grad">curious</strong> by default, and I don't wait for a class to teach me something new. I pick it up and build with it, from a C++ bot that peaked in the top 1.4% of Cambridge Battlecode to full-stack features I shipped as an AI@CPF intern.
+          Hi! I'm Shaun, a Business Analytics student at NUS specialising in <a class="grad lede-link" href="#field/ai">machine learning</a> and <a class="grad lede-link" href="#field/finance">financial analytics</a>. I'm <strong class="grad">curious</strong> by default, and I don't wait for a class to teach me something new. I pick it up and build with it, from a C++ bot that peaked in the top 1.4% of Cambridge Battlecode to full-stack features I shipped for AI@CPF during my internship at CPF.
         </p>
         <div class="cta-row" data-in style="--d:3">
           <a class="btn primary magnetic" href="#work">See my projects <span class="arrow">→</span></a>
@@ -1986,7 +1988,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 
   // ---------- field pages: one view per area a recruiter might hire for ----------
   const fieldPage = document.getElementById("field-page");
-  const WORK = "At AI@CPF (Jul 2026 to now)";
+  const WORK = "CPF AI Enablement Office · Jul 2026 to now";
   const ITEMS = {
     swipe:   { title: "Swipe Survival", kind: "Game", line: "Narrative survival game in Unity. Swipe to decide and keep five resources above zero.", thumb: "media/swipe-t1-poster.jpg", open: "swipe" },
     pet:     { title: "Pet Agents", kind: "Game · Hackathon", line: "3D game in Three.js that teaches how AI agents plan, use tools and follow rules.", thumb: "media/pet-poster-f1.jpg", open: "pet" },
@@ -2002,7 +2004,10 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   const FIELDS = [
     { id: "ai", name: "AI & machine learning", c: "#b9a3ff",
       intro: "Most of my machine learning work has been about measuring models honestly: building the test set, choosing the metric, and checking the output parses before trusting a score. In my internship at CPF as an AI Performance intern, I do the same for AI agents.",
-      work: "I wrote an evaluation framework and guidebook for AI Skills, covering skill triggering, instruction adherence, tool use, output quality and regression testing across LLMs and agent harnesses.",
+      work: [
+        ["Evaluating AI Skills for a real workflow", "I'm evaluating agentic AI Skills, built on the Claude Agent SDK, that help a business department handle appeal cases. I run the Skills on realistic cases, read the full trace of what the agent looked up, decided and called, and review the results with the department's subject-matter experts. Grouping the failures into error modes shows the team which problems matter most and what to fix first."],
+        ["An evaluation framework for the organisation", "From that work I wrote an evaluation framework and guidebook for AI Skills. It covers whether a Skill triggers when it should, follows its instructions, uses tools correctly and produces good output, plus regression testing across different LLMs and agent harnesses."]
+      ],
       mods: [["Feature Engineering", "Choosing and building model inputs from raw data. For the Datathon we narrowed the dataset to five columns."], ["Econometrics Modelling for Data Analytics", "Regression and inference, and the habit of asking whether a result is noise."], ["Data Structures and Algorithms", "The fundamentals behind the search and planning in our Battlecode bot."]],
       items: ["freddy", "dt", "pet", "bc", "hub"] },
     { id: "finance", name: "Financial analytics", c: "#7ee0b5",
@@ -2015,12 +2020,12 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       items: ["bc", "dt", "freddy", "fft", "micron"] },
     { id: "product", name: "Product & UX", c: "#ff7e8e",
       intro: "I care how things feel to use, and I test them on real people. In my internship at CPF as a Product Management intern, that means turning what stakeholders ask for into specs the team can build and test.",
-      work: "I turn stakeholder requirements and user journeys into product specs, user stories and frontend changes, then run end-to-end testing and UAT before each release. I also design user journeys for a company-wide AI Skills marketplace.",
+      work: "For AI@CPF, an organisation-wide AI learning site, I turn stakeholder requirements and user journeys into product specs, user stories and frontend changes, then run end-to-end testing and UAT before each release. I also design user journeys for a company-wide AI Skills marketplace.",
       mods: [["Application Systems Development for Business Analytics", "Going from business requirements to a working application."]],
       items: ["hub", "pet", "swipe"] },
     { id: "web", name: "Full-stack & web", c: "#7cc4ff",
       intro: "I've worked across the stack: Django REST and PostgreSQL on the backend, React and Next.js on the front, and plain HTML, CSS and JavaScript for pages like this one.",
-      work: "I build features and UI improvements for an organisation-wide AI learning site, from specs through frontend changes and bug fixes.",
+      work: "I build features and UI improvements for AI@CPF, an organisation-wide AI learning site, from specs through frontend changes and bug fixes.",
       mods: [["Application Systems Development for Business Analytics", "Designing and building database-backed applications."], ["Data Structures and Algorithms", "The core structures behind efficient code."], ["Computing Methodology", "Programming fundamentals and problem solving."]],
       items: ["sabai", "hub", "fft", "fintech"] },
     { id: "games", name: "Game dev", c: "#ff9a8a",
@@ -2111,7 +2116,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       </button>`; }).join("");
     document.getElementById("fp-body").innerHTML = `
       <header class="fp-head"><p class="eyebrow">Field</p><h2 id="fp-title" class="grad">${fesc(f.name)}</h2><p>${fesc(f.intro)}</p></header>
-      ${f.work ? `<section class="fp-block"><h3>At work</h3><div class="fp-work"><b>${WORK}</b><p>${fesc(f.work)}</p></div></section>` : ""}
+      ${f.work ? `<section class="fp-block"><h3>At work</h3><div class="fp-work"><b>${WORK}</b>${(Array.isArray(f.work) ? f.work : [[null, f.work]]).map(([t, d]) => `${t ? `<h4>${fesc(t)}</h4>` : ""}<p>${fesc(d)}</p>`).join("")}</div></section>` : ""}
       <section class="fp-block"><h3>Projects</h3><div class="fp-projects">${cards}</div></section>
       ${f.mods.length ? `<section class="fp-block"><h3>Modules I've taken</h3><ul class="fp-mods">${f.mods.map(([m, d]) => `<li><b>${fesc(m)}</b><span>${fesc(d)}</span></li>`).join("")}</ul></section>` : `<section class="fp-block"><h3>Modules</h3><p class="fp-more">No module covers this one. I learned it by shipping games.</p></section>`}
       <p class="fp-more">Want the full picture? <a href="#work" data-close>See everything I've made</a> or <a href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">read my résumé</a>.</p>`;
@@ -2224,7 +2229,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     { y: 2025, when: "Aug 2025", m: 8, cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
     { y: 2026, when: "Jan 2026", m: 1, cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
     { y: 2026, when: "Mar 2026", m: 3, cat: "school", title: "Audio FFT Visualizer", line: "A study tool for hearing what the Fourier maths from class describes.", open: "fft" },
-    { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "AI@CPF intern", line: "Building features, writing product specs and creating an AI Skills evaluation framework." },
+    { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "Intern, CPF AI Enablement Office", line: "Building features for AI@CPF, writing product specs and evaluating AI Skills." },
     { y: 2026, when: "Aug 2026", m: 8, cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
     { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Cambridge Battlecode", line: "Our C++ bot climbed to 11th of 824 teams.", open: "bc" },
     { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Pet Agents", line: "A 3D game that teaches how AI agents work, built for a hackathon.", open: "pet" },
