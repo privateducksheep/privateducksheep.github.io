@@ -1374,6 +1374,17 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 .mcard h3 { margin-top: 6px; font-size: 1.55rem; letter-spacing: -0.03em; }
 .mcard-org { margin: -4px 0 4px; font-size: 14px; color: var(--muted); }
 .mcard p:not(.mcard-org) { margin: 0; color: #c2c2c9; font-size: 15px; line-height: 1.55; }
+.mlist { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.mlist li { display: flex; flex-direction: column; gap: 3px; padding-left: 14px; border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); }
+.mlist b { font-size: 15px; font-weight: 650; color: var(--fg); }
+.mlist span { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.mlist p { margin: 2px 0 0 !important; font-size: 14.5px !important; }
+.medals { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.medals em { font-style: normal; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; border: 1px solid; }
+.medals .gold { color: #ffd27a; border-color: rgba(255,210,122,.45); background: rgba(255,210,122,.08); }
+.medals .silver { color: #d6d9e0; border-color: rgba(214,217,224,.4); background: rgba(214,217,224,.07); }
+.mphotos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 2px; }
+.mphotos img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); }
 .mcard-facts { list-style: none; margin: auto 0 0; padding: 14px 0 0; display: flex; gap: 18px; flex-wrap: wrap; border-top: 1px solid var(--line); }
 .mcard-facts li { font-size: 13px; color: var(--muted); }
 .mcard-facts b { display: block; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; color: var(--fg); }
@@ -1759,28 +1770,63 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <section class="more wrap" id="more">
     <div class="section-head reveal">
       <p class="eyebrow">More about me</p>
-      <h2>Outside the code,<br><span class="grad">I lead, help and play.</span></h2>
+      <h2>Beyond work and school,<br><span class="grad">I lead, serve and play.</span></h2>
     </div>
     <div class="more-grid">
       <article class="mcard reveal" style="--c:#7ee0b5;--d:0">
-        <div class="mcard-top"><span class="mcard-kind">Leadership</span><span class="mcard-when">Mar 2025 – May 2026</span></div>
-        <h3>House Head</h3>
+        <div class="mcard-top"><span class="mcard-kind">Leadership</span><span class="mcard-when">AY24/25 – AY25/26</span></div>
+        <h3>House Committee</h3>
         <p class="mcard-org">CAPT Residential College, NUS</p>
-        <p>I led a 14-person house committee that planned welfare drives and large house events for more than 100 residents. I also looked after our budget and onboarded our orientation group leaders.</p>
-        <ul class="mcard-facts"><li><b>14</b> on my committee</li><li><b>100+</b> residents</li></ul>
+        <ul class="mlist">
+          <li><b>House Head</b><span>AY25/26</span><p>I led a 14-person committee that ran welfare drives and large house events for more than 100 residents, managed our budget and onboarded our orientation group leaders.</p></li>
+          <li><b>Events Member</b><span>AY24/25</span><p>I helped plan house events in my first year, which is where I learned how the committee runs.</p></li>
+        </ul>
       </article>
-      <article class="mcard reveal" style="--c:#ff9a8a;--d:1">
-        <div class="mcard-top"><span class="mcard-kind">Sport</span><span class="mcard-when">Feb 2025 – now</span></div>
-        <h3>Dodgeball captain</h3>
-        <p class="mcard-org">NUS Computing and CAPT</p>
-        <p>I captain two dodgeball teams. I run our weekly training, organise inter-house and inter-college games, and sort out the scheduling, logistics and equipment. Turnout has grown since I started, and so has the team's competitive streak.</p>
-        <ul class="mcard-facts"><li><b>2</b> teams</li><li><b>Weekly</b> training</li></ul>
+      <article class="mcard reveal" style="--c:#ffc176;--d:1">
+        <div class="mcard-top"><span class="mcard-kind">Mentoring</span><span class="mcard-when">AY24/25</span></div>
+        <h3>CAPTSlam Queensway</h3>
+        <p class="mcard-org">Overseas Committee member</p>
+        <ul class="mlist">
+          <li><p>Every week we mentored student leaders at Queensway Secondary School, running sessions we planned on different leadership values and virtues.</p></li>
+          <li><p>I also helped plan the project's finale: a trip to Thailand, where we hosted a friendship camp with students from Thai high schools and Chulalongkorn University.</p></li>
+        </ul>
+      </article>
+      <article class="mcard reveal" style="--c:#7cc4ff;--d:2">
+        <div class="mcard-top"><span class="mcard-kind">Community</span><span class="mcard-when">AY24/25 – AY25/26</span></div>
+        <h3>Community Engagement</h3>
+        <p class="mcard-org">CAPT Residential College, NUS</p>
+        <ul class="mlist">
+          <li><b>Trail Leader, CE Day</b><span>AY25/26</span><p>I organised an outreach partnership with Pathlight School and brought about 20 NUS students to run activity stations with its primary school students, built around motor skills, peer learning and emotional regulation.</p></li>
+          <li><b>CE Festival</b><span>AY24/25</span><p>At St Joseph's Home, we learned how care and building design support older residents, then painted tote bags together with them.</p></li>
+          <li><b>CE Day</b><span>Aug 2024</span><p>A visit to ACRES to learn how wildlife rescue works in Singapore.</p></li>
+        </ul>
+      </article>
+      <article class="mcard reveal" style="--c:#ff9a8a;--d:0">
+        <div class="mcard-top"><span class="mcard-kind">Sport</span><span class="mcard-when">2025 – 2026</span></div>
+        <h3>Dodgeball</h3>
+        <p class="mcard-org">CAPT, NUS Computing and TNDC</p>
+        <ul class="mlist">
+          <li><b>CAPT</b><span>Captain, Y1S2 – Y2S2</span><p>I ran our weekly training. Inter-College Games:</p><div class="medals"><em class="gold">1st · Year 1</em><em class="silver">2nd · Year 2, as captain</em></div></li>
+          <li><b>NUS Computing</b><span>Y2S1 – Dec 2026</span><p>Champions as a player, then champions again as captain, before stepping down at the end of 2026.</p><div class="medals"><em class="gold">Champions · Y2S1</em><em class="gold">Champions · Y3S1, as captain</em></div></li>
+          <li><b>TNDC</b><span>2025 – 2026</span><p>A nationwide inter-GRC tournament. Minister David Neo presented the medals.</p><div class="medals"><em class="gold">1st · 2025</em><em class="silver">2nd · 2026</em></div></li>
+        </ul>
+      </article>
+      <article class="mcard reveal" style="--c:#b9a3ff;--d:1">
+        <div class="mcard-top"><span class="mcard-kind">Learning abroad</span><span class="mcard-when">UTC2410B</span></div>
+        <h3>Insights from Nepal</h3>
+        <p class="mcard-org">Community, Culture, Conservation, NUS</p>
+        <div class="mphotos"><img src="me-mountain.jpg" alt="Shaun in front of snow-capped mountains in Nepal" loading="lazy"><img src="me-rooftop.jpg" alt="Shaun on a rooftop with a pagoda behind him in Nepal" loading="lazy"></div>
+        <ul class="mlist">
+          <li><p>A module taught partly through field visits in Nepal. We studied conservation work, local communities and traditions, and the trade-offs that tourism and globalisation bring. Both of my hero photos are from that trip.</p></li>
+        </ul>
       </article>
       <article class="mcard reveal" style="--c:#7cc4ff;--d:2">
         <div class="mcard-top"><span class="mcard-kind">Volunteering</span><span class="mcard-when">Mar 2025 – Feb 2026</span></div>
         <h3>Project Sa'Bai</h3>
         <p class="mcard-org">Student-run health project, NUS</p>
-        <p>Sa'Bai has run free health and eye screenings in Cambodia since 2006. I volunteered from Singapore as a backend developer, building the APIs its volunteers rely on during those trips.</p>
+        <ul class="mlist">
+          <li><p>Sa'Bai has run free health and eye screenings in Cambodia since 2006. I volunteered from Singapore as a backend developer, building the APIs its volunteers rely on during those trips.</p></li>
+        </ul>
         <ul class="mcard-facts"><li><b>6</b> merged pull requests</li><li><b>Since 2006</b> serving villages</li></ul>
       </article>
     </div>
