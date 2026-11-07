@@ -1329,6 +1329,26 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 /* Hackathons */
 .hack { padding-block: 40px 60px; }
 .hack-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+/* ---------- more about me ---------- */
+.more { padding-block: clamp(70px, 12vh, 130px) 20px; }
+.more-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mcard {
+  position: relative; display: flex; flex-direction: column; gap: 10px; padding: 26px 24px 24px; border-radius: 24px; overflow: hidden;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 7%, var(--surface)), var(--surface) 55%); border: 1px solid var(--line);
+  transition: transform .45s var(--ease), border-color .3s;
+}
+.mcard::before { content: ""; position: absolute; left: 24px; right: 24px; top: 0; height: 2px; border-radius: 2px; background: var(--c); opacity: .8; }
+.mcard:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--c) 40%, transparent); }
+.mcard-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; }
+.mcard-kind { font-weight: 650; color: var(--c); }
+.mcard-when { color: var(--muted); font-variant-numeric: tabular-nums; }
+.mcard h3 { margin-top: 6px; font-size: 1.55rem; letter-spacing: -0.03em; }
+.mcard-org { margin: -4px 0 4px; font-size: 14px; color: var(--muted); }
+.mcard p:not(.mcard-org) { margin: 0; color: #c2c2c9; font-size: 15px; line-height: 1.55; }
+.mcard-facts { list-style: none; margin: auto 0 0; padding: 14px 0 0; display: flex; gap: 18px; flex-wrap: wrap; border-top: 1px solid var(--line); }
+.mcard-facts li { font-size: 13px; color: var(--muted); }
+.mcard-facts b { display: block; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; color: var(--fg); }
+@media (max-width: 960px) { .more-grid { grid-template-columns: minmax(0, 1fr); } }
 .hcard.wide { grid-column: 1 / -1; }
 .hcard .card { height: 100%; grid-template-columns: minmax(0, 1fr); align-content: start; padding: clamp(22px, 3vw, 34px); border-radius: 28px; box-shadow: none; }
 .hcard.wide .card { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; }
@@ -1381,6 +1401,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <a href="#work">Projects</a>
   <a href="#hackathons">Hackathons</a>
   <a href="#timeline" class="hide-sm">Timeline</a>
+  <a href="#more" class="hide-sm">About me</a>
     <a href="#contact" class="hide-sm">Contact</a>
   <a class="play" href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
 </nav>
@@ -1698,6 +1719,37 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     </div>
     <div class="tl-top reveal"><div class="tl-legend" id="tl-legend"></div><div class="tl-nav"><button type="button" id="tl-prev" aria-label="Scroll timeline back">←</button><button type="button" id="tl-next" aria-label="Scroll timeline forward">→</button></div></div>
     <div class="tl-frame reveal"><div class="tl-scroll" id="tl-scroll"><div class="tl" id="tl"></div></div></div>
+  </section>
+
+  <!-- MORE ABOUT ME -->
+  <section class="more wrap" id="more">
+    <div class="section-head reveal">
+      <p class="eyebrow">More about me</p>
+      <h2>Outside the code,<br><span class="grad">I lead, help and play.</span></h2>
+    </div>
+    <div class="more-grid">
+      <article class="mcard reveal" style="--c:#7ee0b5;--d:0">
+        <div class="mcard-top"><span class="mcard-kind">Leadership</span><span class="mcard-when">Mar 2025 – May 2026</span></div>
+        <h3>House Head</h3>
+        <p class="mcard-org">CAPT Residential College, NUS</p>
+        <p>I led a 14-person house committee that planned welfare drives and large house events for more than 100 residents. I also looked after our budget and onboarded our orientation group leaders.</p>
+        <ul class="mcard-facts"><li><b>14</b> on my committee</li><li><b>100+</b> residents</li></ul>
+      </article>
+      <article class="mcard reveal" style="--c:#ff9a8a;--d:1">
+        <div class="mcard-top"><span class="mcard-kind">Sport</span><span class="mcard-when">Feb 2025 – now</span></div>
+        <h3>Dodgeball captain</h3>
+        <p class="mcard-org">NUS Computing and CAPT</p>
+        <p>I captain two dodgeball teams. I run our weekly training, organise inter-house and inter-college games, and sort out the scheduling, logistics and equipment. Turnout has grown since I started, and so has the team's competitive streak.</p>
+        <ul class="mcard-facts"><li><b>2</b> teams</li><li><b>Weekly</b> training</li></ul>
+      </article>
+      <article class="mcard reveal" style="--c:#7cc4ff;--d:2">
+        <div class="mcard-top"><span class="mcard-kind">Volunteering</span><span class="mcard-when">Mar 2025 – Feb 2026</span></div>
+        <h3>Project Sa'Bai</h3>
+        <p class="mcard-org">Student-run health project, NUS</p>
+        <p>Sa'Bai has run free health and eye screenings in Cambodia since 2006. I volunteered from Singapore as a backend developer, building the APIs its volunteers rely on during those trips.</p>
+        <ul class="mcard-facts"><li><b>6</b> merged pull requests</li><li><b>Since 2006</b> serving villages</li></ul>
+      </article>
+    </div>
   </section>
 
   <!-- TOOLBOX -->
