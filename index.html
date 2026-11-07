@@ -1,5 +1,17 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Learn by Building</title>
+<title>Shaun Lim · Portfolio</title>
+<meta name="description" content="Business Analytics student at NUS building with machine learning, data and product. Projects, hackathons and an incoming TikTok internship.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://privateducksheep.github.io/">
+<meta property="og:title" content="Shaun Lim · Portfolio">
+<meta property="og:description" content="Business Analytics student at NUS building with machine learning, data and product. Projects, hackathons and an incoming TikTok internship.">
+<meta property="og:image" content="https://privateducksheep.github.io/media/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://privateducksheep.github.io/media/og.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1408,7 +1420,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
   <a href="#timeline" class="hide-sm">Timeline</a>
   <a href="#more" class="hide-sm">About me</a>
     <a href="#contact" class="hide-sm">Contact</a>
-  <a class="play" href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+  <a class="play" href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
 </nav>
 
 <main>
@@ -1781,7 +1793,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       <div class="link-tiles">
         <a class="lt lt-wide" style="--c:#ff9a8a" href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">
           <span class="lt-icon" style="background:linear-gradient(135deg,#ffc176,#ff7e8e 55%,#b9a3ff)"><svg viewBox="0 0 24 24" fill="none" stroke="#141416" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6M9 9h2"/></svg></span>
-          <span class="lt-text"><b>Résumé</b><small>One page, PDF</small></span><span class="lt-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          <span class="lt-text"><b>Resume</b><small>One page, PDF</small></span><span class="lt-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
         </a>
         <a class="lt" style="--c:#f5f5f7" href="https://github.com/privateducksheep" target="_blank" rel="noopener">
           <span class="lt-icon" style="background:#f5f5f7"><svg viewBox="0 0 24 24" fill="#141416"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></span>
@@ -2176,7 +2188,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
       ${f.work ? `<section class="fp-block"><h3>At work</h3><div class="fp-work"><b>${WORK}</b>${(Array.isArray(f.work) ? f.work : [[null, f.work]]).map(([t, d]) => `${t ? `<h4>${fesc(t)}</h4>` : ""}<p>${fesc(d)}</p>`).join("")}</div></section>` : ""}
       <section class="fp-block"><h3>Projects</h3><div class="fp-projects">${cards}</div></section>
       ${f.mods.length ? `<section class="fp-block"><h3>Modules I've taken</h3><ul class="fp-mods">${f.mods.map(([m, d]) => `<li><b>${fesc(m)}</b><span>${fesc(d)}</span></li>`).join("")}</ul></section>` : `<section class="fp-block"><h3>Modules</h3><p class="fp-more">No module covers this one. I learned it by shipping games.</p></section>`}
-      <p class="fp-more">Want the full picture? <a href="#work" data-close>See everything I've made</a> or <a href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">read my résumé</a>.</p>`;
+      <p class="fp-more">Want the full picture? <a href="#work" data-close>See everything I've made</a> or <a href="media/Shaun-Lim-Resume.pdf" target="_blank" rel="noopener">read my resume</a>.</p>`;
     fieldPage.scrollTop = 0;
   }
   let fieldFocus = null;
