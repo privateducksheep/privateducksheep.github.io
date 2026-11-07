@@ -1666,7 +1666,9 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
             </div>
           </div>
           <button class="card-visual media" type="button" data-tilt data-project="bc" aria-label="Open Cambridge Battlecode">
-            <img src="media/bc-poster-oasis.jpg" alt="" loading="lazy">
+            <img src="media/bc-poster-collision.jpg" alt="" loading="lazy">
+            <video class="hover-vid" muted playsinline loop preload="none" aria-hidden="true"></video>
+            <span class="hover-bar" aria-hidden="true"></span>
           </button>
         </div>
       </article>
@@ -2009,7 +2011,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     hub: { trailer: null, preview: null, poster: "media/hubn-poster.jpg", shots: ["home", "products", "post", "blog", "resources", "dashboard", "editor", "admin"].map(f => `${G}hubn-${f}.jpg`) },
     fft: { trailer: "media/fft.mp4", preview: "media/preview/fft.mp4", shots: ["fft-top", "fft-wave", "fft-spec"].map(f => `${G}${f}.jpg`) },
     freddy: { trailer: "media/freddy.mp4", preview: "media/preview/freddy.mp4", shots: ["fz-word_cloud", "fz-review_length_vs_rating", "fz-confusion_OldPrompt_multiclass", "fz-rating_distribution"].map(f => `${G}${f}.jpg`) },
-    bc: { trailer: null, preview: null, poster: "media/bc-poster-oasis.jpg", shots: [`${G}bc-oasis.jpg`, `${G}bc-game.jpg`, `${G}bc-bigworld.jpg`, `${G}bc-team-hd.jpg`, `${G}bc-tracker.jpg`] },
+    bc: { trailer: "media/bc-t1.mp4", preview: "media/preview/bc-t1.mp4", poster: "media/bc-poster-collision.jpg", shots: [`${G}bc-game.jpg`, `${G}bc-bigworld.jpg`, `${G}bc-team-hd.jpg`, `${G}bc-tracker.jpg`] },
     dt: { trailer: null, preview: null, poster: "media/dt-poster.jpg", shots: [`${G}dt-results.jpg`] },
     swipe: { trailer: "media/swipe-t1.mp4", hevc: "media/swipe-t1-hevc.mp4", preview: "media/preview/swipe-t1.mp4", poster: "media/swipe-t1-poster.jpg", shots: ["ssn-menu", "ssn-alina", "ssn-map", "ssn-elder", "ssn-zombie", "ssn-died"].map(f => `${G}${f}.jpg`) },
   };
@@ -2127,7 +2129,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     hub:     { title: "AI Hub", kind: "Web app", line: "Rebuild of an enterprise AI knowledge hub, with a working admin side and analytics.", thumb: "media/hubn-poster.jpg", open: "hub" },
     fft:     { title: "Audio FFT Visualizer", kind: "Tool · Python", line: "Study tool: remove frequencies from a recording and hear what changes. Runs in the browser.", thumb: "media/fft-poster.jpg", open: "fft" },
     sabai:   { title: "Project Sa'Bai", kind: "Backend", line: "Django REST APIs for the patient system used on free health screenings in Cambodia.", mark: "API", jump: "p-sabai" },
-    bc:      { title: "Cambridge Battlecode 2026", kind: "Competition", line: "C++ bot that peaked at 11th of 824 teams, plus a live match tracker I built.", thumb: "media/bc-poster-oasis.jpg", open: "bc" },
+    bc:      { title: "Cambridge Battlecode 2026", kind: "Competition", line: "C++ bot that peaked at 11th of 824 teams, plus a live match tracker I built.", thumb: "media/bc-poster-collision.jpg", open: "bc" },
     freddy:  { title: "TikTok TechJam 2025", kind: "Hackathon", line: "LLM pipeline that flags fake and off-topic Google reviews. I led evaluation.", thumb: "media/freddy-poster.jpg", open: "freddy" },
     dt:      { title: "NUS Datathon 2025", kind: "Hackathon", line: "Random forest that predicts whether a company tops its corporate group, at 0.949 ROC-AUC.", thumb: "media/dt-poster.jpg", open: "dt" },
     fintech: { title: "NUS Fintech Summit 2026", kind: "Hackathon", line: "Crypto wallet that pays by phone number over the XRP Ledger.", mark: "XRPL", jump: "p-fintech" },
