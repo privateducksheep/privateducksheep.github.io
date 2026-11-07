@@ -213,7 +213,7 @@ h2 {
 /* ---------- hero ---------- */
 .hero {
   position: relative;
-  padding-block: clamp(120px, 16vh, 170px) clamp(64px, 10vh, 110px);
+  padding-block: clamp(100px, 13vh, 140px) clamp(56px, 8vh, 90px);
 }
 .aurora {
   position: absolute;
@@ -242,7 +242,7 @@ h2 {
   gap: clamp(40px, 6vw, 90px);
   align-items: center;
 }
-.hero-text { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.hero-text { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 .status {
   display: inline-flex;
   align-items: center;
@@ -284,11 +284,23 @@ h2 {
 .lede strong { font-weight: 700; }
 .lede-link { font-weight: 700; text-decoration: none; background-image: linear-gradient(90deg, var(--sun), var(--coral) 55%, var(--lilac)), linear-gradient(90deg, var(--sun), var(--coral) 55%, var(--lilac)); background-size: 100% 100%, 0% 2px; background-position: 0 0, 0 100%; background-repeat: no-repeat; -webkit-background-clip: text, border-box; background-clip: text, border-box; transition: background-size .35s var(--ease); }
 .lede-link:hover, .lede-link:focus-visible { background-size: 100% 100%, 100% 2px; }
+.lede-link { text-decoration: underline dotted rgba(255,255,255,.35); text-underline-offset: 5px; text-decoration-thickness: 1.5px; }
+.lede-link:hover { text-decoration-color: transparent; }
 .lede-link:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; border-radius: 4px; }
 #p-sabai, #p-micron { scroll-margin-top: 110px; }
 .pulse { animation: cardpulse 1.6s var(--ease) 1; }
 @keyframes cardpulse { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 30% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--coral) 70%, transparent); } }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.orgs { list-style: none; margin: 4px 0 0; padding: 18px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; border-top: 1px solid var(--line); max-width: 640px; }
+@media (max-width: 560px) { .orgs { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
+.orgs li { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.org-logo { width: 36px; height: 36px; flex: none; border-radius: 10px; background: #fff; display: grid; place-items: center; padding: 5px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+.org-logo.wide { width: 58px; padding: 6px 7px; }
+.org-logo img { max-width: 100%; max-height: 100%; display: block; }
+.org-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.org-text b { font-size: 14px; font-weight: 650; display: flex; align-items: center; gap: 6px; }
+.org-text b em { font-style: normal; font-size: 10.5px; font-weight: 650; color: var(--coral); border: 1px solid color-mix(in srgb, var(--coral) 50%, transparent); border-radius: 999px; padding: 1px 6px; }
+.org-text small { font-size: 12.5px; color: var(--muted); }
 
 /* portrait: three layers */
 .portrait-wrap {
@@ -553,7 +565,7 @@ h2 {
 .tl-cat { font-size: 11px; font-weight: 600; color: var(--c); }
 .tl-org { display: flex; align-items: center; gap: 8px; margin: -2px 0 2px !important; font-size: 12.5px !important; font-weight: 600; letter-spacing: 0.01em; color: var(--c) !important; }
 .tl-org img { height: 15px; width: auto; flex: none; opacity: .95; }
-.tl-org img[src*="cpf"] { height: 24px; margin: -4px 0; }
+.tl-org img[src*="cpf"] { height: 20px; background: #fff; border-radius: 5px; padding: 3px 5px; margin: -3px 0; }
 .tl-item.soon { border-style: dashed; border-top-style: solid; background: linear-gradient(180deg, color-mix(in srgb, var(--c) 8%, var(--surface)), var(--surface)); }
 .tl-item.soon .tl-term { color: var(--c); border-color: color-mix(in srgb, var(--c) 50%, transparent); }
 .tl-when { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
@@ -1438,6 +1450,11 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
           <a class="btn primary magnetic" href="#work">See my projects <span class="arrow">→</span></a>
           <a class="btn ghost magnetic" href="#contact">Say hello</a>
         </div>
+        <ul class="orgs" data-in style="--d:4" aria-label="Where I study and work">
+          <li><span class="org-logo"><img src="media/logos/nus.svg" alt="NUS"></span><span class="org-text"><b>NUS</b><small>Business Analytics, 2024–2028</small></span></li>
+          <li><span class="org-logo wide"><img src="media/logos/cpf.png" alt="CPF"></span><span class="org-text"><b>CPF</b><small>Product Management &amp; AI Performance Intern</small></span></li>
+          <li class="soon"><span class="org-logo"><img src="media/logos/tiktok-dark.svg" alt="TikTok"></span><span class="org-text"><b>TikTok <em>Incoming</em></b><small>Product Operations Intern, Jan 2027</small></span></li>
+        </ul>
       </div>
 
       <div class="portrait-wrap" data-in style="--d:2">
@@ -2298,7 +2315,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     { y: 2025, when: "Aug 2025", m: 8, cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
     { y: 2026, when: "Jan 2026", m: 1, cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
     { y: 2026, when: "Mar 2026", m: 3, cat: "school", title: "Audio FFT Visualizer", line: "A study tool for hearing what the Fourier maths from class describes.", open: "fft" },
-    { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "Product Management and AI Performance Intern", org: "CPF · AI Enablement Office", logo: "media/logos/cpf.svg", line: "Building features for AI@CPF, writing product specs and evaluating AI Skills." },
+    { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "Product Management and AI Performance Intern", org: "CPF · AI Enablement Office", logo: "media/logos/cpf.png", line: "Building features for AI@CPF, writing product specs and evaluating AI Skills." },
     { y: 2026, when: "Aug 2026", m: 8, cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
     { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Cambridge Battlecode", line: "Our C++ bot climbed to 11th of 824 teams.", open: "bc" },
     { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Pet Agents", line: "A 3D game that teaches how AI agents work, built for a hackathon.", open: "pet" },
