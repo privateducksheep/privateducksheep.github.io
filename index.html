@@ -295,7 +295,7 @@ h2 {
 @media (max-width: 560px) { .orgs { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
 .orgs li { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
 .org-logo { width: 36px; height: 36px; flex: none; border-radius: 10px; background: #fff; display: grid; place-items: center; padding: 5px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
-.org-logo.wide { width: 58px; padding: 6px 7px; }
+.org-logo.dark { background: #000; border: 1px solid rgba(255,255,255,.18); padding: 8px; }
 .org-logo img { max-width: 100%; max-height: 100%; display: block; }
 .org-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
 .org-text b { font-size: 14px; font-weight: 650; display: flex; align-items: center; gap: 6px; }
@@ -565,7 +565,7 @@ h2 {
 .tl-cat { font-size: 11px; font-weight: 600; color: var(--c); }
 .tl-org { display: flex; align-items: center; gap: 8px; margin: -2px 0 2px !important; font-size: 12.5px !important; font-weight: 600; letter-spacing: 0.01em; color: var(--c) !important; }
 .tl-org img { height: 15px; width: auto; flex: none; opacity: .95; }
-.tl-org img[src*="cpf"] { height: 20px; background: #fff; border-radius: 5px; padding: 3px 5px; margin: -3px 0; }
+.tl-org img[src*="cpf"] { height: 26px; width: 26px; object-fit: contain; background: #fff; border-radius: 7px; padding: 3px; margin: -5px 0; }
 .tl-item.soon { border-style: dashed; border-top-style: solid; background: linear-gradient(180deg, color-mix(in srgb, var(--c) 8%, var(--surface)), var(--surface)); }
 .tl-item.soon .tl-term { color: var(--c); border-color: color-mix(in srgb, var(--c) 50%, transparent); }
 .tl-when { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
@@ -1463,8 +1463,8 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         </div>
         <ul class="orgs" data-in style="--d:4" aria-label="Where I study and work">
           <li><span class="org-logo"><img src="media/logos/nus.svg" alt="NUS"></span><span class="org-text"><b>NUS</b><small>Business Analytics, 2024–2028</small></span></li>
-          <li><span class="org-logo wide"><img src="media/logos/cpf.png" alt="CPF"></span><span class="org-text"><b>CPF</b><small>Product Management &amp; AI Performance Intern</small></span></li>
-          <li class="soon"><span class="org-logo"><img src="media/logos/tiktok-dark.svg" alt="TikTok"></span><span class="org-text"><b>TikTok <em>Incoming</em></b><small>Product Operations Intern, Jan 2027</small></span></li>
+          <li><span class="org-logo"><img src="media/logos/cpf-crest.png" alt="CPF Board"></span><span class="org-text"><b>CPF</b><small>Product Management &amp; AI Performance Intern</small></span></li>
+          <li class="soon"><span class="org-logo dark"><img src="media/logos/tiktok.svg" alt="TikTok"></span><span class="org-text"><b>TikTok <em>Incoming</em></b><small>Product Operations Intern, Jan 2027</small></span></li>
         </ul>
       </div>
 
@@ -2361,7 +2361,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     { y: 2025, when: "Aug 2025", m: 8, cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
     { y: 2026, when: "Jan 2026", m: 1, cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
     { y: 2026, when: "Mar 2026", m: 3, cat: "school", title: "Audio FFT Visualizer", line: "A study tool for hearing what the Fourier maths from class describes.", open: "fft" },
-    { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "Product Management and AI Performance Intern", org: "CPF · AI Enablement Office", logo: "media/logos/cpf.png", line: "Building features for AI@CPF, writing product specs and evaluating AI Skills." },
+    { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "Product Management and AI Performance Intern", org: "CPF · AI Enablement Office", logo: "media/logos/cpf-crest.png", line: "Building features for AI@CPF, writing product specs and evaluating AI Skills." },
     { y: 2026, when: "Aug 2026", m: 8, cat: "intern", title: "AI Hub", line: "The AI@CPF platform, rebuilt with fictional data so I can show it.", open: "hub" },
     { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Cambridge Battlecode", line: "Our C++ bot climbed to 11th of 824 teams.", open: "bc" },
     { y: 2026, when: "Oct 2026", m: 10, cat: "hack", title: "Pet Agents", line: "A 3D game that teaches how AI agents work, built for a hackathon.", open: "pet" },
