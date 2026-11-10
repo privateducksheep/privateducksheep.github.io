@@ -1387,6 +1387,32 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
 .medals .silver { color: #d6d9e0; border-color: rgba(214,217,224,.4); background: rgba(214,217,224,.07); }
 .mphotos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 2px; }
 .mphotos img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); }
+/* photo strip inside a card: scrolls sideways, click to enlarge */
+.mstrip-wrap { position: relative; margin: 6px -24px 2px; }
+.mstrip { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 24px 6px; scroll-padding-inline: 24px; scrollbar-width: none; }
+.mstrip::-webkit-scrollbar { display: none; }
+.mstrip figure { flex: 0 0 100%; margin: 0; scroll-snap-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.mstrip button { padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 14px; width: 100%; }
+.mstrip img { display: block; width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: cover; object-position: center; border-radius: 14px; border: 1px solid var(--line); transition: transform .35s var(--ease); }
+.mstrip button:hover img { transform: scale(1.02); }
+.mstrip figcaption { font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.mstrip-nav { position: absolute; top: calc((100% - 30px) / 2); translate: 0 -50%; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line); background: rgba(12,12,16,.75); color: var(--fg); font-size: 15px; cursor: pointer; display: grid; place-items: center; backdrop-filter: blur(6px); transition: opacity .2s; }
+.mstrip-nav.prev { left: 10px; } .mstrip-nav.next { right: 10px; }
+.mstrip-nav[disabled] { opacity: 0; pointer-events: none; }
+.wu-wide { grid-column: 1 / -1; }
+.vp-photos { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 14px; }
+.vp-photos figcaption { text-align: center; }
+.vp-photos figure { margin: 0; display: flex; flex-direction: column; gap: 7px; width: fit-content; }
+.vp-photos button { padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 14px; }
+.vp-photos img { display: block; height: 300px; width: auto; max-width: 100%; border-radius: 14px; border: 1px solid var(--line); }
+.vp-photos figcaption { width: 0; min-width: 100%; }
+.mstrip figcaption { text-align: center; }
+.vp-photos figcaption { font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.lightbox { position: fixed; inset: 0; z-index: 400; display: grid; place-items: center; padding: 24px; background: rgba(0,0,0,.88); cursor: zoom-out; }
+.lightbox[hidden] { display: none; }
+.lightbox figure { margin: 0; display: flex; flex-direction: column; gap: 12px; align-items: center; max-width: min(1100px, 100%); }
+.lightbox img { max-width: 100%; max-height: 80vh; border-radius: 14px; }
+.lightbox figcaption { color: #d6d6dc; font-size: 15px; text-align: center; }
 .mcard-facts { list-style: none; margin: auto 0 0; padding: 14px 0 0; display: flex; gap: 18px; flex-wrap: wrap; border-top: 1px solid var(--line); }
 .mcard-facts li { font-size: 13px; color: var(--muted); }
 .mcard-facts b { display: block; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; color: var(--fg); }
@@ -1509,6 +1535,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
             <section><h4>What I built</h4><p>Swipe Survival is a narrative survival game I built in Unity for NUS Orbital. It plays in the browser on itch.io and as a download for Windows and Mac. Each card is a person or an event, from a desperate mother to a wandering trader, and you drag it left or right to decide. Every choice moves five resources: food, water, ammo, morale and medicine. If one hits zero, the run ends. Some cards only appear after others, so each run tells its own story.</p></section>
             <section><h4>Why I built it</h4><p>Orbital gave me the chance to take one idea all the way to a build people could download and play. I chose a swipe-to-choose game because it's easy for anyone to pick up, and because every choice shows its cost straight away, which keeps each decision tense.</p></section>
             <section><h4>What I learned</h4><p>I learned to structure a game's code with the Factory and Composite patterns, so new cards and events slot in without rewrites. I also wired up an Audio Mixer whose settings stay saved between sessions, managed the project through Unity DevOps, and exported builds for the web, Windows and Mac.</p></section>
+            <section class="wu-wide"><h4>Who played it</h4><p>My first playtesters were my cousins. They crowded round the screen arguing over every swipe, and Jerome went on to set the high score: 56 days.</p><div class="vp-photos"><figure><button type="button" class="zoom"><img src="media/life/ssn-cousins.jpg" alt="Three of Shaun's cousins crowded around a monitor playing Swipe Survival" loading="lazy"></button><figcaption>My cousins deciding what to do with an abandoned ambulance</figcaption></figure><figure><button type="button" class="zoom"><img src="media/life/ssn-jerome.jpg" alt="Shaun's cousin Jerome smiling next to a screen showing a 56-day high score" loading="lazy"></button><figcaption>Jerome after setting the high score of 56 days</figcaption></figure></div></section>
           </template>
           <div class="card-text">
             <div class="meta"><span>Game</span><span>Unity</span><span>Orbital</span><span class="live">Play in browser</span></div>
@@ -1781,6 +1808,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         <div class="mcard-top"><span class="mcard-kind">Leadership</span><span class="mcard-when">AY24/25 – AY25/26</span></div>
         <h3>House Committee</h3>
         <p class="mcard-org">CAPT Residential College, NUS</p>
+        <div class="mstrip-wrap"><div class="mstrip"><figure><button type="button" class="zoom"><img src="media/life/hc-heads.jpg" alt="Shaun and his co-House Head beside a green Dragon banner" loading="lazy"></button><figcaption>With my co-House Head</figcaption></figure><figure><button type="button" class="zoom"><img src="media/life/hc-committee.jpg" alt="Shaun with his house committee in formal wear" loading="lazy"></button><figcaption>My house committee at our formal night</figcaption></figure><figure><button type="button" class="zoom"><img src="media/life/hc-ols.jpg" alt="Selfie of Shaun and the orientation leaders doing dragon claws" loading="lazy"></button><figcaption>Gearing up for orientation with our orientation leaders</figcaption></figure><figure><button type="button" class="zoom"><img src="media/life/hc-orientation.jpg" alt="Large group photo of the house welcoming new Year 1 students" loading="lazy"></button><figcaption>Welcoming the new Year 1s to Dragon at orientation</figcaption></figure><figure><button type="button" class="zoom"><img src="media/life/hc-exco.jpg" alt="Shaun and the orientation exco with a hand-painted Dragon flag" loading="lazy"></button><figcaption>My orientation exco</figcaption></figure></div><button class="mstrip-nav prev" type="button" aria-label="Previous photo">‹</button><button class="mstrip-nav next" type="button" aria-label="Next photo">›</button></div>
         <ul class="mlist">
           <li><b>House Head</b><span>AY25/26</span><p>I led a 14-person committee that ran welfare drives and large house events for more than 100 residents, managed our budget and onboarded our orientation group leaders.</p></li>
           <li><b>Events Member</b><span>AY24/25</span><p>I helped plan house events in my first year, which is where I learned how the committee runs.</p></li>
@@ -1790,9 +1818,10 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
         <div class="mcard-top"><span class="mcard-kind">Mentoring</span><span class="mcard-when">AY24/25</span></div>
         <h3>CAPTSlam Queensway</h3>
         <p class="mcard-org">Overseas Committee member</p>
+        <div class="mstrip-wrap"><div class="mstrip"><figure><button type="button" class="zoom"><img src="media/life/qw-family-1.jpg" alt="Shaun and fellow mentors with their Queensway mentees in a school hall" loading="lazy"></button><figcaption>My family group at a weekly Queensway session</figcaption></figure><figure><button type="button" class="zoom"><img src="media/life/qw-family-2.jpg" alt="Mentors and mentees sitting together, one holding a paper craft" loading="lazy"></button><figcaption>Showing off what our family group made</figcaption></figure><figure><button type="button" class="zoom"><img src="media/life/qw-thai-cooking.jpg" alt="Singapore and Thai students cooking together at an outdoor stove" loading="lazy"></button><figcaption>Thailand: we taught kaya toast and learned to make som tam</figcaption></figure></div><button class="mstrip-nav prev" type="button" aria-label="Previous photo">‹</button><button class="mstrip-nav next" type="button" aria-label="Next photo">›</button></div>
         <ul class="mlist">
-          <li><p>Every week we mentored student leaders at Queensway Secondary School, running sessions we planned on different leadership values and virtues.</p></li>
-          <li><p>I also helped plan the project's finale: a trip to Thailand, where we hosted a friendship camp with students from Thai high schools and Chulalongkorn University.</p></li>
+          <li><p>Every week we mentored student leaders at Queensway Secondary School, running sessions we planned on different leadership values and virtues. Each of us mentored the same small family group of students all year.</p></li>
+          <li><p>I also helped plan the project's finale: a trip to Thailand, where we hosted a friendship camp with students from Thai high schools and Chulalongkorn University. One activity had us swap home recipes over a camp stove.</p></li>
         </ul>
       </article>
       <article class="mcard reveal" style="--c:#7cc4ff;--d:2">
@@ -1836,6 +1865,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     </div>
   </section>
 
+  <div class="lightbox" id="lightbox" hidden><figure><img alt=""><figcaption></figcaption></figure></div>
   <!-- TOOLBOX -->
   <section class="toolbox" aria-label="Toolbox">
     <div class="wrap reveal"><p class="eyebrow">Toolbox</p></div>
@@ -2426,5 +2456,38 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     } catch (e) { select(); }
   });
 })();
+
+  // photo strips: arrow buttons + click to enlarge (works inside the project viewer too)
+  (() => {
+    const lb = document.getElementById("lightbox"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector("figcaption");
+    const sync = wrap => {
+      const st = wrap.querySelector(".mstrip"), max = st.scrollWidth - st.clientWidth - 2;
+      wrap.querySelector(".prev").disabled = st.scrollLeft <= 2;
+      wrap.querySelector(".next").disabled = st.scrollLeft >= max;
+    };
+    document.addEventListener("click", e => {
+      const nav = e.target.closest(".mstrip-nav");
+      if (nav) {
+        const st = nav.parentElement.querySelector(".mstrip");
+        st.scrollBy({ left: (nav.classList.contains("next") ? 1 : -1) * st.clientWidth * 0.8, behavior: "smooth" });
+        return;
+      }
+      const z = e.target.closest(".mstrip .zoom, .vp-photos .zoom");
+      if (z) {
+        const img = z.querySelector("img");
+        lbImg.src = img.src; lbImg.alt = img.alt;
+        lbCap.textContent = z.parentElement.querySelector("figcaption")?.textContent || "";
+        lb.hidden = false;
+        return;
+      }
+      if (!lb.hidden && e.target.closest("#lightbox")) lb.hidden = true;
+    });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) { lb.hidden = true; e.stopImmediatePropagation(); } }, true);
+    document.addEventListener("scroll", e => { const w = e.target.closest?.(".mstrip-wrap"); if (w) sync(w); }, true);
+    const syncAll = () => document.querySelectorAll(".mstrip-wrap").forEach(sync);
+    addEventListener("load", syncAll); addEventListener("resize", syncAll);
+    new MutationObserver(syncAll).observe(document.getElementById("vp-write"), { childList: true });
+    document.addEventListener("load", e => { const w = e.target.closest?.(".mstrip-wrap"); if (w) sync(w); }, true);
+  })();
 </script>
 <script src="/analytics.js" defer></script></html>
