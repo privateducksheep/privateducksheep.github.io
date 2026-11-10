@@ -1844,7 +1844,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
           <li><b>TNDC</b><span>2025 – 2026</span><p>A nationwide inter-GRC tournament. Minister David Neo presented the medals.</p><div class="medals"><em class="gold">1st · 2025</em><em class="silver">2nd · 2026</em></div></li>
         </ul>
       </article>
-      <article class="mcard reveal" style="--c:#b9a3ff;--d:1">
+      <article class="mcard reveal" id="m-nepal" style="--c:#b9a3ff;--d:1;scroll-margin-top:96px">
         <div class="mcard-top"><span class="mcard-kind">Learning abroad</span><span class="mcard-when">Dec 2025 · Y2 winter</span></div>
         <h3>Insights from Nepal</h3>
         <p class="mcard-org">UTC2410B Community, Culture, Conservation, NUS</p>
@@ -2393,6 +2393,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     { y: 2025, when: "Mar 2025", m: 3, cat: "lead", title: "House Head, CAPT", line: "Led a 14-person committee for over 100 residents." },
     { y: 2025, when: "May 2025", m: 5, cat: "school", title: "Swipe Survival", line: "My first full game, built in Unity for NUS Orbital.", open: "swipe" },
     { y: 2025, when: "Aug 2025", m: 8, cat: "hack", title: "TikTok TechJam", line: "Led evaluation for an LLM that moderates reviews.", open: "freddy" },
+    { y: 2025, when: "Dec 2025", m: 12, cat: "school", title: "Field trip to Nepal", line: "UTC2410B over the winter break: conservation, communities and culture, learned on the ground.", jump: "m-nepal" },
     { y: 2026, when: "Jan 2026", m: 1, cat: "hack", title: "NUS Fintech Summit", line: "Crypto wallet that pays by phone number on the XRP Ledger.", jump: "p-fintech" },
     { y: 2026, when: "Mar 2026", m: 3, cat: "school", title: "Audio FFT Visualizer", line: "A study tool for hearing what the Fourier maths from class describes.", open: "fft" },
     { y: 2026, when: "Jul 2026", m: 7, cat: "intern", title: "Product Management and AI Performance Intern", org: "CPF · AI Enablement Office", logo: "media/logos/cpf-crest.png", line: "Building features for AI@CPF, writing product specs and evaluating AI Skills." },
@@ -2402,7 +2403,7 @@ footer .privacy { flex-basis: 100%; font-size: 12px; color: #6f6f77; }
     { y: 2027, when: "Jan 2027", m: 1, cat: "intern", title: "Product Operations Intern", org: "TikTok · Agentic Lead Generation", logo: "media/logos/tiktok-color.svg", line: "Joining TikTok from January to May 2027, working on product operations for its agentic lead generation product.", soon: true },
   ];
   // NUS terms: Sem 1 runs Aug to Dec, Sem 2 Jan to early May, then the summer break
-  const term = (y, m) => { const yr = (m >= 8 ? y : y - 1) - 2023; return `Year ${yr} · ${m >= 8 ? "Sem 1" : m <= 4 ? "Sem 2" : "Summer"}`; };
+  const term = (y, m) => { const yr = (m >= 8 ? y : y - 1) - 2023; return `Year ${yr} · ${m === 12 ? "Winter" : m >= 8 ? "Sem 1" : m <= 4 ? "Sem 2" : "Summer"}`; };
   document.getElementById("tl-legend").innerHTML = Object.values(CATS).map(([n, c]) => `<span style="--c:${c}"><i></i>${n}</span>`).join("");
   const years = [...new Set(TIMELINE.map(t => t.y))];
   const tl = document.getElementById("tl");
